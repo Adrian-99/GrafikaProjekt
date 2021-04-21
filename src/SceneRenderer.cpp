@@ -29,7 +29,7 @@ void SceneRenderer::ProcessInput(GLFWwindow* window)
 
 void SceneRenderer::RenderScene(GLFWwindow* window)
 {
-    RotateCamera();
+
 }
 
 void SceneRenderer::RotateCamera(GLfloat xRotation, GLfloat zRotation)
