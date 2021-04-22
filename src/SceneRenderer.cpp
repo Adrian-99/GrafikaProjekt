@@ -2,7 +2,7 @@
 
 SceneRenderer::SceneRenderer() :
     exampleCube(0.0f, 0.0f, 0.0f, 5.0f),
-    exampleWheel(0.0f, 0.0f, 0.0f, 20.0f, 20.0f)
+    exampleWheel(0.0f, 0.0f, 0.0f, 20.0f, 15.0f)
 {
     xRot = 0.0f;
     zRot = 0.0f;
