@@ -1,11 +1,15 @@
 #pragma once
 #include <GLFW/glfw3.h>
+#include "Cube.h"
 
 class SceneRenderer
 {
 public:
 	GLfloat xRot;
 	GLfloat zRot;
+
+private:
+	Cube exampleCube;
 
 public:
 	SceneRenderer();
