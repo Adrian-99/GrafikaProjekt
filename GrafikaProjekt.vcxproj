@@ -22,10 +22,12 @@
     <ClCompile Include="src\Cube.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\SceneRenderer.cpp" />
+    <ClCompile Include="src\Wheel.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Cube.h" />
     <ClInclude Include="src\SceneRenderer.h" />
+    <ClInclude Include="src\Wheel.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

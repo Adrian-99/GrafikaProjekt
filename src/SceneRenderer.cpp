@@ -1,7 +1,8 @@
 #include "SceneRenderer.h"
 
 SceneRenderer::SceneRenderer() :
-    exampleCube(0.0f, 0.0f, 0.0f, 5.0f)
+    exampleCube(0.0f, 0.0f, 0.0f, 5.0f),
+    exampleWheel(0.0f, 0.0f, 0.0f, 20.0f, 20.0f)
 {
     xRot = 0.0f;
     zRot = 0.0f;
@@ -12,7 +13,7 @@ SceneRenderer::SceneRenderer() :
 
 void SceneRenderer::ProcessInput(GLFWwindow* window)
 {	
-	float rotationSpeed = 2.0f;
+	float rotationSpeed = 0.5f;
 
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
@@ -32,7 +33,7 @@ void SceneRenderer::ProcessInput(GLFWwindow* window)
 
 void SceneRenderer::RenderScene(GLFWwindow* window)
 {
-    exampleCube.Draw();
+    exampleWheel.Draw();
 }
 
 void SceneRenderer::RotateCamera(GLfloat xRotation, GLfloat zRotation)

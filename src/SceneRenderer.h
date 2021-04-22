@@ -1,6 +1,7 @@
 #pragma once
 #include <GLFW/glfw3.h>
 #include "Cube.h"
+#include "Wheel.h"
 
 class SceneRenderer
 {
@@ -10,6 +11,7 @@ public:
 
 private:
 	Cube exampleCube;
+	Wheel exampleWheel;
 
 public:
 	SceneRenderer();
