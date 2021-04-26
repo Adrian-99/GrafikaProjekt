@@ -1,7 +1,6 @@
 #pragma once
 #include <GLFW/glfw3.h>
-#include "Cube.h"
-#include "Wheel.h"
+#include "WheelLinks.h"
 
 class SceneRenderer
 {
@@ -10,8 +9,8 @@ public:
 	GLfloat zRot;
 
 private:
-	Cube exampleCube;
-	Wheel exampleWheel;
+	WheelLinks leftWheelsWithLinks;
+	WheelLinks rightWheelsWithLinks;
 
 public:
 	SceneRenderer();

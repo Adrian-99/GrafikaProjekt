@@ -1,8 +1,8 @@
 #include "SceneRenderer.h"
 
 SceneRenderer::SceneRenderer() :
-    exampleCube(0.0f, 0.0f, 0.0f, 5.0f),
-    exampleWheel(0.0f, 0.0f, 0.0f, 20.0f, 15.0f)
+    leftWheelsWithLinks(0.0f, -30.0f, 20.0f, 1.0f, true),
+    rightWheelsWithLinks(0.0f, 30.0f, 20.0f, 1.0f, false)
 {
     xRot = 0.0f;
     zRot = 0.0f;
@@ -19,21 +19,22 @@ void SceneRenderer::ProcessInput(GLFWwindow* window)
         glfwSetWindowShouldClose(window, true);
 
     if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
-        RotateCamera(-rotationSpeed);
-
-    if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
         RotateCamera(rotationSpeed);
 
+    if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
+        RotateCamera(-rotationSpeed);
+
     if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
-        RotateCamera(0.0f, -rotationSpeed);
+        RotateCamera(0.0f, rotationSpeed);
 
     if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
-        RotateCamera(0.0f, rotationSpeed);
+        RotateCamera(0.0f, -rotationSpeed);
 }
 
 void SceneRenderer::RenderScene(GLFWwindow* window)
 {
-    exampleWheel.Draw();
+    leftWheelsWithLinks.Draw();
+    rightWheelsWithLinks.Draw();
 }
 
 void SceneRenderer::RotateCamera(GLfloat xRotation, GLfloat zRotation)

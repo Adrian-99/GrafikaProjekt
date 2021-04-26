@@ -61,6 +61,11 @@ void Wheel::Draw()
 	glPopMatrix();
 }
 
+void Wheel::ChangeYPosition(GLfloat y)
+{
+	position[1] = y;
+}
+
 void Wheel::DrawRim()
 {
 	glColor3f(0.6f, 0.6f, 0.6f);

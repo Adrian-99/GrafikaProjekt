@@ -1,5 +1,6 @@
 #include <iostream>
 #include <GLFW/glfw3.h>
+#include <GL/glut.h>
 #include "SceneRenderer.h"
 
 /// <summary>
@@ -22,15 +23,14 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
     glLoadIdentity();
 
     // Establish clipping volume (left, right, bottom, top, near, far)
-    if (width <= height)
+    /*if (width <= height)
         glOrtho(-nRange, nRange, -nRange * height / width, nRange * height / width, -nRange, nRange);
     else
-        glOrtho(-nRange * width / height, nRange * width / height, -nRange, nRange, -nRange, nRange);
+        glOrtho(-nRange * width / height, nRange * width / height, -nRange, nRange, -nRange, nRange);*/
 
     // Establish perspective: 
-    /*
     gluPerspective(60.0f,fAspect,1.0,400);
-    */
+    gluLookAt(0.0f, 0.0f, 200.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();

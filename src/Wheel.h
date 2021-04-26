@@ -17,6 +17,7 @@ public:
 	Wheel(GLfloat x, GLfloat y, GLfloat z, GLfloat radius, GLfloat width);
 	~Wheel();
 	void Draw();
+	void ChangeYPosition(GLfloat y);
 
 private:
 	void DrawRim();
