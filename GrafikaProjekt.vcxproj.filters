@@ -21,7 +21,7 @@
     <ClCompile Include="src\SceneRenderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Cube.cpp">
+    <ClCompile Include="src\Cuboid.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Wheel.cpp">
@@ -30,18 +30,24 @@
     <ClCompile Include="src\WheelLinks.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Body.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\SceneRenderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Cube.h">
+    <ClInclude Include="src\Cuboid.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Wheel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\WheelLinks.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Body.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

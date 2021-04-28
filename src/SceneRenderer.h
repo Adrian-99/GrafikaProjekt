@@ -1,6 +1,7 @@
 #pragma once
 #include <GLFW/glfw3.h>
 #include "WheelLinks.h"
+#include "Body.h"
 
 class SceneRenderer
 {
@@ -11,6 +12,7 @@ public:
 private:
 	WheelLinks leftWheelsWithLinks;
 	WheelLinks rightWheelsWithLinks;
+	Body roverBody;
 
 public:
 	SceneRenderer();
