@@ -1,7 +1,6 @@
 #pragma once
 #include <GLFW/glfw3.h>
-#include "WheelLinks.h"
-#include "Body.h"
+#include "Rover.h"
 
 class SceneRenderer
 {
@@ -10,9 +9,7 @@ public:
 	GLfloat zRot;
 
 private:
-	WheelLinks leftWheelsWithLinks;
-	WheelLinks rightWheelsWithLinks;
-	Body roverBody;
+	Rover rover;
 
 public:
 	SceneRenderer();

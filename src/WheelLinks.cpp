@@ -40,7 +40,7 @@ WheelLinks::~WheelLinks()
 void WheelLinks::Draw() 
 {
 	glPolygonMode(GL_FRONT, GL_FILL);
-	glPolygonMode(GL_BACK, GL_LINE);
+	glPolygonMode(GL_BACK, GL_NONE);
 
 	glPushMatrix();
 
@@ -77,7 +77,7 @@ void WheelLinks::DrawLink(GLfloat fromX, GLfloat fromZ, GLfloat toX, GLfloat toZ
 	GLfloat stepZ = (toZ - fromZ) / stepsCount;
 
 	// Top wall
-	glColor3f(0.8f, 0.8f, 0.0f);
+	glColor3f(0.4f, 0.4f, 0.4f);
 	glBegin(GL_TRIANGLE_STRIP);
 	for (step = 0; step < stepsCount; step++) {
 		x = fromX + step * stepX;
@@ -88,7 +88,7 @@ void WheelLinks::DrawLink(GLfloat fromX, GLfloat fromZ, GLfloat toX, GLfloat toZ
 	glEnd();
 
 	// Bottom wall
-	glColor3f(0.6f, 0.6f, 0.0f);
+	glColor3f(0.3f, 0.3f, 0.3f);
 	glBegin(GL_TRIANGLE_STRIP);
 	for (step = 0; step < stepsCount; step++) {
 		x = fromX + step * stepX;
@@ -99,7 +99,7 @@ void WheelLinks::DrawLink(GLfloat fromX, GLfloat fromZ, GLfloat toX, GLfloat toZ
 	glEnd();
 
 	// Right wall
-	glColor3f(0.7f, 0.7f, 0.0f);
+	glColor3f(0.35f, 0.35f, 0.35f);
 	glBegin(GL_TRIANGLE_STRIP);
 	y = startY + width * 5;
 	for (step = 0; step < stepsCount; step++) {

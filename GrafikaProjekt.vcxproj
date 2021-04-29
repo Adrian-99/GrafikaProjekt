@@ -22,6 +22,7 @@
     <ClCompile Include="src\Body.cpp" />
     <ClCompile Include="src\Cuboid.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\Rover.cpp" />
     <ClCompile Include="src\SceneRenderer.cpp" />
     <ClCompile Include="src\Wheel.cpp" />
     <ClCompile Include="src\WheelLinks.cpp" />
@@ -29,6 +30,7 @@
   <ItemGroup>
     <ClInclude Include="src\Body.h" />
     <ClInclude Include="src\Cuboid.h" />
+    <ClInclude Include="src\Rover.h" />
     <ClInclude Include="src\SceneRenderer.h" />
     <ClInclude Include="src\Wheel.h" />
     <ClInclude Include="src\WheelLinks.h" />

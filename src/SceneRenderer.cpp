@@ -2,8 +2,7 @@
 
 
 SceneRenderer::SceneRenderer() :
-    leftWheelsWithLinks(0.0f, -40.0f, 20.0f, 1.0f, true),
-    rightWheelsWithLinks(0.0f, 40.0f, 20.0f, 1.0f, false)
+    rover(0.0f, 0.0f, 0.0f, 1.0f)
 {
     xRot = 0.0f;
     zRot = 0.0f;
@@ -34,9 +33,7 @@ void SceneRenderer::ProcessInput(GLFWwindow* window)
 
 void SceneRenderer::RenderScene(GLFWwindow* window)
 {
-    leftWheelsWithLinks.Draw();
-    rightWheelsWithLinks.Draw();
-    roverBody.Draw();
+    rover.Draw();
 }
 
 void SceneRenderer::RotateCamera(GLfloat xRotation, GLfloat zRotation)

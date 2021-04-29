@@ -5,13 +5,13 @@
 class Wheel
 {
 private:
-	GLfloat* position;
-	GLfloat halfTireWidth;
-	GLfloat halfRimWidth;
-	GLfloat* rimOuterVertices;
-	GLfloat* tireMiddleVertices;
-	GLfloat* tireOuterVertices;
-	GLint verticesNumber;
+	GLfloat* position;				// pozycja ko³a
+	GLfloat halfTireWidth;			// po³owa szerokoœci opony
+	GLfloat halfRimWidth;			// po³owa szerokoœci felgi
+	GLfloat* rimOuterVertices;		// wskaŸnik do tablicy wspó³rzêdnych XZ wierzcho³ków zewnêtrznych felgi
+	GLfloat* tireMiddleVertices;	// wskaŸnik do tablicy wspó³rzêdnych XZ wierzcho³ków œrodkowych opony
+	GLfloat* tireOuterVertices;		// wskaŸnik do tablicy wspó³rzêdnych XZ wierzcho³ków zewnêtrznych opony
+	GLint verticesNumber;			// liczba par elementów w powy¿szych tablicach
 
 public:
 	Wheel(GLfloat x, GLfloat y, GLfloat z, GLfloat radius, GLfloat width);
