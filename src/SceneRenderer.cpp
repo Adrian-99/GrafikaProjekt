@@ -13,7 +13,7 @@ SceneRenderer::SceneRenderer() :
 
 void SceneRenderer::ProcessInput(GLFWwindow* window)
 {	
-	float rotationSpeed = 1.5f;
+	float rotationSpeed = 0.5f;
 
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);

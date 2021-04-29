@@ -10,10 +10,11 @@ class Body {
 private:
 	
 	//base block coordinates
-	GLfloat x = 15.0f, y = 0.0f, z = 15.0f;
+	GLfloat x, y, z;
 	//base block dimensions
-	GLfloat l= 85.0f, w= 65.0f, h= 30.0f;
+	GLfloat l, w, h;
 
+	GLfloat size;
 	
 
 	GLfloat solarPanelAngle = 37.0f;
@@ -42,7 +43,7 @@ private:
 
 
 public:
-	Body();
+	Body(GLfloat x, GLfloat y, GLfloat z, GLfloat size);
 	~Body();
 
 	void solarPanel(GLfloat x, GLfloat y, GLfloat z, GLfloat l, GLfloat w, GLfloat h);

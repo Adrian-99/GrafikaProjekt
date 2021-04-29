@@ -1,8 +1,16 @@
 #include "Body.h"
 
-Body::Body():
-	roverBody(x, y, z, l, w, h)
+Body::Body(GLfloat x, GLfloat y, GLfloat z, GLfloat size):
+	roverBody(x, y, z, 85.0f * size, 65.0f * size, 30.0f * size)
 {
+	this->x = x;
+	this->y = y;
+	this->z = z;
+	this->l = 85.0f * size;
+	this->w = 65.0f * size;
+	this->h = 30.0f * size;
+	this->size = size;
+
 	frontEdge = x - (l / 2.0f);
 	backEdge = x + (l / 2.0f);
 	rightEdge = y - (w / 2.0f);
@@ -100,8 +108,8 @@ void Body::solarPanelArm(GLfloat L, GLfloat H, GLint side, GLint order)
 	//order = 2 - second arm near the backEdge of deck
 
 	GLfloat frontOrBackEdge;
-	GLfloat spaceFromEdges = 10.0f;		//space from top and back edge
-	GLfloat armOnDeck = 10.0f;			//determines the length of the part of horizontal arm on board
+	GLfloat spaceFromEdges = 10.0f * size;		//space from top and back edge
+	GLfloat armOnDeck = 10.0f * size;			//determines the length of the part of horizontal arm on board
 	GLfloat sideEdge;
 
 	if (side == 1) {
@@ -111,11 +119,11 @@ void Body::solarPanelArm(GLfloat L, GLfloat H, GLint side, GLint order)
 		sideEdge = rightEdge;
 	}
 
-	GLfloat h = 4.0f;
-	GLfloat w = 7.0f;
+	GLfloat h = 4.0f * size;
+	GLfloat w = 7.0f * size;
 
-	GLfloat hArmL = 30.0f;	//horizontal arm length
-	GLfloat vArmH = 20.0f;	//vertical arm height
+	GLfloat hArmL = 30.0f * size;	//horizontal arm length
+	GLfloat vArmH = 20.0f * size;	//vertical arm height
 	GLfloat hArmEnd = side * (sideEdge + side * (-armOnDeck + hArmL));	//ending coordinate of horizontal arm
 
 	
@@ -131,9 +139,9 @@ void Body::solarPanelArm(GLfloat L, GLfloat H, GLint side, GLint order)
 	GLfloat armHandleY = side * (hArmEnd + (h / 2.0));
 	GLfloat armHandleZ = deckH + vArmH;
 
-	GLfloat armHandleL = 5.0f;
-	GLfloat armHandleW = 4.0f;
-	GLfloat armHandleH = 2.0f;
+	GLfloat armHandleL = 5.0f * size;
+	GLfloat armHandleW = 4.0f * size;
+	GLfloat armHandleH = 2.0f * size;
 
 
 	//horizontal arm
@@ -385,7 +393,7 @@ void Body::solarPanelArm(GLfloat L, GLfloat H, GLint side, GLint order)
 		
 		//nie potrafie dobrze obrocic paneli poza ta funkcja
 		if(order == 1)
-			solarPanel(x-armHandleX, 0.0f, armHandleCuboidPartEnd + (solarH / 2.0f), solarL, solarW, solarH);
+			solarPanel(x-armHandleX, 0.0f, armHandleCuboidPartEnd + (solarH / 2.0f), solarL * size, solarW * size, solarH * size);
 
 	}
 	glPopMatrix();
@@ -409,13 +417,13 @@ void Body::Draw() {
 	glPopMatrix();
 
 	//right top
-	solarPanelArm(44, 44, -1, 1);
+	solarPanelArm(44 * size, 44 * size, -1, 1);
 	//right back
-	solarPanelArm(44, 44, -1, 2);
+	solarPanelArm(44 * size, 44 * size, -1, 2);
 	//left top
-	solarPanelArm(44, 44, 1, 1);
+	solarPanelArm(44 * size, 44 * size, 1, 1);
 	//left back
-	solarPanelArm(44, 44, 1, 2);
+	solarPanelArm(44 * size, 44 * size, 1, 2);
 
 	roverBody.Draw();
 
