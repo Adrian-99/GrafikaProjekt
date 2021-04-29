@@ -1,9 +1,9 @@
 #include "Rover.h"
 
 Rover::Rover(GLfloat x, GLfloat y, GLfloat z, GLfloat size) :
-	body(15.0f, 0.0f, 15.0f, 1.0f),
-	leftWheelsWithLinks(0.0f, -40.0f, 20.0f, 1.0f, true),
-	rightWheelsWithLinks(0.0f, 40.0f, 20.0f, 1.0f, false)
+	body(x + 15.0f * size, y, z + 15.0f * size, size),
+	leftWheelsWithLinks(x, y - 40.0f * size, z + 20.0f * size, size, true),
+	rightWheelsWithLinks(x, y + 40.0f * size, z + 20.0f * size, size, false)
 {
 }
 
