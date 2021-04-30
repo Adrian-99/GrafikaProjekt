@@ -2,13 +2,14 @@
 
 
 SceneRenderer::SceneRenderer() :
-    rover(0.0f, 0.0f, 0.0f, 0.9f)
+    rover(0.0f, 0.0f, 0.0f, 1.0f)
 {
     xRot = 0.0f;
     zRot = 0.0f;
 
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-    //glPolygonMode(GL_BACK, GL_NONE);
+    glPolygonMode(GL_FRONT, GL_FILL);
+    glPolygonMode(GL_BACK, GL_NONE);
 }
 
 void SceneRenderer::ProcessInput(GLFWwindow* window)

@@ -50,9 +50,6 @@ Wheel::~Wheel()
 
 void Wheel::Draw()
 {
-	glPolygonMode(GL_FRONT, GL_FILL);
-	glPolygonMode(GL_BACK, GL_NONE);
-
 	glPushMatrix();
 
 	DrawRim();

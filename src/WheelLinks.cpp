@@ -39,9 +39,6 @@ WheelLinks::~WheelLinks()
 
 void WheelLinks::Draw() 
 {
-	glPolygonMode(GL_FRONT, GL_FILL);
-	glPolygonMode(GL_BACK, GL_NONE);
-
 	glPushMatrix();
 
 	DrawConnector(startX, startZ, size * 15);

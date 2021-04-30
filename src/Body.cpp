@@ -27,9 +27,9 @@ void Body::roverBody(GLfloat x, GLfloat y, GLfloat z, GLfloat l, GLfloat w, GLfl
 	GLfloat halfW = w / GLfloat(2.0);
 	GLfloat halfH = h / GLfloat(2.0);
 
-	GLfloat topColor = 0.45;
-	GLfloat bottomColor = 0.10;
-	GLfloat outerColor = 0.35;
+	GLfloat topColor = 0.35;
+	GLfloat bottomColor = 0.3;
+	GLfloat outerColor = 0.325;
 
 	// podstawa  góra
 	glBegin(GL_TRIANGLE_STRIP);
