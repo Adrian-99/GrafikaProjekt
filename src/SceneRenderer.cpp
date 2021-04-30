@@ -2,7 +2,7 @@
 
 
 SceneRenderer::SceneRenderer() :
-    rover(0.0f, 0.0f, 0.0f, 1.0f)
+    rover(0.0f, 0.0f, 0.0f, 0.9f)
 {
     xRot = 0.0f;
     zRot = 0.0f;
@@ -13,7 +13,7 @@ SceneRenderer::SceneRenderer() :
 
 void SceneRenderer::ProcessInput(GLFWwindow* window)
 {	
-	float rotationSpeed = 0.5f;
+	float rotationSpeed = 1.5f;
 
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
