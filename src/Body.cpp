@@ -6,9 +6,9 @@ Body::Body(GLfloat x, GLfloat y, GLfloat z, GLfloat size){
 	this->x = x;
 	this->y = y;
 	this->z = z;
-	this->l = 85.0f * size;
-	this->w = 65.0f * size;
-	this->h = 30.0f * size;
+	this->l = l * size;
+	this->w = w * size;
+	this->h = h * size;
 	this->size = size;
 
 	frontEdge = x - (l / 2.0f);
@@ -20,7 +20,7 @@ Body::Body(GLfloat x, GLfloat y, GLfloat z, GLfloat size){
 
 Body::~Body() {}
 
-void Body::roverBody(GLfloat x, GLfloat y, GLfloat z, GLfloat l, GLfloat w, GLfloat h)
+void Body::roverDeck(GLfloat x, GLfloat y, GLfloat z, GLfloat l, GLfloat w, GLfloat h)
 {
 
 	GLfloat halfL = l / GLfloat(2.0);
@@ -31,6 +31,7 @@ void Body::roverBody(GLfloat x, GLfloat y, GLfloat z, GLfloat l, GLfloat w, GLfl
 	GLfloat bottomColor = 0.3;
 	GLfloat outerColor = 0.325;
 
+	
 	// podstawa  góra
 	glBegin(GL_TRIANGLE_STRIP);
 	glColor3f(topColor, topColor, topColor);
@@ -97,7 +98,6 @@ void Body::roverBody(GLfloat x, GLfloat y, GLfloat z, GLfloat l, GLfloat w, GLfl
 }
 
 
-
 void Body::solarPanel(GLfloat x, GLfloat y, GLfloat z, GLfloat l, GLfloat w, GLfloat h)
 {
 	GLfloat halfL = l / GLfloat(2.0f);
@@ -105,13 +105,13 @@ void Body::solarPanel(GLfloat x, GLfloat y, GLfloat z, GLfloat l, GLfloat w, GLf
 	GLfloat halfH = h / GLfloat(2.0f);
 
 	solarPanelTop(x - halfL, y - halfW, z + halfH);
-		
-	////podstawa góra
+
+	//podstawa góra
 	glBegin(GL_TRIANGLE_STRIP);
 	glColor3f(0.40, 0.40, 0.40);
 	glVertex3f(x - halfL, y - halfW, z + halfH);
 	glVertex3f(x - halfL, y + halfW, z + halfH);
-	//glColor3d(0.0, 1.0, 0.0);	//kolor konczacy gradient
+
 	glVertex3f(x + halfL, y - halfW, z + halfH);
 	glVertex3f(x + halfL, y + halfW, z + halfH);
 	glEnd();
@@ -121,7 +121,7 @@ void Body::solarPanel(GLfloat x, GLfloat y, GLfloat z, GLfloat l, GLfloat w, GLf
 	glColor3f(0.30, 0.30, 0.30);
 	glVertex3f(x - halfL, y - halfW, z - halfH);
 	glVertex3f(x - halfL, y + halfW, z - halfH);
-	//glColor3d(0.0, 1.0, 0.0);	//kolor konczacy gradient
+
 	glVertex3f(x + halfL, y - halfW, z - halfH);
 	glVertex3f(x + halfL, y + halfW, z - halfH);
 	glEnd();
@@ -132,7 +132,7 @@ void Body::solarPanel(GLfloat x, GLfloat y, GLfloat z, GLfloat l, GLfloat w, GLf
 	glColor3f(0.46, .46, 0.46);
 	glVertex3f(x - halfL, y - halfW, z - halfH);
 	glVertex3f(x - halfL, y - halfW, z + halfH);
-	//glColor3d(0.0, 1.0, 0.0);	//kolor konczacy gradient
+	
 	glVertex3f(x - halfL, y + halfW, z - halfH);
 	glVertex3f(x - halfL, y + halfW, z + halfH);
 	glEnd();
@@ -142,7 +142,7 @@ void Body::solarPanel(GLfloat x, GLfloat y, GLfloat z, GLfloat l, GLfloat w, GLf
 	glColor3f(0.46, .46, 0.46);
 	glVertex3f(x + halfL, y - halfW, z - halfH);
 	glVertex3f(x + halfL, y - halfW, z + halfH);
-	//glColor3d(0.0, 1.0, 0.0);	//kolor konczacy gradient
+	
 	glVertex3f(x + halfL, y + halfW, z - halfH);
 	glVertex3f(x + halfL, y + halfW, z + halfH);
 	glEnd();
@@ -153,7 +153,7 @@ void Body::solarPanel(GLfloat x, GLfloat y, GLfloat z, GLfloat l, GLfloat w, GLf
 	glColor3f(0.46, .46, 0.46);
 	glVertex3f(x - halfL, y - halfW, z - halfH);
 	glVertex3f(x - halfL, y - halfW, z + halfH);
-	//glColor3d(0.0, 1.0, 0.0);	//kolor konczacy gradient
+	
 	glVertex3f(x + halfL, y - halfW, z - halfH);
 	glVertex3f(x + halfL, y - halfW, z + halfH);
 	glEnd();
@@ -164,7 +164,7 @@ void Body::solarPanel(GLfloat x, GLfloat y, GLfloat z, GLfloat l, GLfloat w, GLf
 	glColor3f(0.46, .46, 0.46);
 	glVertex3f(x - halfL, y + halfW, z - halfH);
 	glVertex3f(x - halfL, y + halfW, z + halfH);
-	//glColor3d(0.0, 1.0, 0.0);	//kolor konczacy gradient
+	
 	glVertex3f(x + halfL, y + halfW, z - halfH);
 	glVertex3f(x + halfL, y + halfW, z + halfH);
 	glEnd();
@@ -173,10 +173,9 @@ void Body::solarPanel(GLfloat x, GLfloat y, GLfloat z, GLfloat l, GLfloat w, GLf
 
 void Body::solarPanelTop(GLfloat x, GLfloat y, GLfloat z)
 {
-		
-	GLfloat nextElem_X = x;
-	GLfloat nextElem_Y = y;
-	z += 0.01;	//po to zeby tekstury sie nie gryzly
+	GLfloat nextElem_X = x;	//wspolrzedna X aktualnego elementu
+	GLfloat nextElem_Y = y;	//wspolrzedna Y aktualnego elementu
+	z += 0.01;				//tekstura musi byc nad gorna podstawa panelu
 
 	for (int w = 1; w <= solarElemQuantity_W; w++) {
 
@@ -194,22 +193,23 @@ void Body::solarPanelTop(GLfloat x, GLfloat y, GLfloat z)
 			glEnd();
 
 			nextElem_X += size*(solarElemSpace + solarElem_L);
-
 		}
 
 		nextElem_X = x;
 		nextElem_Y += size*(solarElemSpace + solarElem_W);
-
-	}
-		
+	}		
 }
 
 void Body::solarPanelArm(GLfloat L, GLfloat H, GLint side, GLint order)
 {
-	//side = 1 - leftSide
-	//side = -1 - rightSide
-	//order = 1 - first arm near the topEdge of deck
-	//order = 2 - second arm near the backEdge of deck
+	//okreœlenie oznaczenia poszczególnych wartoœci argumentów
+	//L - d³ugoœæ ramienia poziomego (obecnie nieuzywane, zdefiniowane w funkcji)
+	//H - wysokoœæ ramienia pionowego (obecnie nieuzywane, zdefiniowane w funkcji)
+	//side = 1 - lewa strona pok³adu (leftSide)
+	//side = -1 - prawa strona pok³adu (rightSide)
+	//order = 1 - ramie nr1, bli¿ej przedniej krawêdzi pok³adu
+	//order = 2 - ramie nr2, bli¿ej tylnej krawêdzi pok³adu
+
 
 	GLfloat frontOrBackEdge;
 	GLfloat spaceFromEdges = 10.0f * size;		//space from top and back edge
@@ -223,8 +223,8 @@ void Body::solarPanelArm(GLfloat L, GLfloat H, GLint side, GLint order)
 		leftOrRightEdge = rightEdge;
 	}
 
-	GLfloat h = 4.0f * size;
-	GLfloat w = 7.0f * size;
+	GLfloat h = 4.0f * size;	//wysokoœæ ramienia
+	GLfloat w = 7.0f * size;	//szerokoœæ ramienia
 
 	GLfloat hArmL = 30.0f * size;	//horizontal arm length
 	GLfloat vArmH = 20.0f * size;	//vertical arm height
@@ -257,7 +257,7 @@ void Body::solarPanelArm(GLfloat L, GLfloat H, GLint side, GLint order)
 
 
 	// ---- ARM BASE ---- /
-	//zaczyna sie od srodka krawedzi na pokladzie
+	//zaczyna sie od srodka krawedzi ramienia na pokladzie
 	//dolna œciana
 	GLfloat armBaseTopColor = 0.05;
 	GLfloat armBaseOuterColor = 0.0;
@@ -547,7 +547,7 @@ void Body::solarPanelArm(GLfloat L, GLfloat H, GLint side, GLint order)
 
 		//SOLAR PANEL
 		if (order == 1)
-			solarPanel(x - armHandleX, 0.0f, armHandleCuboidPartEnd + (solarH / 2.0f), solarL * size, solarW * size, solarH * size);
+			solarPanel(x - armHandleX, 0.0f, armHandleCuboidPartEnd + (solarPanel_H / 2.0f), solarPanel_L * size, solarPanel_W * size, solarPanel_H * size);
 	
 	glPopMatrix();
 	
@@ -558,25 +558,23 @@ void Body::solarPanelArm(GLfloat L, GLfloat H, GLint side, GLint order)
 
 void Body::cameraNeck(GLfloat xOffset, GLfloat yOffset, GLfloat r, GLfloat h)
 {
-	//cameraNeck location is determined from the top left corner of rover's body
 	/*
 	---------
 	|		|
-	|		|
-	|		|
+	|		|	pozycja szyi jest defniowanaj z lewgo przedniego rogu
+	|		|	pok³adu ³azika, patrzac na niego z góy
 	|*		|
 	---------
 	*/
 
-	GLfloat alpha;
-	GLfloat PI = 3.14; //159265359	
+	GLfloat alpha, PI = 3.14;	
 	GLfloat x,y,z = deckH;
 	GLfloat totalOffsetX = frontEdge + size*xOffset;	//cameraNeck possition
-	GLfloat totalOffsetY = leftEdge + size*yOffset;	//cameraNeck possition
+	GLfloat totalOffsetY = leftEdge + size*yOffset;		//cameraNeck possition
 	GLfloat cameraNeckEnd = deckH + size*h;
 
 	glBegin(GL_TRIANGLE_STRIP);
-	glColor3f(0.35, 0.35, 0.35);
+	glColor3f(0.45, 0.45, 0.45);
 	for (alpha = 0; alpha <= 2 * PI; alpha += PI / 50.0) {
 
 		x = r * sin(alpha) * size;
@@ -589,8 +587,6 @@ void Body::cameraNeck(GLfloat xOffset, GLfloat yOffset, GLfloat r, GLfloat h)
 	glEnd();
 
 	cameraHead(totalOffsetX, totalOffsetY, cameraNeckEnd, 9, 14, 10);
-
-
 }
 
 void Body::cameraHead(GLfloat x, GLfloat y, GLfloat z, GLfloat l, GLfloat w, GLfloat h)
@@ -603,12 +599,10 @@ void Body::cameraHead(GLfloat x, GLfloat y, GLfloat z, GLfloat l, GLfloat w, GLf
 	w = size * w;	//y
 	h = size * h;	//z
 
-
-
 	// ---- HEAD ---- //
 	//podstawa dolna
 	glBegin(GL_TRIANGLE_STRIP);
-	glColor3f(0.0, 0.50, 0.50);	//kolor rozpoczynajacy gradient
+	glColor3f(0.0, 0.50, 0.50);
 	glVertex3f(x - l, y - w, z);
 	glVertex3f(x - l, y + w, z);
 
@@ -618,7 +612,7 @@ void Body::cameraHead(GLfloat x, GLfloat y, GLfloat z, GLfloat l, GLfloat w, GLf
 
 	//podstawa górna
 	glBegin(GL_TRIANGLE_STRIP);
-	glColor3f(0.0, 0.50, 0.50);	//kolor rozpoczynajacy gradient
+	glColor3f(0.0, 0.50, 0.50);
 	glVertex3f(x - l, y - w, z + h);
 	glVertex3f(x - l, y + w, z + h);
 	glVertex3f(x + l, y - w, z + h);
@@ -627,7 +621,7 @@ void Body::cameraHead(GLfloat x, GLfloat y, GLfloat z, GLfloat l, GLfloat w, GLf
 
 	//œciana boczna przednia
 	glBegin(GL_TRIANGLE_STRIP);
-	glColor3f(0.0, 0.40, 0.40);	//kolor rozpoczynajacy gradient
+	glColor3f(0.0, 0.40, 0.40);
 	glVertex3f(x - l, y - w, z);
 	glVertex3f(x - l, y - w, z + h);
 
@@ -637,7 +631,7 @@ void Body::cameraHead(GLfloat x, GLfloat y, GLfloat z, GLfloat l, GLfloat w, GLf
 
 	////œciana boczna tylna
 	glBegin(GL_TRIANGLE_STRIP);
-	glColor3f(0.0, 0.40, 0.40);	//kolor rozpoczynajacy gradient
+	glColor3f(0.0, 0.40, 0.40);
 	glVertex3f(x + l, y - w, z);
 	glVertex3f(x + l, y - w, z + h);
 	glVertex3f(x + l, y + w, z);
@@ -646,7 +640,7 @@ void Body::cameraHead(GLfloat x, GLfloat y, GLfloat z, GLfloat l, GLfloat w, GLf
 
 	//œciana boczna lewa
 	glBegin(GL_TRIANGLE_STRIP);
-	glColor3f(0.0, 0.40, 0.40);	//kolor rozpoczynajacy gradient
+	glColor3f(0.0, 0.40, 0.40);
 	glVertex3f(x - l, y + w, z);
 	glVertex3f(x - l, y + w, z + h);
 	glVertex3f(x + l, y + w, z);
@@ -655,7 +649,7 @@ void Body::cameraHead(GLfloat x, GLfloat y, GLfloat z, GLfloat l, GLfloat w, GLf
 
 	//œciana boczna prawa
 	glBegin(GL_TRIANGLE_STRIP);
-	glColor3f(0.0, 0.40, 0.40);	//kolor rozpoczynajacy gradient
+	glColor3f(0.0, 0.40, 0.40);
 	glVertex3f(x - l, y - w, z);
 	glVertex3f(x - l, y - w, z + h);
 	glVertex3f(x + l, y - w, z);
@@ -663,9 +657,9 @@ void Body::cameraHead(GLfloat x, GLfloat y, GLfloat z, GLfloat l, GLfloat w, GLf
 	glEnd();
 
 
-	GLfloat neckOffset_X = x - l;		//first center towards neck(x), then center towards top left corner of head(-l), then set right possition on head(array[x])
-	GLfloat neckOffset_Y = y + w;		//first center towards neck(y), then center towards top left corner of head(+w), then set right possition on head(array[y])
-	GLfloat neckOffset_Z = z + h;		//first center towards neck(z), then center towards top left corner of head(+h), then set right possition on head(array[z])
+	GLfloat neckOffset_X = x - l;			//first center towards neck(x), then center towards top left corner of head(-l), then set right possition on head(array[x])
+	GLfloat neckOffset_Y = y + w;			//first center towards neck(y), then center towards top left corner of head(+w), then set right possition on head(array[y])
+	GLfloat neckOffset_Z = z + h;			//first center towards neck(z), then center towards top left corner of head(+h), then set right possition on head(array[z])
 	GLfloat neckOffsets[3] = { neckOffset_X, neckOffset_Y, neckOffset_Z };
 
 	GLfloat bigEye[3] = { 0.0, 6.0, 5.0 };
@@ -682,10 +676,10 @@ void Body::cameraHead(GLfloat x, GLfloat y, GLfloat z, GLfloat l, GLfloat w, GLf
 void Body::cameraEye(GLfloat eyeR, GLfloat eyeH, GLfloat neckOffsets[3], GLfloat headOffstets[3])
 {
 
-	// ---- CAMERA EYE ---- //
-
-	//plane determine by X and Z axis
-	//Y axis determine eye's height
+	//p³aszczyzna okreœlona jest przez oœ X i Z
+	//wysokosc obiektywu okreslona jest przez os Y
+	//neckOffsets[3] ustawia pozycje obiektywu na lewy gorny rog przedniej sciany kamery
+	//headOffstets[3] ustawia pozycje obiektywu na przedniej sicanie kamery
 
 	/*
 	-------------
@@ -694,20 +688,12 @@ void Body::cameraEye(GLfloat eyeR, GLfloat eyeH, GLfloat neckOffsets[3], GLfloat
 	-------------
 	*/
 
-	//GLfloat bigEye_R = 3.5f * size;
-	//GLfloat bigEye_H = 1.5f * size;
-
 	eyeR = size * eyeR;
 	eyeH = size * eyeH;
 
 	GLfloat eyeStartX = 0;		//initial eye X possition
 	GLfloat eyeStartY = 0;		//initial eye Y possition
 	GLfloat	eyeStartZ = 0;		//initial eye Z possition
-
-	//GLfloat eyeOffsetX = x - l;				//first center towards neck(x), then center towards top left corner of head(-l), then set right possition()
-	//GLfloat eyeOffsetY = y + w - (6 * size);	//first center towards neck(y), then center towards top left corner of head(+w), then set right possition(-6)
-	//GLfloat eyeOffsetZ = z + h - (5 * size);	//first center towards neck(z), then center towards top left corner of head(+h), then set right possition(-5)
-
 
 	GLfloat eyeOffsetX = neckOffsets[0];
 	GLfloat eyeOffsetY = neckOffsets[1] - (headOffstets[1] * size);
@@ -762,23 +748,17 @@ void Body::cameraEye(GLfloat eyeR, GLfloat eyeH, GLfloat neckOffsets[3], GLfloat
 
 void Body::Draw() {
 
-	
 	glPushMatrix();
-	//roverBody.Draw();	//roverBody is centered by point [0,0,0]
-	roverBody(x, y, z, 85.0f * size, 65.0f * size, 30.0f * size);
 	
-	
-	solarPanelArm(44 * size, 44 * size, -1, 1);	//right top
-	solarPanelArm(44 * size, 44 * size, -1, 2);	//right back
-	solarPanelArm(44 * size, 44 * size, 1, 1);	//left top	
-	solarPanelArm(44 * size, 44 * size, 1, 2);	//left back
+	roverDeck(x, y, z, l, w, h); //[x,y,z] = offset to point [0,0,0]
+		
+	solarPanelArm(0 * size, 0 * size, -1, 1);	//right top
+	solarPanelArm(0 * size, 0 * size, -1, 2);	//right back
+	solarPanelArm(0 * size, 0 * size, 1, 1);	//left top	
+	solarPanelArm(0 * size, 0 * size, 1, 2);	//left back
 
 	cameraNeck(15.0, -22.0, 2.75, 50.0);
-	//cameraNeck(0.0, 0.0, 2.5, 40.0);
-
-
-
+	
 	glPopMatrix();
-
 }
 
