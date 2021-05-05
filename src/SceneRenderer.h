@@ -1,6 +1,7 @@
 #pragma once
 #include <GLFW/glfw3.h>
 #include "Rover.h"
+#include "Object.h"
 
 class SceneRenderer
 {
@@ -10,6 +11,10 @@ public:
 
 private:
 	Rover rover;
+	Object rock1;
+	Object rock2;
+	Object rock3;
+	Object rock4;
 
 public:
 	SceneRenderer();

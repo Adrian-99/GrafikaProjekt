@@ -2,12 +2,17 @@
 
 
 SceneRenderer::SceneRenderer() :
-    rover(0.0f, 0.0f, 0.0f, 1.0f)
+    rover(100.0f, 0.0f, 0.0f, 1.0f),
+    rock1("./obj/rock.obj", -100.0f, -150.0f, 0.0f, 70.0f),
+    rock2("./obj/rock2.obj", -100.0f, -50.0f, 0.0f, 5.0f),
+    rock3("./obj/rock3.obj", -100.0f, 50.0f, 0.0f, 10.0f),
+    rock4("./obj/rock4.obj", -100.0f, 150.0f, 0.0f, 10.0f)
 {
     xRot = 0.0f;
     zRot = 0.0f;
 
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    //glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     glPolygonMode(GL_FRONT, GL_FILL);
     glPolygonMode(GL_BACK, GL_NONE);
 }
@@ -35,6 +40,10 @@ void SceneRenderer::ProcessInput(GLFWwindow* window)
 void SceneRenderer::RenderScene(GLFWwindow* window)
 {
     rover.Draw();
+    rock1.Draw();
+    rock2.Draw();
+    rock3.Draw();
+    rock4.Draw();
 }
 
 void SceneRenderer::RotateCamera(GLfloat xRotation, GLfloat zRotation)
