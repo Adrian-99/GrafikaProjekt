@@ -20,6 +20,11 @@ Object::Object(const char* filePath, GLfloat x, GLfloat y, GLfloat z, GLfloat si
                         vertices.push_back(Vertex(x + stof(lineWords.at(1)) * size, y + stof(lineWords.at(2)) * size, z + stof(lineWords.at(3)) * size));
                     }
                 }
+                else if (lineWords.at(0) == "vn") {
+                    if (lineWords.size() >= 4) {
+                        normals.push_back(Vertex(stof(lineWords.at(1)), stof(lineWords.at(2)), stof(lineWords.at(3))));
+                    }
+                }
                 else if (lineWords.at(0) == "f") {
                     allWordsParts.clear();
                     for (GLint i = 1; i < lineWords.size(); i++) {
@@ -29,6 +34,10 @@ Object::Object(const char* filePath, GLfloat x, GLfloat y, GLfloat z, GLfloat si
                         vertexIndices.push_back(stoi(allWordsParts.at(0).at(0)) - 1);
                         vertexIndices.push_back(stoi(allWordsParts.at(i - 1).at(0)) - 1);
                         vertexIndices.push_back(stoi(allWordsParts.at(i).at(0)) - 1);
+
+                        normalIndices.push_back(stoi(allWordsParts.at(0).at(2)) - 1);
+                        normalIndices.push_back(stoi(allWordsParts.at(i - 1).at(2)) - 1);
+                        normalIndices.push_back(stoi(allWordsParts.at(i).at(2)) - 1);
                     }
                 }
             }
@@ -43,22 +52,24 @@ Object::Object(const char* filePath, GLfloat x, GLfloat y, GLfloat z, GLfloat si
 
 void Object::Draw()
 {
-    for (GLint i = 0; i < vertexIndices.size() / 3; i++) {
+    for (GLint i = 0; i < vertexIndices.size(); i += 3) {
         glBegin(GL_TRIANGLES);
-        glVertex3fv(vertices.at(vertexIndices.at(i * 3)).ToArray());
-        glVertex3fv(vertices.at(vertexIndices.at(i * 3 + 1)).ToArray());
-        glVertex3fv(vertices.at(vertexIndices.at(i * 3 + 2)).ToArray());
+        for (GLint j = 0; j < 3; j++) {
+            glNormal3fv(normals.at(normalIndices.at(i + j)).ToArray());
+            glVertex3fv(vertices.at(vertexIndices.at(i + j)).ToArray());
+        }
         glEnd();
     }
 }
 
 void Object::DrawDuplicate(Vertex offset)
 {
-    for (GLint i = 0; i < vertexIndices.size() / 3; i++) {
+    for (GLint i = 0; i < vertexIndices.size(); i += 3) {
         glBegin(GL_TRIANGLES);
-        glVertex3fv((vertices.at(vertexIndices.at(i * 3)) + offset).ToArray());
-        glVertex3fv((vertices.at(vertexIndices.at(i * 3 + 1)) + offset).ToArray());
-        glVertex3fv((vertices.at(vertexIndices.at(i * 3 + 2)) + offset).ToArray());
+        for (GLint j = 0; j < 3; j++) {
+            glNormal3fv(normals.at(normalIndices.at(i + j)).ToArray());
+            glVertex3fv((vertices.at(vertexIndices.at(i + j)) + offset).ToArray());
+        }
         glEnd();
     }
 }

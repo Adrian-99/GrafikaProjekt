@@ -21,25 +21,25 @@
     <ClCompile Include="src\SceneRenderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Cuboid.cpp">
+    <ClCompile Include="src\Drawable\Body.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Wheel.cpp">
+    <ClCompile Include="src\Drawable\Cuboid.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\WheelLinks.cpp">
+    <ClCompile Include="src\Drawable\Object.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Body.cpp">
+    <ClCompile Include="src\Drawable\Rover.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Rover.cpp">
+    <ClCompile Include="src\Drawable\Wheel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Object.cpp">
+    <ClCompile Include="src\Drawable\WheelLinks.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Vertex.cpp">
+    <ClCompile Include="src\Object\Vertex.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -47,25 +47,25 @@
     <ClInclude Include="src\SceneRenderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Cuboid.h">
+    <ClInclude Include="src\Drawable\Body.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Wheel.h">
+    <ClInclude Include="src\Drawable\Cuboid.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\WheelLinks.h">
+    <ClInclude Include="src\Drawable\Object.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Body.h">
+    <ClInclude Include="src\Drawable\Rover.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Rover.h">
+    <ClInclude Include="src\Drawable\Wheel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Object.h">
+    <ClInclude Include="src\Drawable\WheelLinks.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Vertex.h">
+    <ClInclude Include="src\Object\Vertex.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

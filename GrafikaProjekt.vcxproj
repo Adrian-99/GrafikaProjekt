@@ -19,25 +19,25 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Body.cpp" />
-    <ClCompile Include="src\Cuboid.cpp" />
+    <ClCompile Include="src\Drawable\Body.cpp" />
+    <ClCompile Include="src\Drawable\Cuboid.cpp" />
     <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\Object.cpp" />
-    <ClCompile Include="src\Rover.cpp" />
+    <ClCompile Include="src\Drawable\Object.cpp" />
+    <ClCompile Include="src\Drawable\Rover.cpp" />
     <ClCompile Include="src\SceneRenderer.cpp" />
-    <ClCompile Include="src\Vertex.cpp" />
-    <ClCompile Include="src\Wheel.cpp" />
-    <ClCompile Include="src\WheelLinks.cpp" />
+    <ClCompile Include="src\Object\Vertex.cpp" />
+    <ClCompile Include="src\Drawable\Wheel.cpp" />
+    <ClCompile Include="src\Drawable\WheelLinks.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Body.h" />
-    <ClInclude Include="src\Cuboid.h" />
-    <ClInclude Include="src\Object.h" />
-    <ClInclude Include="src\Rover.h" />
+    <ClInclude Include="src\Drawable\Body.h" />
+    <ClInclude Include="src\Drawable\Cuboid.h" />
+    <ClInclude Include="src\Drawable\Object.h" />
+    <ClInclude Include="src\Drawable\Rover.h" />
     <ClInclude Include="src\SceneRenderer.h" />
-    <ClInclude Include="src\Vertex.h" />
-    <ClInclude Include="src\Wheel.h" />
-    <ClInclude Include="src\WheelLinks.h" />
+    <ClInclude Include="src\Object\Vertex.h" />
+    <ClInclude Include="src\Drawable\Wheel.h" />
+    <ClInclude Include="src\Drawable\WheelLinks.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

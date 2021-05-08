@@ -5,14 +5,15 @@
 #include <vector>
 #include <fstream>
 #include <GLFW/glfw3.h>
-#include "Vertex.h"
+#include "../Object/Vertex.h"
 
 class Object
 {
 private:
-	const char* filePath;
 	std::vector<Vertex> vertices;
+	std::vector<Vertex> normals;
 	std::vector<int> vertexIndices;
+	std::vector<int> normalIndices;
 
 public:
 	Object(const char* filePath, GLfloat x, GLfloat y, GLfloat z, GLfloat size = 1.0f);

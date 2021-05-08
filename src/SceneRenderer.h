@@ -1,7 +1,7 @@
 #pragma once
 #include <GLFW/glfw3.h>
-#include "Rover.h"
-#include "Object.h"
+#include "Drawable/Rover.h"
+#include "Drawable/Object.h"
 
 class SceneRenderer
 {
