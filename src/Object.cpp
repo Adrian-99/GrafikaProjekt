@@ -6,7 +6,7 @@ Object::Object(const char* filePath, GLfloat x, GLfloat y, GLfloat z, GLfloat si
 
     string line;
     vector<string> lineWords;
-    vector<string> wordParts;
+    vector<vector<string>> allWordsParts;
     ifstream file(filePath);
 
     if (file) {
@@ -21,10 +21,14 @@ Object::Object(const char* filePath, GLfloat x, GLfloat y, GLfloat z, GLfloat si
                     }
                 }
                 else if (lineWords.at(0) == "f") {
-                    faces.push_back(ObjectFace(lineWords.size() - 1));
+                    allWordsParts.clear();
                     for (GLint i = 1; i < lineWords.size(); i++) {
-                        wordParts = SplitString(lineWords.at(i), '/', false);
-                        faces.back().SetIndex(i - 1, stoi(wordParts.at(0)) - 1);
+                        allWordsParts.push_back(SplitString(lineWords.at(i), '/', false));
+                    }
+                    for (GLint i = 2; i < allWordsParts.size(); i++) {
+                        vertexIndices.push_back(stoi(allWordsParts.at(0).at(0)) - 1);
+                        vertexIndices.push_back(stoi(allWordsParts.at(i - 1).at(0)) - 1);
+                        vertexIndices.push_back(stoi(allWordsParts.at(i).at(0)) - 1);
                     }
                 }
             }
@@ -39,15 +43,11 @@ Object::Object(const char* filePath, GLfloat x, GLfloat y, GLfloat z, GLfloat si
 
 void Object::Draw()
 {
-    GLenum drawingMode;
-
-    for (GLint i = 0; i < faces.size(); i++) {
-        if (faces.at(i).GetVerticesCount() == 4) drawingMode = GL_QUADS;
-        else drawingMode = GL_TRIANGLE_STRIP;
-        glBegin(drawingMode);
-        for (GLint j = 0; j < faces.at(i).GetVerticesCount(); j++) {
-            glVertex3fv(vertices.at(faces.at(i).GetVertexIndex(j)).ToArray());
-        }
+    for (GLint i = 0; i < vertexIndices.size() / 3; i++) {
+        glBegin(GL_TRIANGLES);
+        glVertex3fv(vertices.at(vertexIndices.at(i * 3)).ToArray());
+        glVertex3fv(vertices.at(vertexIndices.at(i * 3 + 1)).ToArray());
+        glVertex3fv(vertices.at(vertexIndices.at(i * 3 + 2)).ToArray());
         glEnd();
     }
 }

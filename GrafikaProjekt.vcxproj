@@ -23,7 +23,6 @@
     <ClCompile Include="src\Cuboid.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Object.cpp" />
-    <ClCompile Include="src\ObjectFace.cpp" />
     <ClCompile Include="src\Rover.cpp" />
     <ClCompile Include="src\SceneRenderer.cpp" />
     <ClCompile Include="src\Vertex.cpp" />
@@ -34,7 +33,6 @@
     <ClInclude Include="src\Body.h" />
     <ClInclude Include="src\Cuboid.h" />
     <ClInclude Include="src\Object.h" />
-    <ClInclude Include="src\ObjectFace.h" />
     <ClInclude Include="src\Rover.h" />
     <ClInclude Include="src\SceneRenderer.h" />
     <ClInclude Include="src\Vertex.h" />
