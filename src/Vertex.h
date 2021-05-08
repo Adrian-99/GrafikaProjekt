@@ -12,5 +12,7 @@ public:
 	GLfloat Y();
 	GLfloat Z();
 	GLfloat* ToArray();
+	Vertex operator+(Vertex v);
+	Vertex operator-(Vertex v);
 };
 

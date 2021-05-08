@@ -40,10 +40,13 @@ void SceneRenderer::ProcessInput(GLFWwindow* window)
 void SceneRenderer::RenderScene(GLFWwindow* window)
 {
     rover.Draw();
-    rock1.Draw();
-    rock2.Draw();
+    //rock1.Draw();
+    //rock2.Draw();
     rock3.Draw();
-    rock4.Draw();
+    rock3.DrawDuplicate(Vertex(-30.0f, 0.0f, 0.0f));
+    rock3.DrawDuplicate(Vertex(0.0f, 30.0f, 0.0f));
+    rock3.DrawDuplicate(Vertex(0.0f, 0.0f, 30.0f));
+    //rock4.Draw();
 }
 
 void SceneRenderer::RotateCamera(GLfloat xRotation, GLfloat zRotation)

@@ -52,6 +52,17 @@ void Object::Draw()
     }
 }
 
+void Object::DrawDuplicate(Vertex offset)
+{
+    for (GLint i = 0; i < vertexIndices.size() / 3; i++) {
+        glBegin(GL_TRIANGLES);
+        glVertex3fv((vertices.at(vertexIndices.at(i * 3)) + offset).ToArray());
+        glVertex3fv((vertices.at(vertexIndices.at(i * 3 + 1)) + offset).ToArray());
+        glVertex3fv((vertices.at(vertexIndices.at(i * 3 + 2)) + offset).ToArray());
+        glEnd();
+    }
+}
+
 std::vector<std::string> Object::SplitString(std::string text, char delim, bool ignoreEmpty)
 {
     using namespace std;

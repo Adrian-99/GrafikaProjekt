@@ -26,3 +26,13 @@ GLfloat* Vertex::ToArray()
 {
 	return position;
 }
+
+Vertex Vertex::operator+(Vertex v)
+{
+	return Vertex(this->position[0] + v.position[0], this->position[1] + v.position[1], this->position[2] + v.position[2]);
+}
+
+Vertex Vertex::operator-(Vertex v)
+{
+	return Vertex(this->position[0] - v.position[0], this->position[1] - v.position[1], this->position[2] - v.position[2]);
+}
