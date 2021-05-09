@@ -21,12 +21,17 @@ Object::Object(std::string name, GLfloat x, GLfloat y, GLfloat z, GLfloat size)
                 if (lineWords.at(0)[0] == '#') continue;
                 if (lineWords.at(0) == "v") {
                     if (lineWords.size() >= 4) {
-                        vertices.push_back(Vertex(x + stof(lineWords.at(1)) * size, y + stof(lineWords.at(2)) * size, z + stof(lineWords.at(3)) * size));
+                        vertices.push_back(Vector3(x + stof(lineWords.at(1)) * size, y + stof(lineWords.at(3)) * size, z + stof(lineWords.at(2)) * size));
+                    }
+                }
+                else if (lineWords.at(0) == "vt") {
+                    if (lineWords.size() >= 3) {
+                        textureCoords.push_back(Vector2(stof(lineWords.at(1)), stof(lineWords.at(2))));
                     }
                 }
                 else if (lineWords.at(0) == "vn") {
                     if (lineWords.size() >= 4) {
-                        normals.push_back(Vertex(stof(lineWords.at(1)), stof(lineWords.at(2)), stof(lineWords.at(3))));
+                        normals.push_back(Vector3(stof(lineWords.at(1)), stof(lineWords.at(3)), stof(lineWords.at(2))));
                     }
                 }
                 else if (lineWords.at(0) == "f") {
@@ -39,6 +44,10 @@ Object::Object(std::string name, GLfloat x, GLfloat y, GLfloat z, GLfloat size)
                         vertexIndices.push_back(stoi(allWordsParts.at(i - 1).at(0)) - 1);
                         vertexIndices.push_back(stoi(allWordsParts.at(i).at(0)) - 1);
 
+                        textureCoordsIndices.push_back(stoi(allWordsParts.at(0).at(1)) - 1);
+                        textureCoordsIndices.push_back(stoi(allWordsParts.at(i - 1).at(1)) - 1);
+                        textureCoordsIndices.push_back(stoi(allWordsParts.at(i).at(1)) - 1);
+
                         normalIndices.push_back(stoi(allWordsParts.at(0).at(2)) - 1);
                         normalIndices.push_back(stoi(allWordsParts.at(i - 1).at(2)) - 1);
                         normalIndices.push_back(stoi(allWordsParts.at(i).at(2)) - 1);
@@ -46,7 +55,7 @@ Object::Object(std::string name, GLfloat x, GLfloat y, GLfloat z, GLfloat size)
                 }
                 else if (lineWords.at(0) == "mtllib") {
                     if (lineWords.size() >= 2) {
-                        Material::Add(loadingPath + lineWords.at(1), name);
+                        Material::Add(loadingPath, lineWords.at(1), name);
                     }
                 }
                 else if (lineWords.at(0) == "usemtl") {
@@ -66,30 +75,18 @@ Object::Object(std::string name, GLfloat x, GLfloat y, GLfloat z, GLfloat size)
 
 void Object::Draw()
 {
-    for (GLint i = 0; i < vertexIndices.size(); i += 3) {
-        if (FindInVector(materialStartIndices, i) != -1) {
-            std::string tmp = materials.at(FindInVector(materialStartIndices, i));
-            Material::Find(tmp, name).Use();
-        }
-        glBegin(GL_TRIANGLES);
-        for (GLint j = 0; j < 3; j++) {
-            glNormal3fv(normals.at(normalIndices.at(i + j)).ToArray());
-            glVertex3fv(vertices.at(vertexIndices.at(i + j)).ToArray());
-        }
-        glEnd();
-    }
-    Material::StopUsing();
+    DrawDuplicate(Vector3());
 }
 
-void Object::DrawDuplicate(Vertex offset)
+void Object::DrawDuplicate(Vector3 offset)
 {
     for (GLint i = 0; i < vertexIndices.size(); i += 3) {
         if (FindInVector(materialStartIndices, i) != -1) {
-            std::string tmp = materials.at(FindInVector(materialStartIndices, i));
-            Material::Find(tmp, name).Use();
+            Material::Find(materials.at(FindInVector(materialStartIndices, i)), name).Use();
         }
         glBegin(GL_TRIANGLES);
         for (GLint j = 0; j < 3; j++) {
+            glTexCoord2fv(textureCoords.at(textureCoordsIndices.at(i + j)).ToArray());
             glNormal3fv(normals.at(normalIndices.at(i + j)).ToArray());
             glVertex3fv((vertices.at(vertexIndices.at(i + j)) + offset).ToArray());
         }

@@ -24,11 +24,11 @@
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Drawable\Object.cpp" />
     <ClCompile Include="src\Drawable\Rover.cpp" />
-    <ClCompile Include="src\Object\Color.cpp" />
     <ClCompile Include="src\Object\Material.cpp" />
     <ClCompile Include="src\Object\Helpers.cpp" />
+    <ClCompile Include="src\Object\Vector2.cpp" />
     <ClCompile Include="src\SceneRenderer.cpp" />
-    <ClCompile Include="src\Object\Vertex.cpp" />
+    <ClCompile Include="src\Object\Vector3.cpp" />
     <ClCompile Include="src\Drawable\Wheel.cpp" />
     <ClCompile Include="src\Drawable\WheelLinks.cpp" />
   </ItemGroup>
@@ -37,11 +37,11 @@
     <ClInclude Include="src\Drawable\Cuboid.h" />
     <ClInclude Include="src\Drawable\Object.h" />
     <ClInclude Include="src\Drawable\Rover.h" />
-    <ClInclude Include="src\Object\Color.h" />
     <ClInclude Include="src\Object\Material.h" />
     <ClInclude Include="src\Object\Helpers.h" />
+    <ClInclude Include="src\Object\Vector2.h" />
     <ClInclude Include="src\SceneRenderer.h" />
-    <ClInclude Include="src\Object\Vertex.h" />
+    <ClInclude Include="src\Object\Vector3.h" />
     <ClInclude Include="src\Drawable\Wheel.h" />
     <ClInclude Include="src\Drawable\WheelLinks.h" />
   </ItemGroup>

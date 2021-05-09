@@ -1,3 +1,5 @@
+#pragma once
+#define STB_IMAGE_IMPLEMENTATION
 #include <iostream>
 #include <GLFW/glfw3.h>
 #include <GL/glut.h>

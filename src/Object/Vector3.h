@@ -1,18 +1,18 @@
 #pragma once
 #include <GLFW/glfw3.h>
 
-class Vertex
+class Vector3
 {
 private:
 	GLfloat position[3];
 
 public:
-	Vertex(GLfloat x, GLfloat y, GLfloat z);
+	Vector3(GLfloat x = 0.0f, GLfloat y = 0.0f, GLfloat z = 0.0f);
 	GLfloat X();
 	GLfloat Y();
 	GLfloat Z();
 	GLfloat* ToArray();
-	Vertex operator+(Vertex v);
-	Vertex operator-(Vertex v);
+	Vector3 operator+(Vector3 v);
+	Vector3 operator-(Vector3 v);
 };
 
