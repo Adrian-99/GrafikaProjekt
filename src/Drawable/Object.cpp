@@ -1,13 +1,17 @@
 #include "Object.h"
 
-Object::Object(const char* filePath, GLfloat x, GLfloat y, GLfloat z, GLfloat size)
+std::string Object::loadingPath = "./obj/";
+
+Object::Object(std::string name, GLfloat x, GLfloat y, GLfloat z, GLfloat size)
 {
     using namespace std;
+
+    this->name = name;
 
     string line;
     vector<string> lineWords;
     vector<vector<string>> allWordsParts;
-    ifstream file(filePath);
+    ifstream file(loadingPath + name + ".obj");
 
     if (file) {
         while (!file.eof()) {
@@ -40,19 +44,33 @@ Object::Object(const char* filePath, GLfloat x, GLfloat y, GLfloat z, GLfloat si
                         normalIndices.push_back(stoi(allWordsParts.at(i).at(2)) - 1);
                     }
                 }
+                else if (lineWords.at(0) == "mtllib") {
+                    if (lineWords.size() >= 2) {
+                        Material::Add(loadingPath + lineWords.at(1), name);
+                    }
+                }
+                else if (lineWords.at(0) == "usemtl") {
+                    if (lineWords.size() >= 2) {
+                        materials.push_back(lineWords.at(1));
+                        materialStartIndices.push_back(vertexIndices.size());
+                    }
+                }
             }
         }
+        file.close();
     }
     else {
-        cout << "Can't open file " << filePath << endl;
+        cout << "Can't open file " << loadingPath + name + ".obj" << endl;
     }
-
-    file.close();
 }
 
 void Object::Draw()
 {
     for (GLint i = 0; i < vertexIndices.size(); i += 3) {
+        if (FindInVector(materialStartIndices, i) != -1) {
+            std::string tmp = materials.at(FindInVector(materialStartIndices, i));
+            Material::Find(tmp, name).Use();
+        }
         glBegin(GL_TRIANGLES);
         for (GLint j = 0; j < 3; j++) {
             glNormal3fv(normals.at(normalIndices.at(i + j)).ToArray());
@@ -60,11 +78,16 @@ void Object::Draw()
         }
         glEnd();
     }
+    Material::StopUsing();
 }
 
 void Object::DrawDuplicate(Vertex offset)
 {
     for (GLint i = 0; i < vertexIndices.size(); i += 3) {
+        if (FindInVector(materialStartIndices, i) != -1) {
+            std::string tmp = materials.at(FindInVector(materialStartIndices, i));
+            Material::Find(tmp, name).Use();
+        }
         glBegin(GL_TRIANGLES);
         for (GLint j = 0; j < 3; j++) {
             glNormal3fv(normals.at(normalIndices.at(i + j)).ToArray());
@@ -72,29 +95,6 @@ void Object::DrawDuplicate(Vertex offset)
         }
         glEnd();
     }
+    Material::StopUsing();
 }
 
-std::vector<std::string> Object::SplitString(std::string text, char delim, bool ignoreEmpty)
-{
-    using namespace std;
-
-    int lastDelim = 0;
-    int foundDelim;
-    vector<string> result;
-
-    while (1) {
-        foundDelim = text.find(delim, lastDelim);
-        if (foundDelim == string::npos) {
-            if (text.length() != lastDelim || !ignoreEmpty) {
-                result.push_back(text.substr(lastDelim, text.length() - lastDelim));
-            }
-            break;
-        }
-        if (foundDelim != lastDelim || !ignoreEmpty) {
-            result.push_back(text.substr(lastDelim, foundDelim - lastDelim));
-        }
-        lastDelim = foundDelim + 1;
-    }
-
-    return result;
-}

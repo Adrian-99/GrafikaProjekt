@@ -3,10 +3,10 @@
 
 SceneRenderer::SceneRenderer() :
     rover(100.0f, 0.0f, 0.0f, 1.0f),
-    rock1("./obj/rock.obj", -100.0f, -150.0f, 0.0f, 70.0f),
-    rock2("./obj/rock2.obj", -100.0f, -50.0f, 0.0f, 5.0f),
-    rock3("./obj/rock3.obj", -100.0f, 50.0f, 0.0f, 10.0f),
-    rock4("./obj/rock4.obj", -100.0f, 150.0f, 0.0f, 10.0f)
+    rock1("rock", -100.0f, -150.0f, 0.0f, 70.0f),
+    rock2("rock2", -100.0f, -50.0f, 0.0f, 5.0f),
+    rock3("rock3", -100.0f, 50.0f, 0.0f, 10.0f),
+    rock4("rock4", -100.0f, 150.0f, 0.0f, 10.0f)
 {
     xRot = 0.0f;
     zRot = 0.0f;
