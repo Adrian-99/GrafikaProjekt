@@ -1,6 +1,8 @@
 #include "Material.h"
 
 std::vector<Material> Material::materials;
+std::vector<std::string> Material::textureNames;
+std::vector<GLuint> Material::textureIds;
 
 Material::Material(std::string materialName, std::string objectName)
 {
@@ -9,10 +11,16 @@ Material::Material(std::string materialName, std::string objectName)
 	shininess = 0.0f;
 }
 
-void Material::LoadTexture(std::string filePath)
+GLuint Material::LoadTexture(std::string filePath)
 {
+	for (GLint i = 0; i < textureNames.size(); i++) {
+		if (textureNames.at(i) == filePath) return textureIds.at(i);
+	}
+
 	GLint textureWidth, textureHeight, textureChannels;
+	GLuint textureId;
 	unsigned char* textureData = stbi_load(filePath.c_str(), &textureWidth, &textureHeight, &textureChannels, 0);
+
 	if (textureData) {
 		glGenTextures(1, &textureId);
 		glBindTexture(GL_TEXTURE_2D, textureId);
@@ -24,11 +32,16 @@ void Material::LoadTexture(std::string filePath)
 		//glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 		glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, textureWidth, textureHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, textureData);
+
+		textureNames.push_back(filePath);
+		textureIds.push_back(textureId);
 	}
 	else {
 		std::cout << "Can't load texture " << filePath << std::endl;
 	}
 	stbi_image_free(textureData);
+
+	return textureId;
 }
 
 void Material::Use()
@@ -107,7 +120,7 @@ void Material::Add(std::string loadingPath, std::string materialFileName, std::s
 					}
 					else if (lineWords.at(0) == "map_Kd") {
 						if (lineWords.size() >= 2) {
-							materials.back().LoadTexture(loadingPath + lineWords.at(1));
+						 	materials.back().textureId = LoadTexture(loadingPath + lineWords.at(1));
 						}
 					}
 				}

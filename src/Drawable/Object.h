@@ -3,7 +3,6 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include <algorithm>
 #include <fstream>
 #include <GLFW/glfw3.h>
 #include "../Object/Helpers.h"

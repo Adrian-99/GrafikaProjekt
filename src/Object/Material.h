@@ -12,6 +12,8 @@ class Material
 {
 private:
 	static std::vector<Material> materials;
+	static std::vector<std::string> textureNames;
+	static std::vector<GLuint> textureIds;
 
 	std::string materialName;
 	std::string objectName;
@@ -24,11 +26,11 @@ private:
 
 public:
 	Material(std::string materialName, std::string objectName);
-	void LoadTexture(std::string filePath);
 	void Use();
 	static void StopUsing();
 
 	static void Add(std::string loadingPath, std::string materialFileName, std::string objectName);
 	static Material Find(std::string materialName, std::string objectName);
+	static GLuint LoadTexture(std::string filePath);
 };
 
