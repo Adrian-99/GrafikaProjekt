@@ -6,7 +6,12 @@ SceneRenderer::SceneRenderer() :
     rock1("rock", -100.0f, -150.0f, 0.0f, 70.0f),
     rock2("rock2", -100.0f, -50.0f, 0.0f, 5.0f),
     rock3("rock3", -100.0f, 50.0f, 0.0f, 10.0f),
-    rock4("rock4", -100.0f, 150.0f, 0.0f, 10.0f)
+    rock4("rock4", -100.0f, 150.0f, 0.0f, 10.0f),
+
+    t_rock("t_rock", -100.0f, 50.0f, 0.0f, 1.0f),
+    t_rock4("t_rock4", 200.0f, 150.0f, 0.0f, 1.0f),
+
+    terrain("terrain", 0.0f, 0.0f, 0.0f, 1.0f)
 {
     xRot = 0.0f;
     zRot = 0.0f;
@@ -42,11 +47,16 @@ void SceneRenderer::RenderScene(GLFWwindow* window)
     rover.Draw();
     //rock1.Draw();
     rock2.Draw();
-    rock3.Draw();
+    //rock3.Draw();
     //rock3.DrawDuplicate(Vector3(-30.0f, 0.0f, 0.0f));
     //rock3.DrawDuplicate(Vector3(0.0f, 30.0f, 0.0f));
     //rock3.DrawDuplicate(Vector3(0.0f, 0.0f, 30.0f));
     rock4.Draw();
+
+    t_rock.Draw();
+    t_rock4.Draw();
+
+    terrain.Draw();
 }
 
 void SceneRenderer::RotateCamera(GLfloat xRotation, GLfloat zRotation)

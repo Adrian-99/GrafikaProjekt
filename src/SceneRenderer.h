@@ -15,6 +15,10 @@ private:
 	Object rock2;
 	Object rock3;
 	Object rock4;
+	Object t_rock;
+	Object t_rock4;
+
+	Object terrain;
 
 public:
 	SceneRenderer();
