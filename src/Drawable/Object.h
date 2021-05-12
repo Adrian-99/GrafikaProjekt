@@ -28,6 +28,6 @@ private:
 public:
 	Object(std::string name, GLfloat x, GLfloat y, GLfloat z, GLfloat size = 1.0f);
 	void Draw();
-	void DrawDuplicate(Vector3 offset);
+	void DrawDuplicate(Vector3 offset, GLfloat rotationAngle = 0.0f);
 };
 

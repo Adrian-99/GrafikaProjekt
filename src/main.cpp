@@ -3,6 +3,7 @@
 #include <iostream>
 #include <GLFW/glfw3.h>
 #include <GL/glut.h>
+#include <chrono>
 #include "SceneRenderer.h"
 
 /// <summary>
@@ -31,7 +32,7 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
         glOrtho(-nRange * width / height, nRange * width / height, -nRange, nRange, -nRange, nRange);*/
 
     // Establish perspective: 
-    gluPerspective(60.0f,fAspect,1.0,20000);
+    gluPerspective(60.0f,fAspect,1.0,4000);
     gluLookAt(0.0f, 0.0f, 1000.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
 
     glMatrixMode(GL_MODELVIEW);
@@ -63,11 +64,17 @@ int main() {
 
     #pragma region Variables declarations
     SceneRenderer sceneRenderer{};
+
+    /*std::chrono::steady_clock::time_point frameStart, frameStop;
+    long long frameDuration;
+    const short fpsLimit = 60;*/
     #pragma endregion
 
     #pragma region Render loop
     while (!glfwWindowShouldClose(window))
     {
+        //frameStart = std::chrono::high_resolution_clock::now();
+
         sceneRenderer.ProcessInput(window);
 
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
@@ -87,6 +94,11 @@ int main() {
 
         glfwSwapBuffers(window);
         glfwPollEvents();
+
+        /*frameStop = std::chrono::high_resolution_clock::now();
+        frameDuration = std::chrono::duration_cast<std::chrono::milliseconds>(frameStop - frameStart).count();
+        if (frameDuration < 1000 / fpsLimit) Sleep(1000 / fpsLimit - frameDuration);
+        //std::cout << 1000 / std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - frameStart).count() << std::endl;*/
     }
     #pragma endregion
 

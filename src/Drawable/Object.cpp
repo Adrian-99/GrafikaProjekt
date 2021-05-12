@@ -78,8 +78,12 @@ void Object::Draw()
     DrawDuplicate(Vector3());
 }
 
-void Object::DrawDuplicate(Vector3 offset)
+void Object::DrawDuplicate(Vector3 offset, GLfloat rotationAngle)
 {
+    glPushMatrix();
+
+    glTranslatef(offset.X(), offset.Y(), offset.Z());
+    glRotatef(rotationAngle, 0.0f, 0.0f, 1.0f);
     for (GLint i = 0; i < vertexIndices.size(); i += 3) {
         if (FindInVector(materialStartIndices, i) != -1) {
             Material::Find(materials.at(FindInVector(materialStartIndices, i)), name).Use();
@@ -88,10 +92,14 @@ void Object::DrawDuplicate(Vector3 offset)
         for (GLint j = 0; j < 3; j++) {
             glTexCoord2fv(textureCoords.at(textureCoordsIndices.at(i + j)).ToArray());
             glNormal3fv(normals.at(normalIndices.at(i + j)).ToArray());
-            glVertex3fv((vertices.at(vertexIndices.at(i + j)) + offset).ToArray());
+            glVertex3fv((vertices.at(vertexIndices.at(i + j))).ToArray());
         }
         glEnd();
     }
+    glRotatef(-rotationAngle, 0.0f, 0.0f, 1.0f);
+    glTranslatef(-offset.X(), -offset.Y(), -offset.Z());
     Material::StopUsing();
+
+    glPopMatrix();
 }
 

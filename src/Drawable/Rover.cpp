@@ -9,7 +9,9 @@ Rover::Rover(GLfloat x, GLfloat y, GLfloat z, GLfloat size) :
 
 void Rover::Draw()
 {
+	glPushMatrix();
 	body.Draw();
 	leftWheelsWithLinks.Draw();
 	rightWheelsWithLinks.Draw();
+	glPopMatrix();
 }

@@ -2,14 +2,13 @@
 
 
 SceneRenderer::SceneRenderer() :
-    rover(100.0f, 0.0f, 0.0f, 1.0f),
-    rock1("rock", -100.0f, -150.0f, 0.0f, 70.0f),
-    rock2("rock2", -100.0f, -50.0f, 0.0f, 5.0f),
-    rock3("rock3", -100.0f, 50.0f, 0.0f, 10.0f),
-    rock4("rock4", -100.0f, 150.0f, 0.0f, 10.0f),
+    rover(0.0f, 0.0f, 30.0f, 1.0f),
 
-    t_rock("t_rock", -100.0f, 50.0f, 0.0f, 1.0f),
-    t_rock4("t_rock4", 200.0f, 150.0f, 0.0f, 1.0f),
+    rock2("rock2", 0.0f, 0.0f, 0.0f, 5.0f),
+    rock3("rock3", 0.0f, 0.0f, 50.0f, 50.0f),
+    rock4("rock4", 0.0f, 0.0f, 60.0f, 70.0f),
+    t_rock("t_rock", 0.0f, 0.0f, 55.0f, 3.0f),
+    t_rock4("t_rock4", 0.0f, 0.0f, -5.0f, 1.0f),
 
     terrain("terrain", 0.0f, 0.0f, 0.0f, 1.0f)
 {
@@ -45,18 +44,26 @@ void SceneRenderer::ProcessInput(GLFWwindow* window)
 void SceneRenderer::RenderScene(GLFWwindow* window)
 {
     rover.Draw();
-    //rock1.Draw();
-    rock2.Draw();
-    //rock3.Draw();
-    //rock3.DrawDuplicate(Vector3(-30.0f, 0.0f, 0.0f));
-    //rock3.DrawDuplicate(Vector3(0.0f, 30.0f, 0.0f));
-    //rock3.DrawDuplicate(Vector3(0.0f, 0.0f, 30.0f));
-    rock4.Draw();
-
-    t_rock.Draw();
-    t_rock4.Draw();
 
     terrain.Draw();
+
+    t_rock.DrawDuplicate(Vector3(-450.0f, 30.0f, 0.0f), 5.0f);
+    t_rock.DrawDuplicate(Vector3(842.0f, 965.0f, 0.0f), 65.0f);
+    t_rock.DrawDuplicate(Vector3(937.0f, -386.0f, 0.0f), 53.0f);
+    t_rock.DrawDuplicate(Vector3(-214.0f, -937.0f, 0.0f), 21.0f);
+    rock2.DrawDuplicate(Vector3(-700.0f, -450.0f, 0.0f), 30.0f);
+    rock2.DrawDuplicate(Vector3(725.0f, 1053.0f, 0.0f), 38.0f);
+    rock2.DrawDuplicate(Vector3(30.0f, -1320.0f, 0.0f), 73.0f);
+    rock2.DrawDuplicate(Vector3(1274.0f, -57.0f, 0.0f), 64.0f);
+    rock3.DrawDuplicate(Vector3(845.0f, -602.0f, 0.0f), 95.0f);
+    rock3.DrawDuplicate(Vector3(-1322.0f, -321.0f, -30.0f), 32.0f);
+    rock3.DrawDuplicate(Vector3(456.0f, -1434.0f, 0.0f), 52.0f);
+    rock3.DrawDuplicate(Vector3(-634.0f, 678.0f, 0.0f), 103.0f);
+    t_rock4.DrawDuplicate(Vector3(523.0f, 645.0f, 0.0f), 32.0f);
+    t_rock4.DrawDuplicate(Vector3(-132.0f, 885.0f, -10.0f), 142.0f);
+    t_rock4.DrawDuplicate(Vector3(842.0f, -1075.0f, -10.0f), 74.0f);
+    t_rock4.DrawDuplicate(Vector3(-1042.0f, -892.0f, 0.0f), 98.0f);
+    rock4.DrawDuplicate(Vector3(463.0f, 1193.0f, 0.0f), 45.0f);
 }
 
 void SceneRenderer::RotateCamera(GLfloat xRotation, GLfloat zRotation)

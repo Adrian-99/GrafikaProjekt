@@ -11,7 +11,6 @@ public:
 
 private:
 	Rover rover;
-	Object rock1;
 	Object rock2;
 	Object rock3;
 	Object rock4;
