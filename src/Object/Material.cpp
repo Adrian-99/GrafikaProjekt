@@ -18,7 +18,7 @@ GLuint Material::LoadTexture(std::string filePath)
 	}
 
 	GLint textureWidth, textureHeight, textureChannels;
-	GLuint textureId;
+	GLuint textureId = 0;
 	unsigned char* textureData = stbi_load(filePath.c_str(), &textureWidth, &textureHeight, &textureChannels, 0);
 
 	if (textureData) {
@@ -48,7 +48,6 @@ void Material::Use()
 {
 	glEnable(GL_LIGHTING);
 	glEnable(GL_COLOR_MATERIAL);
-	glEnable(GL_DEPTH_TEST);
 	glColorMaterial(GL_FRONT, GL_AMBIENT);
 	glColor3fv(ambientColor.ToArray());
 	glColorMaterial(GL_FRONT, GL_DIFFUSE);
@@ -66,7 +65,6 @@ void Material::Use()
 void Material::StopUsing()
 {
 	glDisable(GL_TEXTURE_2D);
-	glDisable(GL_DEPTH_TEST);
 	glDisable(GL_COLOR_MATERIAL);
 	glDisable(GL_LIGHTING);
 }
@@ -133,7 +131,7 @@ void Material::Add(std::string loadingPath, std::string materialFileName, std::s
 	}
 }
 
-Material Material::Find(std::string materialName, std::string objectName)
+Material& Material::Find(std::string materialName, std::string objectName)
 {
 	for (int i = 0; i < materials.size(); i++) {
 		if (materials.at(i).materialName == materialName && materials.at(i).objectName == objectName) {
