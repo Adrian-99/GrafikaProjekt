@@ -33,7 +33,7 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 
     // Establish perspective: 
     gluPerspective(60.0f,fAspect,1.0,4000);
-    gluLookAt(0.0f, 0.0f, 1000.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
+    gluLookAt(0.0f, 0.0f, 300.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();

@@ -2,7 +2,7 @@
 
 std::string Object::loadingPath = "./obj/";
 
-Object::Object(std::string name, GLfloat x, GLfloat y, GLfloat z, GLfloat size)
+Object::Object(std::string name, Vector3 startPosition, GLfloat size)
 {
     using namespace std;
 
@@ -21,7 +21,7 @@ Object::Object(std::string name, GLfloat x, GLfloat y, GLfloat z, GLfloat size)
                 if (lineWords.at(0)[0] == '#') continue;
                 if (lineWords.at(0) == "v") {
                     if (lineWords.size() >= 4) {
-                        vertices.push_back(Vector3(x + stof(lineWords.at(1)) * size, y + stof(lineWords.at(3)) * size, z + stof(lineWords.at(2)) * size));
+                        vertices.push_back(Vector3(startPosition.X() + stof(lineWords.at(1)) * size, startPosition.Y() + stof(lineWords.at(3)) * size, startPosition.Z() + stof(lineWords.at(2)) * size));
                     }
                 }
                 else if (lineWords.at(0) == "vt") {
@@ -96,8 +96,6 @@ void Object::DrawDuplicate(Vector3 offset, GLfloat rotationAngle)
         }
         glEnd();
     }
-    glRotatef(-rotationAngle, 0.0f, 0.0f, 1.0f);
-    glTranslatef(-offset.X(), -offset.Y(), -offset.Z());
     Material::StopUsing();
 
     glPopMatrix();

@@ -1,14 +1,23 @@
 #include "Wheel.h"
 
-Wheel::Wheel(GLfloat x, GLfloat y, GLfloat z, GLfloat radius, GLfloat width)
+Wheel::Wheel(Vector3 startPosition, GLfloat radius, GLfloat width, bool isLeft)
 {
-	position = new GLfloat[3];
-	position[0] = x;
-	position[1] = y;
-	position[2] = z;
+	position = startPosition;
 
-	halfTireWidth = width / 2;
-	halfRimWidth = halfTireWidth * 0.7;
+	if (isLeft) {
+		rimRightEdgeY = 0.0f;
+		rimLeftEdgeY = -0.7 * width;
+		tireRightEdgeY = 0.15 * width;
+		tireLeftEdgeY = -0.85 * width;
+	}
+	else {
+		rimLeftEdgeY = 0.0f;
+		rimRightEdgeY = 0.7 * width;
+		tireLeftEdgeY = -0.15 * width;
+		tireRightEdgeY = 0.85 * width;
+	}
+
+	turnAngle = 0.0f;
 
 	verticesNumber = 128;
 	rimOuterVertices = new GLfloat[verticesNumber * 2];
@@ -42,7 +51,6 @@ Wheel::Wheel(GLfloat x, GLfloat y, GLfloat z, GLfloat radius, GLfloat width)
 
 Wheel::~Wheel()
 {
-	delete[] position;
 	delete[] rimOuterVertices;
 	delete[] tireMiddleVertices;
 	delete[] tireOuterVertices;
@@ -52,36 +60,32 @@ void Wheel::Draw()
 {
 	glPushMatrix();
 
+	glTranslatef(position.X(), position.Y(), position.Z());
+	glRotatef(turnAngle, 0.0f, 0.0f, 1.0f);
+
 	DrawRim();
 	DrawTire();
 
 	glPopMatrix();
 }
 
-void Wheel::ChangeYPosition(GLfloat y)
-{
-	position[1] = y;
-}
-
 void Wheel::DrawRim()
 {
 	glColor3f(0.6f, 0.6f, 0.6f);
 
-	GLfloat rimYpos = position[1] - halfRimWidth;
 	glBegin(GL_TRIANGLE_FAN);
-	glVertex3f(position[0], rimYpos, position[2]);
-	glVertex3f(position[0] + rimOuterVertices[2 * verticesNumber - 2], rimYpos, position[2] + rimOuterVertices[2 * verticesNumber - 1]);
+	glVertex3f(0.0f, rimLeftEdgeY, 0.0f);
+	glVertex3f(rimOuterVertices[2 * verticesNumber - 2], rimLeftEdgeY, rimOuterVertices[2 * verticesNumber - 1]);
 	for (GLint i = 0; i < verticesNumber; i++) {
-		glVertex3f(position[0] + rimOuterVertices[2 * i], rimYpos, position[2] + rimOuterVertices[2 * i + 1]);
+		glVertex3f(rimOuterVertices[2 * i], rimLeftEdgeY, rimOuterVertices[2 * i + 1]);
 	}
 	glEnd();
 
-	rimYpos = position[1] + halfRimWidth;
 	glBegin(GL_TRIANGLE_FAN);
-	glVertex3f(position[0], rimYpos, position[2]);
-	glVertex3f(position[0] + rimOuterVertices[0], rimYpos, position[2] + rimOuterVertices[1]);
+	glVertex3f(0.0f, rimRightEdgeY, 0.0f);
+	glVertex3f(rimOuterVertices[0], rimRightEdgeY, rimOuterVertices[1]);
 	for (GLint i = verticesNumber - 1; i >= 0; i--) {
-		glVertex3f(position[0] + rimOuterVertices[2 * i], rimYpos, position[2] + rimOuterVertices[2 * i + 1]);
+		glVertex3f(rimOuterVertices[2 * i], rimRightEdgeY, rimOuterVertices[2 * i + 1]);
 	}
 	glEnd();
 }
@@ -90,56 +94,60 @@ void Wheel::DrawTire()
 {
 	glColor3f(0.0f, 0.0f, 0.0f);
 
-	GLfloat rimYpos = position[1] - halfRimWidth;
-	GLfloat tireYpos = position[1] - halfTireWidth;
 	glBegin(GL_TRIANGLE_STRIP);
-	glVertex3f(position[0] + rimOuterVertices[2 * verticesNumber - 2], rimYpos, position[2] + rimOuterVertices[2 * verticesNumber - 1]);
-	glVertex3f(position[0] + tireMiddleVertices[2 * verticesNumber - 2], tireYpos, position[2] + tireMiddleVertices[2 * verticesNumber - 1]);
+	glVertex3f(rimOuterVertices[2 * verticesNumber - 2], rimLeftEdgeY, rimOuterVertices[2 * verticesNumber - 1]);
+	glVertex3f(tireMiddleVertices[2 * verticesNumber - 2], tireLeftEdgeY, tireMiddleVertices[2 * verticesNumber - 1]);
 	for (GLint i = 0; i < verticesNumber; i++) {
-		glVertex3f(position[0] + rimOuterVertices[2 * i], rimYpos, position[2] + rimOuterVertices[2 * i + 1]);
-		glVertex3f(position[0] + tireMiddleVertices[2 * i], tireYpos, position[2] + tireMiddleVertices[2 * i + 1]);
+		glVertex3f(rimOuterVertices[2 * i], rimLeftEdgeY, rimOuterVertices[2 * i + 1]);
+		glVertex3f(tireMiddleVertices[2 * i], tireLeftEdgeY, tireMiddleVertices[2 * i + 1]);
 	}
 	glEnd();
 
-	rimYpos = position[1] + halfRimWidth;
-	tireYpos = position[1] + halfTireWidth;
 	glBegin(GL_TRIANGLE_STRIP);
-	glVertex3f(position[0] + rimOuterVertices[0], rimYpos, position[2] + rimOuterVertices[1]);
-	glVertex3f(position[0] + tireMiddleVertices[0], tireYpos, position[2] + tireMiddleVertices[1]);
+	glVertex3f(rimOuterVertices[0], rimRightEdgeY, rimOuterVertices[1]);
+	glVertex3f(tireMiddleVertices[0], tireRightEdgeY, tireMiddleVertices[1]);
 	for (GLint i = verticesNumber - 1; i >= 0; i--) {
-		glVertex3f(position[0] + rimOuterVertices[2 * i], rimYpos, position[2] + rimOuterVertices[2 * i + 1]);
-		glVertex3f(position[0] + tireMiddleVertices[2 * i], tireYpos, position[2] + tireMiddleVertices[2 * i + 1]);
+		glVertex3f(rimOuterVertices[2 * i], rimRightEdgeY, rimOuterVertices[2 * i + 1]);
+		glVertex3f(tireMiddleVertices[2 * i], tireRightEdgeY, tireMiddleVertices[2 * i + 1]);
 	}
 	glEnd();
 
 	glColor3f(0.1f, 0.05f, 0.0f);
-	tireYpos = position[1] - halfTireWidth;
 	glBegin(GL_TRIANGLE_STRIP);
-	glVertex3f(position[0] + tireMiddleVertices[2 * verticesNumber - 2], tireYpos, position[2] + tireMiddleVertices[2 * verticesNumber - 1]);
-	glVertex3f(position[0] + tireOuterVertices[2 * verticesNumber - 2], tireYpos, position[2] + tireOuterVertices[2 * verticesNumber - 1]);
+	glVertex3f(tireMiddleVertices[2 * verticesNumber - 2], tireLeftEdgeY, tireMiddleVertices[2 * verticesNumber - 1]);
+	glVertex3f(tireOuterVertices[2 * verticesNumber - 2], tireLeftEdgeY, tireOuterVertices[2 * verticesNumber - 1]);
 	for (GLint i = 0; i < verticesNumber; i++) {
-		glVertex3f(position[0] + tireMiddleVertices[2 * i], tireYpos, position[2] + tireMiddleVertices[2 * i + 1]);
-		glVertex3f(position[0] + tireOuterVertices[2 * i], tireYpos, position[2] + tireOuterVertices[2 * i + 1]);
+		glVertex3f(tireMiddleVertices[2 * i], tireLeftEdgeY, tireMiddleVertices[2 * i + 1]);
+		glVertex3f(tireOuterVertices[2 * i], tireLeftEdgeY, tireOuterVertices[2 * i + 1]);
 	}
 	glEnd();
 
-	tireYpos = position[1] + halfTireWidth;
 	glBegin(GL_TRIANGLE_STRIP);
-	glVertex3f(position[0] + tireMiddleVertices[0], tireYpos, position[2] + tireMiddleVertices[1]);
-	glVertex3f(position[0] + tireOuterVertices[0], tireYpos, position[2] + tireOuterVertices[1]);
+	glVertex3f(tireMiddleVertices[0], tireRightEdgeY, tireMiddleVertices[1]);
+	glVertex3f(tireOuterVertices[0], tireRightEdgeY, tireOuterVertices[1]);
 	for (GLint i = verticesNumber - 1; i >= 0; i--) {
-		glVertex3f(position[0] + tireMiddleVertices[2 * i], tireYpos, position[2] + tireMiddleVertices[2 * i + 1]);
-		glVertex3f(position[0] + tireOuterVertices[2 * i], tireYpos, position[2] + tireOuterVertices[2 * i + 1]);
+		glVertex3f(tireMiddleVertices[2 * i], tireRightEdgeY, tireMiddleVertices[2 * i + 1]);
+		glVertex3f(tireOuterVertices[2 * i], tireRightEdgeY, tireOuterVertices[2 * i + 1]);
 	}
 	glEnd();
 
 	glColor3f(0.2f, 0.1f, 0.0f);
 	glBegin(GL_TRIANGLE_STRIP);
-	glVertex3f(position[0] + tireOuterVertices[2 * verticesNumber - 2], position[1] - halfTireWidth, position[2] + tireOuterVertices[2 * verticesNumber - 1]);
-	glVertex3f(position[0] + tireOuterVertices[2 * verticesNumber - 2], position[1] + halfTireWidth, position[2] + tireOuterVertices[2 * verticesNumber - 1]);
+	glVertex3f(tireOuterVertices[2 * verticesNumber - 2], tireLeftEdgeY, tireOuterVertices[2 * verticesNumber - 1]);
+	glVertex3f(tireOuterVertices[2 * verticesNumber - 2], tireRightEdgeY, tireOuterVertices[2 * verticesNumber - 1]);
 	for (GLint i = 0; i < verticesNumber; i++) {
-		glVertex3f(position[0] + tireOuterVertices[2 * i], position[1] - halfTireWidth, position[2] + tireOuterVertices[2 * i + 1]);
-		glVertex3f(position[0] + tireOuterVertices[2 * i], position[1] + halfTireWidth, position[2] + tireOuterVertices[2 * i + 1]);
+		glVertex3f(tireOuterVertices[2 * i], tireLeftEdgeY, tireOuterVertices[2 * i + 1]);
+		glVertex3f(tireOuterVertices[2 * i], tireRightEdgeY, tireOuterVertices[2 * i + 1]);
 	}
 	glEnd();
+}
+
+void Wheel::ChangeYPosition(GLfloat y)
+{
+	position = Vector3(position.X(), y, position.Z());
+}
+
+void Wheel::SetTurnAngle(GLfloat angle)
+{
+	turnAngle = angle;
 }

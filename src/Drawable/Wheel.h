@@ -1,23 +1,29 @@
 #pragma once
 #include <GLFW/glfw3.h>
 #include <cmath>
+#include "../Object/Vector3.h"
 
 class Wheel
 {
 private:
-	GLfloat* position;				// pozycja ko³a
-	GLfloat halfTireWidth;			// po³owa szerokoœci opony
-	GLfloat halfRimWidth;			// po³owa szerokoœci felgi
+	Vector3 position;				// pozycja ko³a
+	GLfloat tireLeftEdgeY;
+	GLfloat tireRightEdgeY;
+	GLfloat rimLeftEdgeY;
+	GLfloat rimRightEdgeY;
 	GLfloat* rimOuterVertices;		// wskaŸnik do tablicy wspó³rzêdnych XZ wierzcho³ków zewnêtrznych felgi
 	GLfloat* tireMiddleVertices;	// wskaŸnik do tablicy wspó³rzêdnych XZ wierzcho³ków œrodkowych opony
 	GLfloat* tireOuterVertices;		// wskaŸnik do tablicy wspó³rzêdnych XZ wierzcho³ków zewnêtrznych opony
 	GLint verticesNumber;			// liczba par elementów w powy¿szych tablicach
 
+	GLfloat turnAngle;
+
 public:
-	Wheel(GLfloat x, GLfloat y, GLfloat z, GLfloat radius, GLfloat width);
+	Wheel(Vector3 startPosition, GLfloat radius, GLfloat width, bool isLeft);
 	~Wheel();
 	void Draw();
 	void ChangeYPosition(GLfloat y);
+	void SetTurnAngle(GLfloat angle);
 
 private:
 	void DrawRim();

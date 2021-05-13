@@ -26,7 +26,7 @@ private:
 	std::vector<int> materialStartIndices;	// lista startowych wierzcho³ków, u¿ywaj¹cych poszczególne materia³y
 
 public:
-	Object(std::string name, GLfloat x, GLfloat y, GLfloat z, GLfloat size = 1.0f);
+	Object(std::string name, Vector3 startPosition = Vector3(), GLfloat size = 1.0f);
 	void Draw();
 	void DrawDuplicate(Vector3 offset, GLfloat rotationAngle = 0.0f);
 };

@@ -1,24 +1,23 @@
 #include "WheelLinks.h"
 
-WheelLinks::WheelLinks(GLfloat startX, GLfloat startY, GLfloat startZ, GLfloat size, GLboolean wheelsOnTheLeft) :
-	wheel1(startX - 65 * size, startY, startZ - 30 * size, size * 20, size * 20),
-	wheel2(startX + 10 * size, startY, startZ - 30 * size, size * 20, size * 20),
-	wheel3(startX + 70 * size, startY, startZ - 30 * size, size * 20, size * 20)
+WheelLinks::WheelLinks(Vector3 startPosition, GLfloat size, GLboolean wheelsOnTheLeft) :
+	wheel1(Vector3(-65 * size, 0.0f, -30 * size), size * 20, size * 20, wheelsOnTheLeft),
+	wheel2(Vector3(10 * size, 0.0f, -30 * size), size * 20, size * 20, wheelsOnTheLeft),
+	wheel3(Vector3(70 * size, 0.0f, -30 * size), size * 20, size * 20, wheelsOnTheLeft)
 {
-	this->startX = startX;
-	this->startY = startY;
-	this->startZ = startZ;
+	this->position = startPosition;
 	this->size = size;
+	this->leftSide = wheelsOnTheLeft;
 
 	if (wheelsOnTheLeft) {
-		wheel1.ChangeYPosition(startY - size * 17);
-		wheel2.ChangeYPosition(startY - size * 17);
-		wheel3.ChangeYPosition(startY - size * 17);
+		wheel1.ChangeYPosition(-size * 17);
+		wheel2.ChangeYPosition(-size * 17);
+		wheel3.ChangeYPosition(-size * 17);
 	}
 	else {
-		wheel1.ChangeYPosition(startY + size * 17);
-		wheel2.ChangeYPosition(startY + size * 17);
-		wheel3.ChangeYPosition(startY + size * 17);
+		wheel1.ChangeYPosition(size * 17);
+		wheel2.ChangeYPosition(size * 17);
+		wheel3.ChangeYPosition(size * 17);
 	}
 
 	circleVerticesCount = 20;
@@ -41,17 +40,19 @@ void WheelLinks::Draw()
 {
 	glPushMatrix();
 
-	DrawConnector(startX, startZ, size * 15);
-	DrawLink(startX, startZ, startX - 65 * size, startZ - 30 * size, size);
-	DrawConnector(startX - 65 * size, startZ - 30 * size, size * 20);
+	glTranslatef(position.X(), position.Y(), position.Z());
+
+	DrawConnector(0.0f, 0.0f, size * 15);
+	DrawLink(0.0f, 0.0f, -65.0f * size, -30.0f * size, size);
+	DrawConnector(-65.0f * size, -30.0f * size, size * 15, true, leftSide);
 	wheel1.Draw();
-	DrawLink(startX, startZ, startX + 40 * size, startZ - 10 * size, size);
-	DrawConnector(startX + 40 * size, startZ - 10 * size, size * 15);
-	DrawLink(startX + 40 * size, startZ - 10 * size, startX + 10 * size, startZ - 30 * size, size);
-	DrawConnector(startX + 10 * size, startZ - 30 * size, size * 20);
+	DrawLink(0.0f, 0.0f, 40.0f * size, -10.0f * size, size);
+	DrawConnector(40.0f * size, -10.0f * size, size * 15);
+	DrawLink(40.0f * size, -10.0f * size, 10.0f * size, -30.0f * size, size);
+	DrawConnector(10.0f * size, -30.0f * size, size * 15, true, leftSide);
 	wheel2.Draw();
-	DrawLink(startX + 40 * size, startZ - 10 * size, startX + 70 * size, startZ - 30 * size, size);
-	DrawConnector(startX + 70 * size, startZ - 30 * size, size * 20);
+	DrawLink(40.0f * size, -10.0f * size, 70.0f * size, -30.0f * size, size);
+	DrawConnector(70.0f * size, -30.0f * size, size * 15, true, leftSide);
 	wheel3.Draw();
 
 	glPopMatrix();
@@ -79,8 +80,8 @@ void WheelLinks::DrawLink(GLfloat fromX, GLfloat fromZ, GLfloat toX, GLfloat toZ
 	for (step = 0; step < stepsCount; step++) {
 		x = fromX + step * stepX;
 		z = fromZ + 2.5 * width + step * stepZ;
-		glVertex3f(x, startY - width * 5, z);
-		glVertex3f(x, startY + width * 5, z);
+		glVertex3f(x, -width * 5, z);
+		glVertex3f(x, width * 5, z);
 	}
 	glEnd();
 
@@ -90,15 +91,15 @@ void WheelLinks::DrawLink(GLfloat fromX, GLfloat fromZ, GLfloat toX, GLfloat toZ
 	for (step = 0; step < stepsCount; step++) {
 		x = fromX + step * stepX;
 		z = fromZ - 2.5 * width + step * stepZ;
-		glVertex3f(x, startY + width * 5, z);
-		glVertex3f(x, startY - width * 5, z);
+		glVertex3f(x, width * 5, z);
+		glVertex3f(x, -width * 5, z);
 	}
 	glEnd();
 
 	// Right wall
 	glColor3f(0.35f, 0.35f, 0.35f);
 	glBegin(GL_TRIANGLE_STRIP);
-	y = startY + width * 5;
+	y = width * 5;
 	for (step = 0; step < stepsCount; step++) {
 		x = fromX + step * stepX;
 		z = fromZ + 2.5 * width + step * stepZ;
@@ -109,7 +110,7 @@ void WheelLinks::DrawLink(GLfloat fromX, GLfloat fromZ, GLfloat toX, GLfloat toZ
 
 	// Left wall
 	glBegin(GL_TRIANGLE_STRIP);
-	y = startY - width * 5;
+	y = -width * 5;
 	for (step = 0; step < stepsCount; step++) {
 		x = fromX + step * stepX;
 		z = fromZ + 2.5 * width + step * stepZ;
@@ -119,30 +120,33 @@ void WheelLinks::DrawLink(GLfloat fromX, GLfloat fromZ, GLfloat toX, GLfloat toZ
 	glEnd();
 }
 
-void WheelLinks::DrawConnector(GLfloat x, GLfloat z, GLfloat width)
+void WheelLinks::DrawConnector(GLfloat x, GLfloat z, GLfloat width, bool extraWidth, bool leftExtraWidth)
 {
 	GLint step;
-	GLfloat y;
+	GLfloat leftY, rightY;
+
+	if (extraWidth && leftExtraWidth) leftY = -width * 1.5;
+	else leftY = -width / 2;
+	if (extraWidth && !leftExtraWidth) rightY = width * 1.5;
+	else rightY = width / 2;
 
 	glColor3f(0.2f, 0.2f, 0.2f);
 
 	// Left wall
-	y = startY - width / 2;
 	glBegin(GL_TRIANGLE_FAN);
-	glVertex3f(x, y, z);
-	glVertex3f(x + circleVertices[2 * circleVerticesCount - 2], y, z + circleVertices[2 * circleVerticesCount - 1]);
+	glVertex3f(x, leftY, z);
+	glVertex3f(x + circleVertices[2 * circleVerticesCount - 2], leftY, z + circleVertices[2 * circleVerticesCount - 1]);
 	for (step = 0; step < circleVerticesCount; step++) {
-		glVertex3f(x + circleVertices[2 * step], y, z + circleVertices[2 * step + 1]);
+		glVertex3f(x + circleVertices[2 * step], leftY, z + circleVertices[2 * step + 1]);
 	}
 	glEnd();
 
 	// Right wall
-	y = startY + width / 2;
 	glBegin(GL_TRIANGLE_FAN);
-	glVertex3f(x, y, z);
-	glVertex3f(x + circleVertices[0], y, z + circleVertices[1]);
+	glVertex3f(x, rightY, z);
+	glVertex3f(x + circleVertices[0], rightY, z + circleVertices[1]);
 	for (step = circleVerticesCount - 1; step >= 0; step--) {
-		glVertex3f(x + circleVertices[2 * step], y, z + circleVertices[2 * step + 1]);
+		glVertex3f(x + circleVertices[2 * step], rightY, z + circleVertices[2 * step + 1]);
 	}
 	glEnd();
 
@@ -150,11 +154,17 @@ void WheelLinks::DrawConnector(GLfloat x, GLfloat z, GLfloat width)
 
 	// Outer wall
 	glBegin(GL_TRIANGLE_STRIP);
-	glVertex3f(x + circleVertices[circleVerticesCount * 2 - 2], startY - width / 2, z + circleVertices[circleVerticesCount * 2 - 1]);
-	glVertex3f(x + circleVertices[circleVerticesCount * 2 - 2], startY + width / 2, z + circleVertices[circleVerticesCount * 2 - 1]);
+	glVertex3f(x + circleVertices[circleVerticesCount * 2 - 2], leftY, z + circleVertices[circleVerticesCount * 2 - 1]);
+	glVertex3f(x + circleVertices[circleVerticesCount * 2 - 2], rightY, z + circleVertices[circleVerticesCount * 2 - 1]);
 	for (step = 0; step < circleVerticesCount; step++) {
-		glVertex3f(x + circleVertices[step * 2], startY - width / 2, z + circleVertices[step * 2 + 1]);
-		glVertex3f(x + circleVertices[step * 2], startY + width / 2, z + circleVertices[step * 2 + 1]);
+		glVertex3f(x + circleVertices[step * 2], leftY, z + circleVertices[step * 2 + 1]);
+		glVertex3f(x + circleVertices[step * 2], rightY, z + circleVertices[step * 2 + 1]);
 	}
 	glEnd();
+}
+
+void WheelLinks::TurnWheels(GLfloat turnAngle)
+{
+	wheel1.SetTurnAngle(turnAngle);
+	wheel3.SetTurnAngle(-0.5 * turnAngle);
 }

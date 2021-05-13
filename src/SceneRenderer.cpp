@@ -2,15 +2,14 @@
 
 
 SceneRenderer::SceneRenderer() :
-    rover(0.0f, 0.0f, 30.0f, 1.0f),
+    rover(Vector3(0.0f, 0.0f, 30.0f), 1.0f),
 
-    rock2("rock2", 0.0f, 0.0f, 0.0f, 5.0f),
-    rock3("rock3", 0.0f, 0.0f, 50.0f, 50.0f),
-    rock4("rock4", 0.0f, 0.0f, 60.0f, 70.0f),
-    t_rock("t_rock", 0.0f, 0.0f, 55.0f, 3.0f),
-    t_rock4("t_rock4", 0.0f, 0.0f, -5.0f, 1.0f),
-
-    terrain("terrain", 0.0f, 0.0f, 0.0f, 1.0f)
+    rock2("rock2", Vector3(), 5.0f),
+    rock3("rock3", Vector3(0.0f, 0.0f, 50.0f), 50.0f),
+    rock4("rock4", Vector3(0.0f, 0.0f, 60.0f), 70.0f),
+    t_rock("t_rock", Vector3(0.0f, 0.0f, 55.0f), 3.0f),
+    t_rock4("t_rock4", Vector3(0.0f, 0.0f, -5.0f), 1.0f),
+    terrain("terrain", Vector3(), 1.0f)
 {
     xRot = 0.0f;
     zRot = 0.0f;
@@ -39,6 +38,12 @@ void SceneRenderer::ProcessInput(GLFWwindow* window)
 
     if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
         RotateCamera(0.0f, -rotationSpeed);
+
+    if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+        rover.AddWheelsTurnAngle(4.0f);
+
+    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+        rover.AddWheelsTurnAngle(-4.0f);
 }
 
 void SceneRenderer::RenderScene(GLFWwindow* window)
@@ -64,6 +69,8 @@ void SceneRenderer::RenderScene(GLFWwindow* window)
     t_rock4.DrawDuplicate(Vector3(842.0f, -1075.0f, -10.0f), 74.0f);
     t_rock4.DrawDuplicate(Vector3(-1042.0f, -892.0f, 0.0f), 98.0f);
     rock4.DrawDuplicate(Vector3(463.0f, 1193.0f, 0.0f), 45.0f);
+
+    rover.WheelsCentering();
 }
 
 void SceneRenderer::RotateCamera(GLfloat xRotation, GLfloat zRotation)
