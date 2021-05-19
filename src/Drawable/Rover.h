@@ -8,17 +8,18 @@ class Rover
 {
 private:
 	Vector3 position;
+	GLfloat rotationAngle;
+
+	GLfloat wheelsTurnAngle;
+	GLfloat speed;
 
 	Body body;
 	WheelLinks leftWheelsWithLinks;
 	WheelLinks rightWheelsWithLinks;
 
-	GLfloat wheelsTurnAngle;
-
 public:
 	Rover(Vector3 startPosition, GLfloat size);
 	void Draw();
-	void AddWheelsTurnAngle(GLfloat additionalAngle);
-	void WheelsCentering();
+	void ProcessInput(GLfloat additionalSpeed, GLfloat additionalTurnAngle);
 };
 

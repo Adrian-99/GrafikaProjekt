@@ -22,28 +22,32 @@ SceneRenderer::SceneRenderer() :
 
 void SceneRenderer::ProcessInput(GLFWwindow* window)
 {	
-	float rotationSpeed = 1.5f;
+	GLfloat cameraRotationSpeed = 1.5f;
+    GLfloat additionalTurnAngle = 0.0f;
+    GLfloat additionalSpeed = 0.0f;
 
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
 
     if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
-        RotateCamera(rotationSpeed);
+        RotateCamera(cameraRotationSpeed);
 
     if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
-        RotateCamera(-rotationSpeed);
+        RotateCamera(-cameraRotationSpeed);
 
     if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
-        RotateCamera(0.0f, rotationSpeed);
+        RotateCamera(0.0f, cameraRotationSpeed);
 
     if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
-        RotateCamera(0.0f, -rotationSpeed);
+        RotateCamera(0.0f, -cameraRotationSpeed);
 
     if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-        rover.AddWheelsTurnAngle(4.0f);
+        additionalTurnAngle += 2.0f;
 
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-        rover.AddWheelsTurnAngle(-4.0f);
+        additionalTurnAngle -= 2.0f;
+
+    rover.ProcessInput(additionalSpeed, additionalTurnAngle);
 }
 
 void SceneRenderer::RenderScene(GLFWwindow* window)
@@ -69,8 +73,6 @@ void SceneRenderer::RenderScene(GLFWwindow* window)
     t_rock4.DrawDuplicate(Vector3(842.0f, -1075.0f, -10.0f), 74.0f);
     t_rock4.DrawDuplicate(Vector3(-1042.0f, -892.0f, 0.0f), 98.0f);
     rock4.DrawDuplicate(Vector3(463.0f, 1193.0f, 0.0f), 45.0f);
-
-    rover.WheelsCentering();
 }
 
 void SceneRenderer::RotateCamera(GLfloat xRotation, GLfloat zRotation)

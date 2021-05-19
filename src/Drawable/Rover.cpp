@@ -22,20 +22,22 @@ void Rover::Draw()
 	glPopMatrix();
 }
 
-void Rover::AddWheelsTurnAngle(GLfloat additionalAngle)
+void Rover::ProcessInput(GLfloat additionalSpeed, GLfloat additionalTurnAngle)
 {
-	wheelsTurnAngle += additionalAngle;
-	if (wheelsTurnAngle > 30) wheelsTurnAngle = 30.0f;
-	else if (wheelsTurnAngle < -30) wheelsTurnAngle = -30.0f;
+	if (additionalTurnAngle != 0.0f) {
+		wheelsTurnAngle += additionalTurnAngle;
+		if (wheelsTurnAngle > 30.0f) wheelsTurnAngle = 30.0f;
+		else if (wheelsTurnAngle < -30.0f) wheelsTurnAngle = -30.0f;
+	}
+	else {
+		if (wheelsTurnAngle > 2.0f) wheelsTurnAngle -= 2.0f;
+		else if (wheelsTurnAngle < -2.0f) wheelsTurnAngle += 2.0f;
+		else if (wheelsTurnAngle != 0.0f) wheelsTurnAngle = 0.0f;
+		leftWheelsWithLinks.TurnWheels(wheelsTurnAngle);
+		rightWheelsWithLinks.TurnWheels(wheelsTurnAngle);
+	}
 	leftWheelsWithLinks.TurnWheels(wheelsTurnAngle);
 	rightWheelsWithLinks.TurnWheels(wheelsTurnAngle);
-}
 
-void Rover::WheelsCentering()
-{
-	if (wheelsTurnAngle > 2) wheelsTurnAngle -= 2.0f;
-	else if (wheelsTurnAngle < 2) wheelsTurnAngle += 2.0f;
-	else if (wheelsTurnAngle != 0) wheelsTurnAngle = 0.0f;
-	leftWheelsWithLinks.TurnWheels(wheelsTurnAngle);
-	rightWheelsWithLinks.TurnWheels(wheelsTurnAngle);
+	// TODO: Aktualizacja prêdkoœci tutaj
 }
