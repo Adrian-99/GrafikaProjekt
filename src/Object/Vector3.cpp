@@ -27,12 +27,46 @@ GLfloat* Vector3::ToArray()
 	return position;
 }
 
-Vector3 Vector3::operator+(Vector3 v)
+GLfloat Vector3::X(GLfloat newX)
+{
+	position[0] = newX;
+	return newX;
+}
+
+GLfloat Vector3::Y(GLfloat newY)
+{
+	position[1] = newY;
+	return newY;
+}
+
+GLfloat Vector3::Z(GLfloat newZ)
+{
+	position[2] = newZ;
+	return newZ;
+}
+
+Vector3 Vector3::operator+(const Vector3& v)
 {
 	return Vector3(this->position[0] + v.position[0], this->position[1] + v.position[1], this->position[2] + v.position[2]);
 }
 
-Vector3 Vector3::operator-(Vector3 v)
+Vector3 Vector3::operator-(const Vector3& v)
 {
 	return Vector3(this->position[0] - v.position[0], this->position[1] - v.position[1], this->position[2] - v.position[2]);
+}
+
+Vector3& Vector3::operator+=(const Vector3& v)
+{
+	position[0] += v.position[0];
+	position[1] += v.position[1];
+	position[2] += v.position[2];
+	return *this;
+}
+
+Vector3& Vector3::operator-=(const Vector3& v)
+{
+	position[0] -= v.position[0];
+	position[1] -= v.position[1];
+	position[2] -= v.position[2];
+	return *this;
 }

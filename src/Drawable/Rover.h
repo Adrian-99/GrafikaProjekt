@@ -13,6 +13,7 @@ private:
 	GLfloat wheelsTurnAngle;
 	GLfloat speed;
 
+	GLfloat size;
 	Body body;
 	WheelLinks leftWheelsWithLinks;
 	WheelLinks rightWheelsWithLinks;
@@ -21,5 +22,8 @@ public:
 	Rover(Vector3 startPosition, GLfloat size);
 	void Draw();
 	void ProcessInput(GLfloat additionalSpeed, GLfloat additionalTurnAngle);
+
+private:
+	void UpdatePosition();
 };
 

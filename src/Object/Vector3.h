@@ -12,7 +12,12 @@ public:
 	GLfloat Y();
 	GLfloat Z();
 	GLfloat* ToArray();
-	Vector3 operator+(Vector3 v);
-	Vector3 operator-(Vector3 v);
+	GLfloat X(GLfloat newX);
+	GLfloat Y(GLfloat newY);
+	GLfloat Z(GLfloat newZ);
+	Vector3 operator+(const Vector3& v);
+	Vector3 operator-(const Vector3& v);
+	Vector3& operator+=(const Vector3& v);
+	Vector3& operator-=(const Vector3& v);
 };
 

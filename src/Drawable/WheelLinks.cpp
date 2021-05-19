@@ -165,6 +165,12 @@ void WheelLinks::DrawConnector(GLfloat x, GLfloat z, GLfloat width, bool extraWi
 
 void WheelLinks::TurnWheels(GLfloat turnAngle)
 {
-	wheel1.SetTurnAngle(turnAngle);
-	wheel3.SetTurnAngle(-0.5 * turnAngle);
+	if (leftSide ^ turnAngle > 0.0f) {
+		wheel1.SetTurnAngle(0.9f * turnAngle);
+		wheel3.SetTurnAngle(0.9f * -0.8 * turnAngle);
+	}
+	else {
+		wheel1.SetTurnAngle(1.2f * turnAngle);
+		wheel3.SetTurnAngle(1.2f * -0.8 * turnAngle);
+	}
 }

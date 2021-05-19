@@ -2,7 +2,7 @@
 
 
 SceneRenderer::SceneRenderer() :
-    rover(Vector3(0.0f, 0.0f, 30.0f), 1.0f),
+    rover(Vector3(0.0f, 0.0f, 0.0f), 1.0f),
 
     rock2("rock2", Vector3(), 5.0f),
     rock3("rock3", Vector3(0.0f, 0.0f, 50.0f), 50.0f),
@@ -40,6 +40,12 @@ void SceneRenderer::ProcessInput(GLFWwindow* window)
 
     if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
         RotateCamera(0.0f, -cameraRotationSpeed);
+
+    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+        additionalSpeed += 100.0f;
+
+    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+        additionalSpeed -= 100.0f;
 
     if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
         additionalTurnAngle += 2.0f;
