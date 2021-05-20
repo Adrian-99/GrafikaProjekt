@@ -3,7 +3,6 @@
 #include <iostream>
 #include <GLFW/glfw3.h>
 #include <GL/glut.h>
-#include <chrono>
 #include "SceneRenderer.h"
 
 /// <summary>
@@ -39,10 +38,6 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
     glLoadIdentity();
 }
 
-
-double lastTime = glfwGetTime();    //Simple FPS counter - to remove
-int nbFrames = 0;                   //Simple FPS counter - to remove
-
 int main() {
     #pragma region Creating window
     glfwInit();
@@ -69,32 +64,28 @@ int main() {
     #pragma region Variables declarations
     SceneRenderer sceneRenderer{};
 
-    /*std::chrono::steady_clock::time_point frameStart, frameStop;
-    long long frameDuration;
-    const short fpsLimit = 60;*/
+    double frameStartTime, frameDuration;
+    const unsigned short fpsLimit = 30;
+
+    /*double lastTime = glfwGetTime();    //Simple FPS counter - to remove
+    int nbFrames = 0;                   //Simple FPS counter - to remove*/
     #pragma endregion
-
-
-   
-
 
     #pragma region Render loop
     while (!glfwWindowShouldClose(window))
     {
-        //frameStart = std::chrono::high_resolution_clock::now();
+        frameStartTime = glfwGetTime();
 
         //Simple FPS counter
         // Measure speed
-        double currentTime = glfwGetTime();
+        /*double currentTime = glfwGetTime();
         nbFrames++;
         if (currentTime - lastTime >= 1.0) { // If last prinf() was more than 1 sec ago
             // printf and reset timer
             printf("%f ms/frame\n", 1000.0 / double(nbFrames));
             nbFrames = 0;
             lastTime += 1.0;
-        }
-
-
+        }*/
 
         sceneRenderer.ProcessInput(window);
 
@@ -116,10 +107,8 @@ int main() {
         glfwSwapBuffers(window);
         glfwPollEvents();
 
-        /*frameStop = std::chrono::high_resolution_clock::now();
-        frameDuration = std::chrono::duration_cast<std::chrono::milliseconds>(frameStop - frameStart).count();
-        if (frameDuration < 1000 / fpsLimit) Sleep(1000 / fpsLimit - frameDuration);
-        //std::cout << 1000 / std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - frameStart).count() << std::endl;*/
+        frameDuration = (glfwGetTime() - frameStartTime) * 1000;
+        if (frameDuration < 1000.0 / fpsLimit) Sleep(0.85 * (1000 / fpsLimit - (int)frameDuration));
     }
     #pragma endregion
 
