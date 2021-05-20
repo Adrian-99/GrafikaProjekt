@@ -12,6 +12,7 @@ private:
 
 	GLfloat wheelsTurnAngle;
 	GLfloat speed;
+	GLfloat moveSpeed = 0.25f;
 	GLfloat breakingSpeed = 0.5f;
 
 	GLfloat size;

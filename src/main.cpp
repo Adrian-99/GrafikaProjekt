@@ -39,6 +39,10 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
     glLoadIdentity();
 }
 
+
+double lastTime = glfwGetTime();    //Simple FPS counter - to remove
+int nbFrames = 0;                   //Simple FPS counter - to remove
+
 int main() {
     #pragma region Creating window
     glfwInit();
@@ -70,10 +74,27 @@ int main() {
     const short fpsLimit = 60;*/
     #pragma endregion
 
+
+   
+
+
     #pragma region Render loop
     while (!glfwWindowShouldClose(window))
     {
         //frameStart = std::chrono::high_resolution_clock::now();
+
+        //Simple FPS counter
+        // Measure speed
+        double currentTime = glfwGetTime();
+        nbFrames++;
+        if (currentTime - lastTime >= 1.0) { // If last prinf() was more than 1 sec ago
+            // printf and reset timer
+            printf("%f ms/frame\n", 1000.0 / double(nbFrames));
+            nbFrames = 0;
+            lastTime += 1.0;
+        }
+
+
 
         sceneRenderer.ProcessInput(window);
 

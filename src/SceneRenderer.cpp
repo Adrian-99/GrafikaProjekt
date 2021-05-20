@@ -24,7 +24,7 @@ void SceneRenderer::ProcessInput(GLFWwindow* window)
 {	
 	GLfloat cameraRotationSpeed = 1.5f;
     GLfloat additionalTurnAngle = 0.0f;
-    GLfloat additionalSpeed = 0.0f;
+    GLfloat moveDirection = 0.0f;           //1=moveForward  -1=moveBackward, 0=staying
 
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
@@ -42,10 +42,10 @@ void SceneRenderer::ProcessInput(GLFWwindow* window)
         RotateCamera(0.0f, -cameraRotationSpeed);
 
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-        additionalSpeed += 0.25f;
+        moveDirection = 1.0f;
 
     if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-        additionalSpeed -= 0.25f;
+        moveDirection = -1.0f;
 
     if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
         additionalTurnAngle += 2.0f;
@@ -53,7 +53,7 @@ void SceneRenderer::ProcessInput(GLFWwindow* window)
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
         additionalTurnAngle -= 2.0f;
 
-    rover.ProcessInput(additionalSpeed, additionalTurnAngle);
+    rover.ProcessInput(moveDirection, additionalTurnAngle);
 }
 
 void SceneRenderer::RenderScene(GLFWwindow* window)

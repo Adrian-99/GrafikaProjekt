@@ -27,7 +27,7 @@ void Rover::Draw()
 	glPopMatrix();
 }
 
-void Rover::ProcessInput(GLfloat additionalSpeed, GLfloat additionalTurnAngle)
+void Rover::ProcessInput(GLfloat moveDirection, GLfloat additionalTurnAngle)
 {
 	// Aktualizacja skrêtu kó³	
 	if (additionalTurnAngle != 0.0f) {
@@ -44,26 +44,29 @@ void Rover::ProcessInput(GLfloat additionalSpeed, GLfloat additionalTurnAngle)
 	rightWheelsWithLinks.TurnWheels(wheelsTurnAngle);
 
 	// Aktualizacja prêdkoœci ³azika	
-	if (additionalSpeed != 0.0f) {
+	if (moveDirection != 0.0f) {
 				
 		//breaking while moving forward
-		if (speed > 0 and additionalSpeed < 0 )
+		if (speed > 0 and moveDirection < 0 )
 			speed -= breakingSpeed;
 		
 		//breaking while moving backward
-		else if (speed < 0 and additionalSpeed > 0)
+		else if (speed < 0 and moveDirection > 0)
 			speed += breakingSpeed;
 
-		// move forward or backward
-		else if (speed < 20 and speed > -20)
-			speed += additionalSpeed;
+		// move forward 
+		if (moveDirection == 1.0f and speed < 20)
+			speed += moveSpeed;
+		// move backward 
+		else if (moveDirection == -1.0f and speed > -20)
+			speed += -moveSpeed;
 		
 	}
 	//momentum
-	else if (additionalSpeed == 0.0f) {
+	else if (moveDirection == 0.0f) {
 		//TODO: add more advanced mathematical model
-		if (speed > 0.0f) speed -= 0.25f;
-		if (speed < 0.0f) speed += 0.25f;
+		if (speed > 0.0f) speed -= moveSpeed;
+		if (speed < 0.0f) speed += moveSpeed;
 	}
 
 	UpdatePosition();
