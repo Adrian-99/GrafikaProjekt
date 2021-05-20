@@ -29,6 +29,7 @@ void Rover::Draw()
 
 void Rover::ProcessInput(GLfloat additionalSpeed, GLfloat additionalTurnAngle)
 {
+	// Aktualizacja skrêtu kó³	
 	if (additionalTurnAngle != 0.0f) {
 		wheelsTurnAngle += additionalTurnAngle;
 		if (wheelsTurnAngle > 25.0f) wheelsTurnAngle = 25.0f;
@@ -42,20 +43,27 @@ void Rover::ProcessInput(GLfloat additionalSpeed, GLfloat additionalTurnAngle)
 	leftWheelsWithLinks.TurnWheels(wheelsTurnAngle);
 	rightWheelsWithLinks.TurnWheels(wheelsTurnAngle);
 
-	// TODO: Aktualizacja prêdkoœci tutaj
-	//additionalSpeed == velocity
-	
-	// move forward or backward
+	// Aktualizacja prêdkoœci ³azika	
 	if (additionalSpeed != 0.0f) {
-		if (speed < 20 and speed > -20)
+				
+		//breaking while moving forward
+		if (speed > 0 and additionalSpeed < 0 )
+			speed -= breakingSpeed;
+		
+		//breaking while moving backward
+		else if (speed < 0 and additionalSpeed > 0)
+			speed += breakingSpeed;
+
+		// move forward or backward
+		else if (speed < 20 and speed > -20)
 			speed += additionalSpeed;
+		
 	}
 	//momentum
 	else if (additionalSpeed == 0.0f) {
 		//TODO: add more advanced mathematical model
 		if (speed > 0.0f) speed -= 0.25f;
-		if (speed < 0.0f) speed += 0.25f;		
-		//std::cout << "momentum-speed: " << speed << std::endl;
+		if (speed < 0.0f) speed += 0.25f;
 	}
 
 	UpdatePosition();
@@ -65,7 +73,7 @@ void Rover::UpdatePosition()
 {
 	if (speed != 0.0f) {
 		Vector3 moveVector;
-		GLfloat distance = speed / 1.25;	//TODO: factor depends on rover speed
+		GLfloat distance = speed / 1.25;	//TODO: factor(1.25) depends on rover speed
 		if (wheelsTurnAngle != 0.0f) {
 			GLfloat turnRadius = 1 / tan(wheelsTurnAngle * 0.01745329252f) * 75.0f * size;
 			rotationAngle += 360 * (distance / (2 * 3.14159265359f * turnRadius));
