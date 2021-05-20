@@ -1,9 +1,9 @@
 #include "WheelLinks.h"
 
-WheelLinks::WheelLinks(Vector3 startPosition, GLfloat size, GLboolean wheelsOnTheLeft, GLfloat* roverSpeed) :
-	wheel1(Vector3(-65 * size, 0.0f, -30 * size), size * 20, size * 20, wheelsOnTheLeft, roverSpeed),
-	wheel2(Vector3(10 * size, 0.0f, -30 * size), size * 20, size * 20, wheelsOnTheLeft, roverSpeed),
-	wheel3(Vector3(70 * size, 0.0f, -30 * size), size * 20, size * 20, wheelsOnTheLeft, roverSpeed)
+WheelLinks::WheelLinks(Vector3 startPosition, GLfloat size, GLboolean wheelsOnTheLeft) :
+	wheel1(Vector3(-65 * size, 0.0f, -30 * size), size * 20, size * 20, wheelsOnTheLeft),
+	wheel2(Vector3(10 * size, 0.0f, -30 * size), size * 20, size * 20, wheelsOnTheLeft),
+	wheel3(Vector3(70 * size, 0.0f, -30 * size), size * 20, size * 20, wheelsOnTheLeft)
 {
 	this->position = startPosition;
 	this->size = size;
@@ -163,14 +163,25 @@ void WheelLinks::DrawConnector(GLfloat x, GLfloat z, GLfloat width, bool extraWi
 	glEnd();
 }
 
-void WheelLinks::TurnWheels(GLfloat turnAngle)
+void WheelLinks::UpdateWheels(GLfloat turnAngle, GLfloat speed)
 {
-	if (leftSide ^ turnAngle > 0.0f) {
+	if (leftSide ^ (turnAngle > 0.0f)) {
 		wheel1.SetTurnAngle(0.9f * turnAngle);
 		wheel3.SetTurnAngle(0.9f * -0.8 * turnAngle);
 	}
 	else {
 		wheel1.SetTurnAngle(1.2f * turnAngle);
 		wheel3.SetTurnAngle(1.2f * -0.8 * turnAngle);
+	}
+
+	if (leftSide) {
+		wheel1.AddRotationAngle(0.032 * speed * (60 - turnAngle) / size);
+		wheel2.AddRotationAngle(0.032 * speed * (60 - turnAngle) / size);
+		wheel3.AddRotationAngle(0.032 * speed * (60 - turnAngle) / size);
+	}
+	else {
+		wheel1.AddRotationAngle(0.032 * speed * (60 + turnAngle) / size);
+		wheel2.AddRotationAngle(0.032 * speed * (60 + turnAngle) / size);
+		wheel3.AddRotationAngle(0.032 * speed * (60 + turnAngle) / size);
 	}
 }

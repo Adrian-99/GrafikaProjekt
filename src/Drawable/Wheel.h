@@ -7,9 +7,7 @@ class Wheel
 {
 private:
 	Vector3 position;			// pozycja ko³a
-	GLfloat* roverSpeed;		// predkoœæ ³azika
-	GLfloat spinningSpeed;		// predkoœæ obrotu ko³a
-	GLfloat spinAngle;			// k¹t obrotu ko³a
+	GLfloat rotationAngle;			// k¹t obrotu ko³a
 	GLfloat tireLeftEdgeY;
 	GLfloat tireRightEdgeY;
 	GLfloat rimLeftEdgeY;
@@ -22,15 +20,15 @@ private:
 	GLfloat turnAngle;
 
 public:
-	Wheel(Vector3 startPosition, GLfloat radius, GLfloat width, bool isLeft, GLfloat* roverSpeed);
+	Wheel(Vector3 startPosition, GLfloat radius, GLfloat width, bool isLeft);
 	~Wheel();
 	void Draw();
 	void ChangeYPosition(GLfloat y);
 	void SetTurnAngle(GLfloat angle);
+	void AddRotationAngle(GLfloat angle);
 
 private:
 	void DrawRim();
 	void DrawTire();
-	void SpinningAnimation();
 };
 

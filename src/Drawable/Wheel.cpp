@@ -1,10 +1,9 @@
 #include "Wheel.h"
 #include <iostream>
 
-Wheel::Wheel(Vector3 startPosition, GLfloat radius, GLfloat width, bool isLeft, GLfloat* roverSpeed)
+Wheel::Wheel(Vector3 startPosition, GLfloat radius, GLfloat width, bool isLeft)
 {
 	this->position = startPosition;
-	this->roverSpeed = roverSpeed;
 
 	if (isLeft) {
 		rimRightEdgeY = 0.0f;
@@ -20,6 +19,7 @@ Wheel::Wheel(Vector3 startPosition, GLfloat radius, GLfloat width, bool isLeft, 
 	}
 
 	turnAngle = 0.0f;
+	rotationAngle = 0.0f;
 
 	verticesNumber = 128;
 	rimOuterVertices = new GLfloat[verticesNumber * 2];
@@ -59,15 +59,12 @@ Wheel::~Wheel()
 }
 
 void Wheel::Draw()
-{	
-
-	SpinningAnimation();
-	
+{
 	glPushMatrix();
 
 	glTranslatef(position.X(), position.Y(), position.Z());
 	glRotatef(turnAngle, 0.0f, 0.0f, 1.0f);
-	glRotatef(spinAngle, 0.0f, 1.0f, 0.0f);
+	glRotatef(rotationAngle, 0.0f, -1.0f, 0.0f);
 
 	DrawRim();
 	DrawTire();
@@ -83,6 +80,8 @@ void Wheel::DrawRim()
 	glVertex3f(0.0f, rimLeftEdgeY, 0.0f);
 	glVertex3f(rimOuterVertices[2 * verticesNumber - 2], rimLeftEdgeY, rimOuterVertices[2 * verticesNumber - 1]);
 	for (GLint i = 0; i < verticesNumber; i++) {
+		if (i % 32 == 0) glColor3f(0.6f, 0.6f, 0.6f);
+		if (i % 32 == 16) glColor3f(0.5f, 0.5f, 0.5f);
 		glVertex3f(rimOuterVertices[2 * i], rimLeftEdgeY, rimOuterVertices[2 * i + 1]);
 	}
 	glEnd();
@@ -91,6 +90,8 @@ void Wheel::DrawRim()
 	glVertex3f(0.0f, rimRightEdgeY, 0.0f);
 	glVertex3f(rimOuterVertices[0], rimRightEdgeY, rimOuterVertices[1]);
 	for (GLint i = verticesNumber - 1; i >= 0; i--) {
+		if (i % 32 == 31) glColor3f(0.6f, 0.6f, 0.6f);
+		if (i % 32 == 15) glColor3f(0.5f, 0.5f, 0.5f);
 		glVertex3f(rimOuterVertices[2 * i], rimRightEdgeY, rimOuterVertices[2 * i + 1]);
 	}
 	glEnd();
@@ -148,36 +149,6 @@ void Wheel::DrawTire()
 	glEnd();
 }
 
-void Wheel::SpinningAnimation() {
-
-	//wheel spinnig ainmation
-	//std::cout << "roverSpeed: " << *roverSpeed << std::endl;
-
-	//move forward spanning speed ranges
-	if (*roverSpeed > 0.0f) {
-		if (*roverSpeed < 5.0f) spinningSpeed = 10.0f;
-		else if (*roverSpeed < 10.0f) spinningSpeed = 20.0f;
-		else if (*roverSpeed < 15.0f) spinningSpeed = 30.0f;
-		else if (*roverSpeed < 20.0f) spinningSpeed = 40.0f;
-	}
-	//move backward spanning speed ranges
-	else if (*roverSpeed < 0.0f) {
-		if (*roverSpeed > -5) spinningSpeed = -10.0f;
-		else if (*roverSpeed > -10.0f) spinningSpeed = -20.0f;
-		else if (*roverSpeed > -15.0f) spinningSpeed = -30.0f;
-		else if (*roverSpeed > -20.0f) spinningSpeed = -40.0f;
-	}
-	else if (*roverSpeed == 0.0f) {
-		spinAngle = 360.0f;
-		spinningSpeed = 0.0f;
-	}
-
-	spinAngle += spinningSpeed;
-	if (spinAngle > 360) spinAngle -= 360;
-	if (spinAngle < 0) spinAngle += 360;
-
-}
-
 void Wheel::ChangeYPosition(GLfloat y)
 {
 	position = Vector3(position.X(), y, position.Z());
@@ -186,4 +157,9 @@ void Wheel::ChangeYPosition(GLfloat y)
 void Wheel::SetTurnAngle(GLfloat angle)
 {
 	turnAngle = angle;
+}
+
+void Wheel::AddRotationAngle(GLfloat angle)
+{
+	rotationAngle += angle;
 }

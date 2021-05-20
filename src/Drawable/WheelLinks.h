@@ -2,6 +2,7 @@
 #include <GLFW/glfw3.h>
 #include "Wheel.h"
 #include "../Object/Vector3.h"
+#include <iostream>
 
 class WheelLinks
 {
@@ -14,10 +15,10 @@ private:
 	bool leftSide;
 
 public:
-	WheelLinks(Vector3 startPosition, GLfloat size, GLboolean wheelsOnTheLeft, GLfloat* roverSpeed);
+	WheelLinks(Vector3 startPosition, GLfloat size, GLboolean wheelsOnTheLeft);
 	~WheelLinks();
 	void Draw();
-	void TurnWheels(GLfloat turnAngle);
+	void UpdateWheels(GLfloat turnAngle, GLfloat speed);
 
 private:
 	void DrawLink(GLfloat fromX, GLfloat fromZ, GLfloat toX, GLfloat toZ, GLfloat width);
