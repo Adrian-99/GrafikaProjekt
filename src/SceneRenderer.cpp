@@ -42,10 +42,10 @@ void SceneRenderer::ProcessInput(GLFWwindow* window)
         RotateCamera(0.0f, -cameraRotationSpeed);
 
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-        additionalSpeed += 100.0f;
+        additionalSpeed += 0.25f;
 
     if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-        additionalSpeed -= 100.0f;
+        additionalSpeed -= 0.25f;
 
     if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
         additionalTurnAngle += 2.0f;

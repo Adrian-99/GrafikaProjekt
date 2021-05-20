@@ -1,9 +1,9 @@
 #include "WheelLinks.h"
 
-WheelLinks::WheelLinks(Vector3 startPosition, GLfloat size, GLboolean wheelsOnTheLeft) :
-	wheel1(Vector3(-65 * size, 0.0f, -30 * size), size * 20, size * 20, wheelsOnTheLeft),
-	wheel2(Vector3(10 * size, 0.0f, -30 * size), size * 20, size * 20, wheelsOnTheLeft),
-	wheel3(Vector3(70 * size, 0.0f, -30 * size), size * 20, size * 20, wheelsOnTheLeft)
+WheelLinks::WheelLinks(Vector3 startPosition, GLfloat size, GLboolean wheelsOnTheLeft, GLfloat* roverSpeed) :
+	wheel1(Vector3(-65 * size, 0.0f, -30 * size), size * 20, size * 20, wheelsOnTheLeft, roverSpeed),
+	wheel2(Vector3(10 * size, 0.0f, -30 * size), size * 20, size * 20, wheelsOnTheLeft, roverSpeed),
+	wheel3(Vector3(70 * size, 0.0f, -30 * size), size * 20, size * 20, wheelsOnTheLeft, roverSpeed)
 {
 	this->position = startPosition;
 	this->size = size;

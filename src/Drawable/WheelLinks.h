@@ -14,7 +14,7 @@ private:
 	bool leftSide;
 
 public:
-	WheelLinks(Vector3 startPosition, GLfloat size, GLboolean wheelsOnTheLeft);
+	WheelLinks(Vector3 startPosition, GLfloat size, GLboolean wheelsOnTheLeft, GLfloat* roverSpeed);
 	~WheelLinks();
 	void Draw();
 	void TurnWheels(GLfloat turnAngle);

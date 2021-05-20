@@ -1,8 +1,10 @@
 #include "Wheel.h"
+#include <iostream>
 
-Wheel::Wheel(Vector3 startPosition, GLfloat radius, GLfloat width, bool isLeft)
+Wheel::Wheel(Vector3 startPosition, GLfloat radius, GLfloat width, bool isLeft, GLfloat* roverSpeed)
 {
-	position = startPosition;
+	this->position = startPosition;
+	this->roverSpeed = roverSpeed;
 
 	if (isLeft) {
 		rimRightEdgeY = 0.0f;
@@ -57,11 +59,15 @@ Wheel::~Wheel()
 }
 
 void Wheel::Draw()
-{
+{	
+
+	SpinningAnimation();
+	
 	glPushMatrix();
 
 	glTranslatef(position.X(), position.Y(), position.Z());
 	glRotatef(turnAngle, 0.0f, 0.0f, 1.0f);
+	glRotatef(spinAngle, 0.0f, 1.0f, 0.0f);
 
 	DrawRim();
 	DrawTire();
@@ -140,6 +146,36 @@ void Wheel::DrawTire()
 		glVertex3f(tireOuterVertices[2 * i], tireRightEdgeY, tireOuterVertices[2 * i + 1]);
 	}
 	glEnd();
+}
+
+void Wheel::SpinningAnimation() {
+
+	//wheel spinnig ainmation
+	//std::cout << "roverSpeed: " << *roverSpeed << std::endl;
+
+	//move forward spanning speed ranges
+	if (*roverSpeed > 0.0f) {
+		if (*roverSpeed < 5.0f) spinningSpeed = 10.0f;
+		else if (*roverSpeed < 10.0f) spinningSpeed = 20.0f;
+		else if (*roverSpeed < 15.0f) spinningSpeed = 30.0f;
+		else if (*roverSpeed < 20.0f) spinningSpeed = 40.0f;
+	}
+	//move backward spanning speed ranges
+	else if (*roverSpeed < 0.0f) {
+		if (*roverSpeed > -5) spinningSpeed = -10.0f;
+		else if (*roverSpeed > -10.0f) spinningSpeed = -20.0f;
+		else if (*roverSpeed > -15.0f) spinningSpeed = -30.0f;
+		else if (*roverSpeed > -20.0f) spinningSpeed = -40.0f;
+	}
+	else if (*roverSpeed == 0.0f) {
+		spinAngle = 360.0f;
+		spinningSpeed = 0.0f;
+	}
+
+	spinAngle += spinningSpeed;
+	if (spinAngle > 360) spinAngle -= 360;
+	if (spinAngle < 0) spinAngle += 360;
+
 }
 
 void Wheel::ChangeYPosition(GLfloat y)
