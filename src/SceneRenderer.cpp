@@ -1,7 +1,7 @@
 #include "SceneRenderer.h"
 
 
-SceneRenderer::SceneRenderer() :
+SceneRenderer::SceneRenderer(GLFWwindow* window) :
     rover(Vector3(0.0f, 0.0f, 0.0f), 1.0f),
 
     rock2("rock2", Vector3(), 5.0f),
@@ -11,8 +11,10 @@ SceneRenderer::SceneRenderer() :
     t_rock4("t_rock4", Vector3(0.0f, 0.0f, -5.0f), 1.0f),
     terrain("terrain", Vector3(), 1.0f)
 {
-    xRot = 0.0f;
-    zRot = 0.0f;
+    CameraXRotation = 90.0f;
+    CameraZRotation = 0.0f;
+
+    this->window = window;
 
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     //glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
@@ -20,7 +22,7 @@ SceneRenderer::SceneRenderer() :
     glPolygonMode(GL_BACK, GL_NONE);
 }
 
-void SceneRenderer::ProcessInput(GLFWwindow* window)
+void SceneRenderer::ProcessInput()
 {	
 	GLfloat cameraRotationSpeed = 1.5f;
     GLfloat additionalTurnAngle = 0.0f;
@@ -56,7 +58,7 @@ void SceneRenderer::ProcessInput(GLFWwindow* window)
     rover.ProcessInput(moveDirection, additionalTurnAngle);
 }
 
-void SceneRenderer::RenderScene(GLFWwindow* window)
+void SceneRenderer::RenderScene()
 {
     rover.Draw();
 
@@ -79,15 +81,42 @@ void SceneRenderer::RenderScene(GLFWwindow* window)
     t_rock4.DrawDuplicate(Vector3(842.0f, -1075.0f, -10.0f), 74.0f);
     t_rock4.DrawDuplicate(Vector3(-1042.0f, -892.0f, 0.0f), 98.0f);
     rock4.DrawDuplicate(Vector3(463.0f, 1193.0f, 0.0f), 45.0f);
+
+    UpdateCameraPosition();
 }
 
 void SceneRenderer::RotateCamera(GLfloat xRotation, GLfloat zRotation)
 {
-    xRot += xRotation;
-    zRot += zRotation;
+    CameraXRotation += xRotation;
+    CameraZRotation += zRotation;
 
-    while (xRot > 360) xRot -= 360;
-    while (xRot < 0) xRot += 360;
-    while (zRot > 360) zRot -= 360;
-    while (zRot < 0) zRot += 360;
+    while (CameraXRotation > 360) CameraXRotation -= 360;
+    while (CameraXRotation < 0) CameraXRotation += 360;
+    while (CameraZRotation > 360) CameraZRotation -= 360;
+    while (CameraZRotation < 0) CameraZRotation += 360;
+}
+
+void SceneRenderer::UpdateCameraPosition()
+{
+    GLint width, height;
+    glfwGetFramebufferSize(window, &width, &height);
+    Vector3 roverPosition = rover.GetPosition();
+    GLfloat roverRotation = rover.GetRotation();
+    Vector3 cameraOffset, cameraPosition;
+
+    GLfloat cameraDistance = 300.0f;
+    cameraOffset.Z(cos(-CameraXRotation * 0.01745329252f) * cameraDistance);
+    cameraOffset.X(cos((-CameraZRotation + roverRotation) * 0.01745329252f) * sin(-CameraXRotation * 0.01745329252f) * cameraDistance);
+    cameraOffset.Y(sin((-CameraZRotation + roverRotation) * 0.01745329252f) * sin(-CameraXRotation * 0.01745329252f) * cameraDistance);
+
+    cameraPosition = roverPosition + cameraOffset + Vector3(0.0f, 0.0f, 30.0f);
+
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+
+    gluPerspective(60.0f, (GLfloat)width / (GLfloat)height, 1.0, 4000);
+    gluLookAt(cameraPosition.X(), cameraPosition.Y(), cameraPosition.Z(), roverPosition.X(), roverPosition.Y(), roverPosition.Z(), 0.0f, 0.0f, 1.0f);
+
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
 }

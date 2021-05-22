@@ -24,6 +24,8 @@ public:
 	Rover(Vector3 startPosition, GLfloat size);
 	void Draw();
 	void ProcessInput(GLfloat additionalSpeed, GLfloat additionalTurnAngle);
+	Vector3 GetPosition();
+	GLfloat GetRotation();
 
 private:
 	void UpdatePosition();
