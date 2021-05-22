@@ -11,8 +11,8 @@ SceneRenderer::SceneRenderer(GLFWwindow* window) :
     t_rock4("t_rock4", Vector3(0.0f, 0.0f, -5.0f), 1.0f),
     terrain("terrain", Vector3(), 1.0f)
 {
-    CameraXRotation = 90.0f;
-    CameraZRotation = 0.0f;
+    CameraXRotation = 30.0f;
+    CameraZRotation = 180.0f;
 
     this->window = window;
 
@@ -90,8 +90,10 @@ void SceneRenderer::RotateCamera(GLfloat xRotation, GLfloat zRotation)
     CameraXRotation += xRotation;
     CameraZRotation += zRotation;
 
-    while (CameraXRotation > 360) CameraXRotation -= 360;
-    while (CameraXRotation < 0) CameraXRotation += 360;
+    //while (CameraXRotation > 360) CameraXRotation -= 360;
+    //while (CameraXRotation < 0) CameraXRotation += 360;
+    if (CameraXRotation < 0.0f) CameraXRotation = 0.0f;
+    else if (CameraXRotation > 89.0f) CameraXRotation = 89.0f;
     while (CameraZRotation > 360) CameraZRotation -= 360;
     while (CameraZRotation < 0) CameraZRotation += 360;
 }
@@ -102,14 +104,14 @@ void SceneRenderer::UpdateCameraPosition()
     glfwGetFramebufferSize(window, &width, &height);
     Vector3 roverPosition = rover.GetPosition();
     GLfloat roverRotation = rover.GetRotation();
-    Vector3 cameraOffset, cameraPosition;
+    Vector3 cameraPosition;
 
     GLfloat cameraDistance = 300.0f;
-    cameraOffset.Z(cos(-CameraXRotation * 0.01745329252f) * cameraDistance);
-    cameraOffset.X(cos((-CameraZRotation + roverRotation) * 0.01745329252f) * sin(-CameraXRotation * 0.01745329252f) * cameraDistance);
-    cameraOffset.Y(sin((-CameraZRotation + roverRotation) * 0.01745329252f) * sin(-CameraXRotation * 0.01745329252f) * cameraDistance);
 
-    cameraPosition = roverPosition + cameraOffset + Vector3(0.0f, 0.0f, 30.0f);
+    cameraPosition = roverPosition + Vector3(
+        cos((-CameraZRotation + roverRotation) * 0.01745329252f) * cos(CameraXRotation * 0.01745329252f) * cameraDistance,
+        sin((-CameraZRotation + roverRotation) * 0.01745329252f) * cos(CameraXRotation * 0.01745329252f) * cameraDistance,
+        sin(CameraXRotation * 0.01745329252f) * cameraDistance + 50.0f);
 
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
