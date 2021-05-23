@@ -18,38 +18,15 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 {
-    SceneRenderer::cameraDistance -= yoffset * 20;
-}
-
-void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
-{
-    
-    if (action == 1) {
-        double xpos, ypos;
-        glfwGetCursorPos(window, &xpos, &ypos);
-        SceneRenderer::clickMouseX = xpos;
-        SceneRenderer::clickMouseY = ypos;
-        SceneRenderer::currMouseX = xpos;
-        SceneRenderer::currMouseY = ypos;
-        std::cout << "mouse_button_callback: pressed -> " << xpos << " " << ypos << std::endl;
-    }
-    else {
-        std::cout << "mouse_button_callback: released"<< std::endl;
-    }
+    SceneRenderer::cameraFov -= yoffset * 5;
+    if (SceneRenderer::cameraFov < 30.0f) SceneRenderer::cameraFov = 30.0f;
+    else if (SceneRenderer::cameraFov > 120.0f) SceneRenderer::cameraFov = 120.0f;
 }
 
 static void cursor_position_callback(GLFWwindow* window, double xpos, double ypos)
 {
+    SceneRenderer::currMousePosition = Vector2(xpos, ypos);
 }
-
-
-
-GLfloat SceneRenderer::cameraDistance = 300.f;
-GLfloat SceneRenderer::clickMouseX = 0.f;;
-GLfloat SceneRenderer::clickMouseY = 0.f;
-GLfloat SceneRenderer::currMouseX = 0.f;
-GLfloat SceneRenderer::currMouseY = 0.f;
-
 
 int main() {
     #pragma region Creating window
@@ -73,8 +50,7 @@ int main() {
     #pragma region Registering callbacks
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
     glfwSetScrollCallback(window, scroll_callback);
-    glfwSetMouseButtonCallback(window, mouse_button_callback);
-    glfwSetCursorPosCallback(window, cursor_position_callback);     //unused
+    glfwSetCursorPosCallback(window, cursor_position_callback);
     #pragma endregion
 
     #pragma region Variables declarations

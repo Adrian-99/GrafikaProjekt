@@ -1,17 +1,16 @@
 #pragma once
 #include <GLFW/glfw3.h>
 #include <GL/glut.h>
+#include "Object/Vector2.h"
 #include "Drawable/Rover.h"
 #include "Drawable/Object.h"
 
 class SceneRenderer
 {
 public:
-	static GLfloat cameraDistance;
-	static GLfloat clickMouseX;
-	static GLfloat clickMouseY;
-	static GLfloat currMouseX;
-	static GLfloat currMouseY;
+	static GLfloat cameraFov;
+	static Vector2 prevMousePosition;
+	static Vector2 currMousePosition;
 
 private:
 	GLFWwindow* window;
@@ -36,5 +35,6 @@ public:
 private:
 	void RotateCamera(GLfloat xRotation = 0.0f, GLfloat zRotation = 0.0f);
 	void UpdateCameraPosition();
+	void ProcessMouseMovement();
 };
 

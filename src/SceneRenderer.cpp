@@ -1,5 +1,8 @@
 #include "SceneRenderer.h"
 
+GLfloat SceneRenderer::cameraFov = 60.0f;
+Vector2 SceneRenderer::prevMousePosition;
+Vector2 SceneRenderer::currMousePosition;
 
 SceneRenderer::SceneRenderer(GLFWwindow* window) :
     rover(Vector3(0.0f, 0.0f, 0.0f), 1.0f),
@@ -11,7 +14,7 @@ SceneRenderer::SceneRenderer(GLFWwindow* window) :
     t_rock4("t_rock4", Vector3(0.0f, 0.0f, -5.0f), 1.0f),
     terrain("terrain", Vector3(), 1.0f)
 {
-    CameraXRotation = 30.0f;
+    CameraXRotation = 20.0f;
     CameraZRotation = 180.0f;
 
     this->window = window;
@@ -25,7 +28,6 @@ SceneRenderer::SceneRenderer(GLFWwindow* window) :
 void SceneRenderer::ProcessInput()
 {	
 	GLfloat cameraRotationSpeed = 1.5f;
-    GLfloat mouseCameraRotationSpeed = 4.0f;
     GLfloat additionalTurnAngle = 0.0f;
     GLfloat moveDirection = 0.0f;           //1=moveForward  -1=moveBackward, 0=staying
 
@@ -55,73 +57,6 @@ void SceneRenderer::ProcessInput()
 
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
         additionalTurnAngle -= 2.0f;
-
-
-    //MOUSE EVENTS
-
-    if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS) {
-        double xpos, ypos;
-        glfwGetCursorPos(window, &xpos, &ypos);
-        //std::cout << xpos << "-" << ypos << std::endl;
-
-        GLfloat tolerance = 25.0f;
-
-        /*if (abs(clickMouseX - currMouseX) > 100) mouseCameraRotationSpeed = 2.0f;
-        if (abs(clickMouseX - currMouseX) > 200) mouseCameraRotationSpeed = 4.0f;
-        if (abs(clickMouseX - currMouseX) > 300) mouseCameraRotationSpeed = 6.0f;
-        if (abs(clickMouseX - currMouseX) > 400) mouseCameraRotationSpeed = 8.0f;
-        if (abs(clickMouseX - currMouseX) > 500) mouseCameraRotationSpeed = 10.0f;
-        if (abs(clickMouseX - currMouseX) > 600) mouseCameraRotationSpeed = 12.0f;*/
-
-        //horizontal swipe
-        //if (ypos <= clickMouseY + tolerance and ypos >= clickMouseY - tolerance) {
-
-            std::cout <<  "-" << std::endl;
-            if (currMouseX - xpos > 0) {
-                //move camera to the left
-                std::cout << "move camera to the left" << std::endl;
-                CameraZRotation += mouseCameraRotationSpeed;
-            }
-            else if (currMouseX - xpos < 0) {
-                //move camera to the right
-                std::cout << "move camera to the right" << std::endl;
-                CameraZRotation -= mouseCameraRotationSpeed;
-            }
-
-            currMouseX = xpos;
-            currMouseY = ypos;
-
-        //}
-
-    }
-
-    if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_PRESS) {
-        double xpos, ypos;
-        glfwGetCursorPos(window, &xpos, &ypos);
-        std::cout << xpos << ypos << std::endl;
-
-        GLfloat tolerance = 25.0f;
-
-        //vertical swipe
-        /*if (xpos <= clickMouseX + tolerance and xpos >= clickMouseX - tolerance) {*/
-
-            if (currMouseY - ypos > 0) {
-                //move camera to the left
-                std::cout << "move camera to the left" << std::endl;
-                CameraXRotation += mouseCameraRotationSpeed / 2.0f;
-            }
-            else if (currMouseY - ypos < 0) {
-                //move camera to the right
-                std::cout << "move camera to the right" << std::endl;
-                CameraXRotation -= mouseCameraRotationSpeed / 2.0f;
-            }
-
-            currMouseX = xpos;
-            currMouseY = ypos;
-
-        //}
-
-    }
 
     rover.ProcessInput(moveDirection, additionalTurnAngle);
 }
@@ -168,11 +103,14 @@ void SceneRenderer::RotateCamera(GLfloat xRotation, GLfloat zRotation)
 
 void SceneRenderer::UpdateCameraPosition()
 {
-    GLint width, height;
-    glfwGetFramebufferSize(window, &width, &height);
+    GLint windowWidth, windowHeight;
+    glfwGetFramebufferSize(window, &windowWidth, &windowHeight);
     Vector3 roverPosition = rover.GetPosition();
     GLfloat roverRotation = rover.GetRotation();
+    GLfloat cameraDistance = 300.0f;
     Vector3 cameraPosition;
+
+    ProcessMouseMovement();
 
     cameraPosition = roverPosition + Vector3(
         cos((-CameraZRotation + roverRotation) * 0.01745329252f) * cos(CameraXRotation * 0.01745329252f) * cameraDistance,
@@ -182,10 +120,21 @@ void SceneRenderer::UpdateCameraPosition()
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
 
-    gluPerspective(60.0f, (GLfloat)width / (GLfloat)height, 1.0, 4000);
-    gluLookAt(cameraPosition.X(), cameraPosition.Y(), cameraPosition.Z(), roverPosition.X(), roverPosition.Y(), roverPosition.Z(), 0.0f, 0.0f, 1.0f);
+    gluPerspective(cameraFov, (GLfloat)windowWidth / (GLfloat)windowHeight, 1.0, 4000);
+    gluLookAt(cameraPosition.X(), cameraPosition.Y(), cameraPosition.Z(), roverPosition.X(), roverPosition.Y(), roverPosition.Z() + 50.0f, 0.0f, 0.0f, 1.0f);
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
     
+}
+
+void SceneRenderer::ProcessMouseMovement()
+{
+    if (currMousePosition != prevMousePosition) {
+        if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_PRESS) {
+            Vector2 move = (prevMousePosition - currMousePosition) / -8.0f;
+            RotateCamera(move.Y(), move.X());
+        }
+        prevMousePosition = currMousePosition;
+    }
 }
