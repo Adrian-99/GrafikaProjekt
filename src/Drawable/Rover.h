@@ -3,12 +3,14 @@
 #include "Body.h"
 #include "WheelLinks.h"
 #include "../Object/Vector3.h"
+#include "../Drawable/Terrain.h"
 
 class Rover
 {
 private:
 	Vector3 position;
 	GLfloat rotationAngle;
+	Terrain* terrainPtr;
 
 	GLfloat wheelsTurnAngle;
 	GLfloat speed;
@@ -21,7 +23,7 @@ private:
 	WheelLinks rightWheelsWithLinks;
 
 public:
-	Rover(Vector3 startPosition, GLfloat size);
+	Rover(Vector3 startPosition, GLfloat size, Terrain* terrainPtr);
 	void Draw();
 	void ProcessInput(GLfloat additionalSpeed, GLfloat additionalTurnAngle);
 	Vector3 GetPosition();

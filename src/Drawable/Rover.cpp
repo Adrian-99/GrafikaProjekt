@@ -1,6 +1,6 @@
 #include "Rover.h"
 
-Rover::Rover(Vector3 startPosition, GLfloat size) :
+Rover::Rover(Vector3 startPosition, GLfloat size, Terrain* terrainPtr) :
 	body(5.0f * size, 0.0f, 45.0f * size, size),
 	leftWheelsWithLinks(Vector3(-10.0f * size, -40.0f * size, 50.0f * size), size, true),
 	rightWheelsWithLinks(Vector3(-10.0f * size, 40.0f * size, 50.0f * size), size, false)
@@ -9,8 +9,8 @@ Rover::Rover(Vector3 startPosition, GLfloat size) :
 	rotationAngle = 0.0f;
 	wheelsTurnAngle = 0.0f;
 	speed = 0.0f;
-
 	this->size = size;
+	this->terrainPtr = terrainPtr;
 }
 
 void Rover::Draw()
@@ -97,5 +97,6 @@ void Rover::UpdatePosition()
 		moveVector.X(cos(rotationAngle * 0.01745329252f) * distance);
 		moveVector.Y(sin(rotationAngle * 0.01745329252f) * distance);
 		position += moveVector;
+		position.Z(terrainPtr->GetApproxHeightAt(Vector2(position.X(), position.Y())));
 	}
 }
