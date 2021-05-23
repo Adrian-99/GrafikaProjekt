@@ -6,12 +6,19 @@
 
 class SceneRenderer
 {
+public:
+	static GLfloat cameraDistance;
+	static GLfloat clickMouseX;
+	static GLfloat clickMouseY;
+	static GLfloat currMouseX;
+	static GLfloat currMouseY;
+
 private:
 	GLFWwindow* window;
 
 	GLfloat CameraXRotation;
 	GLfloat CameraZRotation;
-
+	
 	Rover rover;
 	Object rock2;
 	Object rock3;
