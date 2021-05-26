@@ -16,6 +16,7 @@ public:
 	GLfloat X(GLfloat newX);
 	GLfloat Y(GLfloat newY);
 	GLfloat Z(GLfloat newZ);
+	Vector3 Rotate(GLfloat xAxisAngle, GLfloat yAxisAngle, GLfloat zAxisAngle);
 	GLfloat GetLength();
 	GLfloat* ToArray();
 	Vector2 ToVector2();

@@ -13,6 +13,7 @@ public:
 	GLfloat Y();
 	GLfloat X(GLfloat newX);
 	GLfloat Y(GLfloat newY);
+	Vector2 Rotate(GLfloat angle);
 	GLfloat GetLength();
 	GLfloat* ToArray();
 	Vector2 operator+(const Vector2& v);

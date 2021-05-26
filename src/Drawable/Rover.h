@@ -9,7 +9,9 @@ class Rover
 {
 private:
 	Vector3 position;
-	GLfloat rotationAngle;
+	GLfloat yawAngle;
+	GLfloat pitchAngle;
+	GLfloat rollAngle;
 	Terrain* terrainPtr;
 
 	GLfloat wheelsTurnAngle;
