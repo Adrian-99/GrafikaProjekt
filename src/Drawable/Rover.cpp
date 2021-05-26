@@ -73,6 +73,16 @@ void Rover::ProcessInput(GLfloat moveDirection, GLfloat additionalTurnAngle)
 	UpdatePosition();
 }
 
+Vector3 Rover::GetPosition()
+{
+	return position;
+}
+
+GLfloat Rover::GetRotation()
+{
+	return rotationAngle;
+}
+
 void Rover::UpdatePosition()
 {
 	if (speed != 0.0f) {

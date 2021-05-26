@@ -13,29 +13,19 @@
 /// <param name="height">New window height</param>
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
-    GLfloat nRange = 100.0f;
-    GLfloat fAspect;
-
-    fAspect = (GLfloat)width / (GLfloat)height;
-    // Set Viewport to window dimensions
     glViewport(0, 0, width, height);
+}
 
-    // Reset coordinate system
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
+void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
+{
+    SceneRenderer::cameraFov -= yoffset * 5;
+    if (SceneRenderer::cameraFov < 30.0f) SceneRenderer::cameraFov = 30.0f;
+    else if (SceneRenderer::cameraFov > 120.0f) SceneRenderer::cameraFov = 120.0f;
+}
 
-    // Establish clipping volume (left, right, bottom, top, near, far)
-    /*if (width <= height)
-        glOrtho(-nRange, nRange, -nRange * height / width, nRange * height / width, -nRange, nRange);
-    else
-        glOrtho(-nRange * width / height, nRange * width / height, -nRange, nRange, -nRange, nRange);*/
-
-    // Establish perspective: 
-    gluPerspective(60.0f,fAspect,1.0,4000);
-    gluLookAt(0.0f, 0.0f, 300.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
-
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
+static void cursor_position_callback(GLFWwindow* window, double xpos, double ypos)
+{
+    SceneRenderer::currMousePosition = Vector2(xpos, ypos);
 }
 
 int main() {
@@ -59,10 +49,12 @@ int main() {
 
     #pragma region Registering callbacks
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+    glfwSetScrollCallback(window, scroll_callback);
+    glfwSetCursorPosCallback(window, cursor_position_callback);
     #pragma endregion
 
     #pragma region Variables declarations
-    SceneRenderer sceneRenderer{};
+    SceneRenderer sceneRenderer(window);
 
     double frameStartTime, frameDuration;
     const unsigned short fpsLimit = 30;
@@ -87,18 +79,15 @@ int main() {
             lastTime += 1.0;
         }*/
 
-        sceneRenderer.ProcessInput(window);
+        sceneRenderer.ProcessInput();
 
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glEnable(GL_DEPTH_TEST);    //bardzo wazne okresla kolejnosc rysowania scian
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glPushMatrix();
 
-        glRotatef(sceneRenderer.xRot, 1.0f, 0.0f, 0.0f);
-        glRotatef(sceneRenderer.zRot, 0.0f, 0.0f, 1.0f);
-
         // Draw thigs here
-        sceneRenderer.RenderScene(window);
+        sceneRenderer.RenderScene();
 
         glPopMatrix();
         glMatrixMode(GL_MODELVIEW);
