@@ -4,6 +4,7 @@
 #include "Object/Vector2.h"
 #include "Drawable/Rover.h"
 #include "Drawable/Object.h"
+#include "Drawable/Terrain.h"
 
 class SceneRenderer
 {
@@ -25,7 +26,7 @@ private:
 	Object t_rock;
 	Object t_rock4;
 
-	Object terrain;
+	Terrain terrain;
 
 public:
 	SceneRenderer(GLFWwindow* window);

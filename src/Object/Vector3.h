@@ -1,5 +1,7 @@
 #pragma once
 #include <GLFW/glfw3.h>
+#include <math.h>
+#include "Vector2.h"
 
 class Vector3
 {
@@ -11,10 +13,13 @@ public:
 	GLfloat X();
 	GLfloat Y();
 	GLfloat Z();
-	GLfloat* ToArray();
 	GLfloat X(GLfloat newX);
 	GLfloat Y(GLfloat newY);
 	GLfloat Z(GLfloat newZ);
+	Vector3 Rotate(GLfloat xAxisAngle, GLfloat yAxisAngle, GLfloat zAxisAngle);
+	GLfloat GetLength();
+	GLfloat* ToArray();
+	Vector2 ToVector2();
 	Vector3 operator+(const Vector3& v);
 	Vector3 operator-(const Vector3& v);
 	Vector3& operator+=(const Vector3& v);

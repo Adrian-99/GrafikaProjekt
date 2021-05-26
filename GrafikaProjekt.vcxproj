@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="src\Drawable\Body.cpp" />
     <ClCompile Include="src\Drawable\Cuboid.cpp" />
+    <ClCompile Include="src\Drawable\Terrain.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Drawable\Object.cpp" />
     <ClCompile Include="src\Drawable\Rover.cpp" />
@@ -37,6 +38,7 @@
     <ClInclude Include="src\Drawable\Cuboid.h" />
     <ClInclude Include="src\Drawable\Object.h" />
     <ClInclude Include="src\Drawable\Rover.h" />
+    <ClInclude Include="src\Drawable\Terrain.h" />
     <ClInclude Include="src\Object\Material.h" />
     <ClInclude Include="src\Object\Helpers.h" />
     <ClInclude Include="src\Object\Vector2.h" />

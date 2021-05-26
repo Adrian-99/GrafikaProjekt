@@ -12,7 +12,7 @@
 
 class Object
 {
-private:
+protected:
 	static std::string loadingPath;			// œcie¿ka do folderu, w którym znajduj¹ siê pliki .obj
 
 	std::string name;						// nazwa pliku .obj

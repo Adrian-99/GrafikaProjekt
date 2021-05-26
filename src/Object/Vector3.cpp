@@ -22,11 +22,6 @@ GLfloat Vector3::Z()
 	return position[2];
 }
 
-GLfloat* Vector3::ToArray()
-{
-	return position;
-}
-
 GLfloat Vector3::X(GLfloat newX)
 {
 	position[0] = newX;
@@ -43,6 +38,40 @@ GLfloat Vector3::Z(GLfloat newZ)
 {
 	position[2] = newZ;
 	return newZ;
+}
+
+Vector3 Vector3::Rotate(GLfloat xAxisAngle, GLfloat yAxisAngle, GLfloat zAxisAngle)
+{
+	xAxisAngle = xAxisAngle * 0.01745329252f;
+	yAxisAngle = yAxisAngle * 0.01745329252f;
+	zAxisAngle = zAxisAngle * 0.01745329252f;
+	Vector3 result = *this;
+
+	result.position[1] = result.position[1] * cos(xAxisAngle) - result.position[2] * sin(xAxisAngle);
+	result.position[2] = result.position[1] * sin(xAxisAngle) + result.position[2] * cos(xAxisAngle);
+
+	result.position[0] = result.position[0] * cos(yAxisAngle) + result.position[2] * sin(yAxisAngle);
+	result.position[2] = -result.position[0] * sin(yAxisAngle) + result.position[2] * cos(yAxisAngle);
+
+	result.position[0] = result.position[0] * cos(zAxisAngle) - result.position[1] * sin(zAxisAngle);
+	result.position[1] = result.position[0] * sin(zAxisAngle) + result.position[1] * cos(zAxisAngle);
+
+	return result;
+}
+
+GLfloat Vector3::GetLength()
+{
+	return sqrt(pow(position[0], 2) + pow(position[1], 2) + pow(position[2], 2));
+}
+
+GLfloat* Vector3::ToArray()
+{
+	return position;
+}
+
+Vector2 Vector3::ToVector2()
+{
+	return Vector2(position[0], position[1]);
 }
 
 Vector3 Vector3::operator+(const Vector3& v)

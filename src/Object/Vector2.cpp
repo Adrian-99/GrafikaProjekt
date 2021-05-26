@@ -28,6 +28,17 @@ GLfloat Vector2::Y(GLfloat newY)
     return newY;
 }
 
+Vector2 Vector2::Rotate(GLfloat angle)
+{
+    angle = angle * 0.01745329252f;
+    return Vector2(position[0] * cos(angle) - position[1] * sin(angle), position[0] * sin(angle) + position[1] * cos(angle));
+}
+
+GLfloat Vector2::GetLength()
+{
+    return sqrt(pow(position[0], 2) + pow(position[1], 2));
+}
+
 GLfloat* Vector2::ToArray()
 {
     return position;
