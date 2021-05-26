@@ -50,11 +50,11 @@ void Rover::ProcessInput(GLfloat moveDirection, GLfloat additionalTurnAngle)
 				
 		//breaking while moving forward
 		if (speed > 0 and moveDirection < 0 )
-			speed -= breakingSpeed;
+			speed -= brakingSpeed;
 		
 		//breaking while moving backward
 		else if (speed < 0 and moveDirection > 0)
-			speed += breakingSpeed;
+			speed += brakingSpeed;
 
 		// move forward 
 		if (moveDirection == 1.0f and speed < 20)
@@ -101,8 +101,6 @@ void Rover::UpdatePosition()
 		moveVector.X(cos(yawAngle * 0.01745329252f) * distance);
 		moveVector.Y(sin(yawAngle * 0.01745329252f) * distance);
 		position += moveVector;
-
-
 
 		GLfloat leftFrontHeight = terrainPtr->GetApproxHeightAt((position).ToVector2() + Vector2(75.0f * size, 40.0f * size).Rotate(yawAngle));
 		GLfloat rightFrontHeight = terrainPtr->GetApproxHeightAt((position).ToVector2() + Vector2(75.0f * size, -40.0f * size).Rotate(yawAngle));

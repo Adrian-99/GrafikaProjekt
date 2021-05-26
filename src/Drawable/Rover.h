@@ -8,16 +8,16 @@
 class Rover
 {
 private:
-	Vector3 position;
-	GLfloat yawAngle;
-	GLfloat pitchAngle;
-	GLfloat rollAngle;
-	Terrain* terrainPtr;
+	Vector3 position;				// aktualna pozycja ³azika
+	GLfloat yawAngle;				// k¹t obrotu ³azika wokó³ osi Z
+	GLfloat pitchAngle;				// k¹t obrotu ³azika wokó³ osi Y
+	GLfloat rollAngle;				// k¹t obrotu ³azika wokó³ osi X
+	Terrain* terrainPtr;			// wskaŸnik do obiektu terenu, po którym porusza siê ³azik
 
-	GLfloat wheelsTurnAngle;
-	GLfloat speed;
-	GLfloat moveSpeed = 0.25f;
-	GLfloat breakingSpeed = 0.5f;
+	GLfloat wheelsTurnAngle;		// aktualny k¹t skrêtu kó³
+	GLfloat speed;					// aktualna prêdkoœæ ³azika
+	GLfloat moveSpeed = 0.25f;		// przyspieszenie ³azika
+	GLfloat brakingSpeed = 0.5f;	// hamowanie ³azika
 
 	GLfloat size;
 	Body body;

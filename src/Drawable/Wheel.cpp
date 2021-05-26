@@ -162,4 +162,6 @@ void Wheel::SetTurnAngle(GLfloat angle)
 void Wheel::AddRotationAngle(GLfloat angle)
 {
 	rotationAngle += angle;
+	while (rotationAngle < 0.0f) rotationAngle += 360.0f;
+	while (rotationAngle > 360.0f) rotationAngle -= 360.0f;
 }

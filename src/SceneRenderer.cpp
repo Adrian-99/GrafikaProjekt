@@ -29,7 +29,7 @@ void SceneRenderer::ProcessInput()
 {	
 	GLfloat cameraRotationSpeed = 1.5f;
     GLfloat additionalTurnAngle = 0.0f;
-    GLfloat moveDirection = 0.0f;           //1=moveForward  -1=moveBackward, 0=staying
+    GLfloat moveDirection = 0.0f;           //1=moveForward  -1=moveBackward, 0=stay
 
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
@@ -66,7 +66,6 @@ void SceneRenderer::RenderScene()
     rover.Draw();
 
     terrain.Draw();
-    //terrain.DrawHeightMap();
 
     t_rock.DrawDuplicate(Vector3(-450.0f, 30.0f, 0.0f), 5.0f);
     t_rock.DrawDuplicate(Vector3(842.0f, 965.0f, 0.0f), 65.0f);
@@ -85,7 +84,6 @@ void SceneRenderer::RenderScene()
     t_rock4.DrawDuplicate(Vector3(842.0f, -1075.0f, -10.0f), 74.0f);
     t_rock4.DrawDuplicate(Vector3(-1042.0f, -892.0f, 0.0f), 98.0f);
     rock4.DrawDuplicate(Vector3(463.0f, 1193.0f, 0.0f), 45.0f);
-
 
     UpdateCameraPosition();
 }
