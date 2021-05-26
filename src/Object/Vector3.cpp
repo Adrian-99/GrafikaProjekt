@@ -22,11 +22,6 @@ GLfloat Vector3::Z()
 	return position[2];
 }
 
-GLfloat* Vector3::ToArray()
-{
-	return position;
-}
-
 GLfloat Vector3::X(GLfloat newX)
 {
 	position[0] = newX;
@@ -43,6 +38,21 @@ GLfloat Vector3::Z(GLfloat newZ)
 {
 	position[2] = newZ;
 	return newZ;
+}
+
+GLfloat Vector3::GetLength()
+{
+	return sqrt(pow(position[0], 2) + pow(position[1], 2) + pow(position[2], 2));
+}
+
+GLfloat* Vector3::ToArray()
+{
+	return position;
+}
+
+Vector2 Vector3::ToVector2()
+{
+	return Vector2(position[0], position[1]);
 }
 
 Vector3 Vector3::operator+(const Vector3& v)

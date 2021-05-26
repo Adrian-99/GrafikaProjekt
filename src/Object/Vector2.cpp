@@ -28,6 +28,11 @@ GLfloat Vector2::Y(GLfloat newY)
     return newY;
 }
 
+GLfloat Vector2::GetLength()
+{
+    return sqrt(pow(position[0], 2) + pow(position[1], 2));
+}
+
 GLfloat* Vector2::ToArray()
 {
     return position;

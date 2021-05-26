@@ -3,7 +3,7 @@
 Terrain::Terrain(std::string name, Vector3 startPosition, GLfloat size, GLint heightMapOptimization) :
 	Object(name, startPosition, size)
 {
-	this->heightMapOptimization = heightMapOptimization;
+	/*this->heightMapOptimization = heightMapOptimization;
 
 	GLfloat minX = vertices.at(0).X() / heightMapOptimization;
 	GLfloat maxX = vertices.at(0).X() / heightMapOptimization;
@@ -49,7 +49,61 @@ Terrain::Terrain(std::string name, Vector3 startPosition, GLfloat size, GLint he
 		*occurancesPtr += 1;
 	}
 
-	GLint unknownHeights;
+	bool unknownHeights;
+	GLint sumOfWeights;
+	GLfloat sumOfHeights;
+	GLint foundXNeighbuors;
+	GLint foundYNeighbuors;
+	do {
+		unknownHeights = false;
+		for (GLint i = 0; i < heightMapDimensionX; i++) {
+			for (GLint j = 0; j < heightMapDimensionY; j++) {
+				if (occurances[i][j] > 0) continue;
+				sumOfWeights = 0;
+				sumOfHeights = 0.0f;
+				foundXNeighbuors = 0;
+				foundYNeighbuors = 0;
+				for (GLint k = 1; i - k >= 0 && k < 10; k++) {
+					if (occurances[i - k][j] > 0) {
+						sumOfWeights += 10 - k;
+						sumOfHeights += heightMap[i - k][j] * (10 - k);
+						foundXNeighbuors++;
+						break;
+					}
+				}
+				for (GLint k = 1; i + k < heightMapDimensionX && k < 10; k++) {
+					if (occurances[i + k][j] > 0) {
+						sumOfWeights += 10 - k;
+						sumOfHeights += heightMap[i + k][j] * (10 - k);
+						foundXNeighbuors++;
+						break;
+					}
+				}
+				for (GLint k = 1; j - k >= 0 && k < 10; k++) {
+					if (occurances[i][j - k] > 0) {
+						sumOfWeights += 10 - k;
+						sumOfHeights += heightMap[i][j - k] * (10 - k);
+						foundYNeighbuors++;
+						break;
+					}
+				}
+				for (GLint k = 1; j + k < heightMapDimensionY && k < 10; k++) {
+					if (occurances[i][j + k] > 0) {
+						sumOfWeights += 10 - k;
+						sumOfHeights += heightMap[i][j + k] * (10 - k);
+						foundYNeighbuors++;
+						break;
+					}
+				}
+				if (foundXNeighbuors == 2 || foundYNeighbuors == 2) {
+					heightMap[i][j] = sumOfHeights / sumOfWeights;
+					occurances[i][j] = 1;
+				}
+			}
+		}
+	} while (unknownHeights);*/
+
+	/*GLint unknownHeights;
 	GLint knownHeightsAround;
 	GLfloat sumOfHeightsAround;
 	do {
@@ -75,35 +129,57 @@ Terrain::Terrain(std::string name, Vector3 startPosition, GLfloat size, GLint he
 					knownHeightsAround++;
 					sumOfHeightsAround += heightMap[i][j + 1];
 				}
-				heightMap[i][j] = sumOfHeightsAround / knownHeightsAround;
-				occurances[i][j] = 1;
+				if (knownHeightsAround >= 3) {
+					heightMap[i][j] = sumOfHeightsAround / knownHeightsAround;
+					occurances[i][j] = 1;
+				}
 			}
 		}
 
-	} while (unknownHeights);
+	} while (unknownHeights);*/
 
-	for (GLint i = 0; i < heightMapDimensionX; i++) delete[] occurances[i];
-	delete[] occurances;
+	/*for (GLint i = 0; i < heightMapDimensionX; i++) delete[] occurances[i];
+	delete[] occurances;*/
 }
 
 Terrain::~Terrain()
 {
-	for (GLint i = 0; i < heightMapDimensionX; i++) delete[] heightMap[i];
-	delete[] heightMap;
+	/*for (GLint i = 0; i < heightMapDimensionX; i++) delete[] heightMap[i];
+	delete[] heightMap;*/
 }
 
 GLfloat Terrain::GetApproxHeightAt(Vector2 position)
 {
-	GLint convertedX = (GLint)round(position.X() / heightMapOptimization) - heightMapMinX;
+	/*GLint convertedX = (GLint)round(position.X() / heightMapOptimization) - heightMapMinX;
 	GLint convertedY = (GLint)round(position.Y() / heightMapOptimization) - heightMapMinY;
 	if (convertedX >= 0 && convertedX < heightMapDimensionX && convertedY >= 0 && convertedY < heightMapDimensionY)
 		return heightMap[convertedX][convertedY];
-	return 0.0f;
+	return 0.0f;*/
+
+	GLfloat toleranceRadius = 150.0f;
+
+	std::vector<Vector3> verticesAround;
+
+	for (GLint i = 1; i < vertices.size(); i++) {
+		if ((vertices.at(i).ToVector2() - position).GetLength() < toleranceRadius) {
+			verticesAround.push_back(vertices.at(i));
+		}
+	}
+
+	GLfloat weights = 0.0f;
+	GLfloat heights = 0.0f;
+
+	for (GLint i = 0; i < verticesAround.size(); i++) {
+		weights += toleranceRadius - (verticesAround.at(i).ToVector2() - position).GetLength();
+		heights += verticesAround.at(i).Z() * (toleranceRadius - (verticesAround.at(i).ToVector2() - position).GetLength());
+	}
+	if (weights > 0.0f) return heights / weights;
+	else return 0.0f;
 }
 
 void Terrain::DrawHeightMap()
 {
-	glPushMatrix();
+	/*glPushMatrix();
 
 	glColor3f(1.0f, 1.0f, 0.0f);
 
@@ -116,5 +192,5 @@ void Terrain::DrawHeightMap()
 		glEnd();
 	}
 
-	glPopMatrix();
+	glPopMatrix();*/
 }

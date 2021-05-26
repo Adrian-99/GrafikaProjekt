@@ -1,5 +1,6 @@
 #pragma once
 #include <GLFW/glfw3.h>
+#include <math.h>
 
 class Vector2
 {
@@ -12,6 +13,7 @@ public:
 	GLfloat Y();
 	GLfloat X(GLfloat newX);
 	GLfloat Y(GLfloat newY);
+	GLfloat GetLength();
 	GLfloat* ToArray();
 	Vector2 operator+(const Vector2& v);
 	Vector2 operator-(const Vector2& v);

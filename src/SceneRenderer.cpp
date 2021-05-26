@@ -66,7 +66,7 @@ void SceneRenderer::RenderScene()
     rover.Draw();
 
     terrain.Draw();
-    terrain.DrawHeightMap();
+    //terrain.DrawHeightMap();
 
     t_rock.DrawDuplicate(Vector3(-450.0f, 30.0f, 0.0f), 5.0f);
     t_rock.DrawDuplicate(Vector3(842.0f, 965.0f, 0.0f), 65.0f);
