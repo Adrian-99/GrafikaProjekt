@@ -48,11 +48,11 @@ void Rover::ProcessInput(GLfloat moveDirection, GLfloat additionalTurnAngle)
 	// Aktualizacja prêdkoœci ³azika	
 	if (moveDirection != 0.0f) {
 				
-		//breaking while moving forward
+		//braking while moving forward
 		if (speed > 0 and moveDirection < 0 )
 			speed -= brakingSpeed;
 		
-		//breaking while moving backward
+		//braking while moving backward
 		else if (speed < 0 and moveDirection > 0)
 			speed += brakingSpeed;
 
@@ -62,7 +62,6 @@ void Rover::ProcessInput(GLfloat moveDirection, GLfloat additionalTurnAngle)
 		// move backward 
 		else if (moveDirection == -1.0f and speed > -20)
 			speed += -moveSpeed;
-		
 	}
 	//momentum
 	else if (moveDirection == 0.0f) {
@@ -91,7 +90,7 @@ void Rover::UpdatePosition()
 {
 	if (speed != 0.0f) {
 		Vector3 moveVector;
-		GLfloat distance = speed / 1.25;	//TODO: factor(1.25) depends on rover speed
+		GLfloat distance = speed / 1.25;
 		if (wheelsTurnAngle != 0.0f) {
 			GLfloat turnRadius = 1 / tan(wheelsTurnAngle * 0.01745329252f) * 75.0f * size;
 			yawAngle += 360 * (distance / (2 * 3.14159265359f * turnRadius));
