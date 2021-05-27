@@ -102,14 +102,31 @@ void Rover::UpdatePosition()
 		moveVector.Y(sin(yawAngle * 0.01745329252f) * distance);
 		position += moveVector;
 
-		GLfloat leftFrontHeight = terrainPtr->GetApproxHeightAt((position).ToVector2() + Vector2(75.0f * size, 40.0f * size).Rotate(yawAngle));
-		GLfloat rightFrontHeight = terrainPtr->GetApproxHeightAt((position).ToVector2() + Vector2(75.0f * size, -40.0f * size).Rotate(yawAngle));
-		GLfloat leftBackHeight = terrainPtr->GetApproxHeightAt((position).ToVector2() + Vector2(-60.0f * size, 40.0f * size).Rotate(yawAngle));
-		GLfloat rightBackHeight = terrainPtr->GetApproxHeightAt((position).ToVector2() + Vector2(-60.0f * size, -40.0f * size).Rotate(yawAngle));
+		Vector2 leftFrontXY = Vector2(75.0f * size * cos(pitchAngle * 0.01745329252f), 40.0f * size * cos(rollAngle * 0.01745329252f));
+		Vector2 rightFrontXY = Vector2(75.0f * size * cos(pitchAngle * 0.01745329252f), -40.0f * size * cos(-rollAngle * 0.01745329252f));
+		Vector2 leftBackXY = Vector2(-60.0f * size * cos(-pitchAngle * 0.01745329252f), 40.0f * size * cos(rollAngle * 0.01745329252f));
+		Vector2 rightBackXY = Vector2(-60.0f * size * cos(-pitchAngle * 0.01745329252f), -40.0f * size * cos(-rollAngle * 0.01745329252f));
 
-		pitchAngle = (asin((leftFrontHeight - leftBackHeight) / 135.0f) + asin((rightFrontHeight - rightBackHeight) / 135.0f)) * 57.2957795 / 2;
-		rollAngle = (asin((rightFrontHeight - leftFrontHeight) / 80.0f) + asin((rightBackHeight - leftBackHeight) / 80.0f)) * 57.2957795 / 2;
+		GLfloat leftFrontHeight = terrainPtr->GetApproxHeightAt(position.ToVector2() + leftFrontXY.Rotate(yawAngle));
+		GLfloat rightFrontHeight = terrainPtr->GetApproxHeightAt(position.ToVector2() + rightFrontXY.Rotate(yawAngle));
+		GLfloat leftBackHeight = terrainPtr->GetApproxHeightAt(position.ToVector2() + leftBackXY.Rotate(yawAngle));
+		GLfloat rightBackHeight = terrainPtr->GetApproxHeightAt(position.ToVector2() + rightBackXY.Rotate(yawAngle));
+
+		GLfloat newPitchAngle = (asin((leftFrontHeight - leftBackHeight) / 135.0f) + asin((rightFrontHeight - rightBackHeight) / 135.0f)) * 57.2957795 / 2;
+		GLfloat newRollAngle = (asin((rightFrontHeight - leftFrontHeight) / 80.0f) + asin((rightBackHeight - leftBackHeight) / 80.0f)) * 57.2957795 / 2;
+
+		GLfloat angleMaxStep = 10.0f;
+
+		if (newPitchAngle - pitchAngle < -angleMaxStep) pitchAngle -= angleMaxStep;
+		else if (newPitchAngle - pitchAngle > angleMaxStep) pitchAngle += angleMaxStep;
+		else pitchAngle = newPitchAngle;
+
+		if (newRollAngle - rollAngle < -angleMaxStep) rollAngle -= angleMaxStep;
+		else if (newRollAngle - rollAngle > angleMaxStep) rollAngle += angleMaxStep;
+		else rollAngle = newRollAngle;
 
 		position.Z((leftFrontHeight + rightFrontHeight + leftBackHeight + rightBackHeight) / 4);
+
+		std::cout << "Yaw: " << yawAngle << "; Pitch: " << pitchAngle << "; Roll: " << rollAngle << std::endl;
 	}
 }
