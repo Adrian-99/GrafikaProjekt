@@ -7,6 +7,8 @@ Object::Object(std::string name, Vector3 startPosition, GLfloat size)
     using namespace std;
 
     this->name = name;
+    duplicateOffsets.clear();
+    duplicateRotations.clear();
 
     string line;
     vector<string> lineWords;
@@ -73,12 +75,31 @@ Object::Object(std::string name, Vector3 startPosition, GLfloat size)
     }
 }
 
-void Object::Draw()
+int Object::AddDuplicate(Vector3 offset, GLfloat rotationAngle)
 {
-    DrawDuplicate(Vector3());
+    duplicateOffsets.push_back(offset);
+    duplicateRotations.push_back(rotationAngle);
+    return duplicateOffsets.size() - 1;
 }
 
-void Object::DrawDuplicate(Vector3 offset, GLfloat rotationAngle)
+void Object::Draw()
+{
+    DrawObject();
+}
+
+void Object::DrawDuplicate(int duplicateIndex)
+{
+    if (duplicateIndex == -1) {
+        for (GLint i = 0; i < duplicateOffsets.size(); i++) {
+            DrawObject(duplicateOffsets.at(i), duplicateRotations.at(i));
+        }
+    }
+    else if (duplicateIndex >= 0 && duplicateIndex < duplicateOffsets.size()) {
+        DrawObject(duplicateOffsets.at(duplicateIndex), duplicateRotations.at(duplicateIndex));
+    }
+}
+
+void Object::DrawObject(Vector3 offset, GLfloat rotationAngle)
 {
     glPushMatrix();
 

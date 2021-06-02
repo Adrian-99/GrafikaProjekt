@@ -25,9 +25,16 @@ protected:
 	std::vector<int> normalIndices;			// lista kolejnoœci u¿ywania normalnych
 	std::vector<int> materialStartIndices;	// lista startowych wierzcho³ków, u¿ywaj¹cych poszczególne materia³y
 
+	std::vector<Vector3> duplicateOffsets;
+	std::vector<GLfloat> duplicateRotations;
+
 public:
 	Object(std::string name, Vector3 startPosition = Vector3(), GLfloat size = 1.0f);
+	int AddDuplicate(Vector3 offset, GLfloat rotationAngle = 0.0f);
 	void Draw();
-	void DrawDuplicate(Vector3 offset, GLfloat rotationAngle = 0.0f);
+	void DrawDuplicate(int duplicateIndex = -1);
+
+private:
+	void DrawObject(Vector3 offset = Vector3(), GLfloat rotationAngle = 0.0f);
 };
 

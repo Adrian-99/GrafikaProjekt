@@ -126,6 +126,6 @@ void Rover::UpdatePosition()
 
 		position.Z((leftFrontHeight + rightFrontHeight + leftBackHeight + rightBackHeight) / 4);
 
-		std::cout << "Yaw: " << yawAngle << "; Pitch: " << pitchAngle << "; Roll: " << rollAngle << std::endl;
+		//std::cout << "Yaw: " << yawAngle << "; Pitch: " << pitchAngle << "; Roll: " << rollAngle << std::endl;
 	}
 }
