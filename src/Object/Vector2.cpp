@@ -39,6 +39,11 @@ GLfloat Vector2::GetLength()
     return sqrt(pow(position[0], 2) + pow(position[1], 2));
 }
 
+GLfloat Vector2::GetAngle()
+{
+    return atan2(position[1], position[0]) * 57.2957795131;
+}
+
 GLfloat* Vector2::ToArray()
 {
     return position;
@@ -95,4 +100,24 @@ Vector2& Vector2::operator/=(const GLfloat& num)
 bool Vector2::operator!=(const Vector2& v)
 {
     return this->position[0] != v.position[0] || this->position[1] != v.position[1];
+}
+
+bool Vector2::operator>(const Vector2& v)
+{
+    return position[0] > v.position[0] && position[1] > v.position[1];
+}
+
+bool Vector2::operator>=(const Vector2& v)
+{
+    return position[0] >= v.position[0] && position[1] >= v.position[1];
+}
+
+bool Vector2::operator<(const Vector2& v)
+{
+    return position[0] < v.position[0] && position[1] < v.position[1];
+}
+
+bool Vector2::operator<=(const Vector2& v)
+{
+    return position[0] <= v.position[0] && position[1] <= v.position[1];
 }

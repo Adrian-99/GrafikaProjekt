@@ -9,6 +9,7 @@
 #include "../Object/Vector2.h"
 #include "../Object/Vector3.h"
 #include "../Object/Material.h"
+#include "../Collision/CollisionController.h"
 
 class Object
 {
@@ -29,12 +30,15 @@ protected:
 	std::vector<GLfloat> duplicateRotations;
 
 public:
-	Object(std::string name, Vector3 startPosition = Vector3(), GLfloat size = 1.0f);
-	int AddDuplicate(Vector3 offset, GLfloat rotationAngle = 0.0f);
+	Object(std::string name, Vector3 startPosition = Vector3(), GLfloat size = 1.0f, CollisionController* collisionController = nullptr);
+	int AddDuplicate(Vector3 offset, GLfloat rotationAngle = 0.0f, CollisionController* collisionController = nullptr);
 	void Draw();
 	void DrawDuplicate(int duplicateIndex = -1);
+	Vector3 GetMinPoint();
+	Vector3 GetMaxPoint();
 
 private:
 	void DrawObject(Vector3 offset = Vector3(), GLfloat rotationAngle = 0.0f);
+	void AddCollider(CollisionController* collisionController, Vector3 offset = Vector3());
 };
 

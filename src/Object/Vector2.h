@@ -15,6 +15,7 @@ public:
 	GLfloat Y(GLfloat newY);
 	Vector2 Rotate(GLfloat angle);
 	GLfloat GetLength();
+	GLfloat GetAngle();
 	GLfloat* ToArray();
 	Vector2 operator+(const Vector2& v);
 	Vector2 operator-(const Vector2& v);
@@ -25,5 +26,9 @@ public:
 	Vector2& operator*=(const GLfloat& num);
 	Vector2& operator/=(const GLfloat& num);
 	bool operator!=(const Vector2& v);
+	bool operator>(const Vector2& v);
+	bool operator>=(const Vector2& v);
+	bool operator<(const Vector2& v);
+	bool operator<=(const Vector2& v);
 };
 
