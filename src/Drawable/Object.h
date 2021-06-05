@@ -39,6 +39,6 @@ public:
 
 private:
 	void DrawObject(Vector3 offset = Vector3(), GLfloat rotationAngle = 0.0f);
-	void AddCollider(CollisionController* collisionController, Vector3 offset = Vector3());
+	void AddCollider(CollisionController* collisionController, Vector3 offset = Vector3(), GLfloat rotationAngle = 0.0f);
 };
 

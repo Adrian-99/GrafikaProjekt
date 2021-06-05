@@ -16,5 +16,7 @@ public:
 	bool Contains(Vector2 point);
 	void AddCollider(Vector3 position, GLfloat width, GLfloat height);
 	std::vector<Vector2> DetectCollisions(Collider collider);
+
+	void DrawAllColliders();
 };
 

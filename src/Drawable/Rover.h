@@ -22,6 +22,7 @@ private:
 	GLfloat brakingSpeed = 0.5f;	// hamowanie ³azika
 
 	CollisionController* collisionControllerPtr;
+	Collider collider;
 
 	GLfloat size;
 	Body body;
@@ -34,6 +35,8 @@ public:
 	void ProcessInput(GLfloat additionalSpeed, GLfloat additionalTurnAngle);
 	Vector3 GetPosition();
 	GLfloat GetRotation();
+
+	void DrawCollider();
 
 private:
 	void UpdatePosition();

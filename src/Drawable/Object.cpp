@@ -82,7 +82,7 @@ int Object::AddDuplicate(Vector3 offset, GLfloat rotationAngle, CollisionControl
     duplicateOffsets.push_back(offset);
     duplicateRotations.push_back(rotationAngle);
 
-    if (collisionController != nullptr) AddCollider(collisionController, offset);
+    if (collisionController != nullptr) AddCollider(collisionController, offset, rotationAngle);
 
     return duplicateOffsets.size() - 1;
 }
@@ -149,7 +149,7 @@ void Object::DrawObject(Vector3 offset, GLfloat rotationAngle)
     glPopMatrix();
 }
 
-void Object::AddCollider(CollisionController* collisionController, Vector3 offset)
+void Object::AddCollider(CollisionController* collisionController, Vector3 offset, GLfloat rotationAngle)
 {
     Vector3 minPoint = GetMinPoint();
     Vector3 maxPoint = GetMaxPoint();
@@ -158,6 +158,7 @@ void Object::AddCollider(CollisionController* collisionController, Vector3 offse
     position.X((maxPoint.X() + minPoint.X()) / 2);
     position.Y((maxPoint.Y() + minPoint.Y()) / 2);
     position.Z(minPoint.Z());
+    position.Rotate(0.0f, 0.0f, rotationAngle);
 
     GLfloat width = ((maxPoint.X() - minPoint.X()) + (maxPoint.Y() - minPoint.Y())) / 2;
 

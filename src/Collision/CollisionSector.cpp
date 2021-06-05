@@ -28,3 +28,10 @@ std::vector<Vector2> CollisionSector::DetectCollisions(Collider collider)
 	}
 	return result;
 }
+
+void CollisionSector::DrawAllColliders()
+{
+	for (GLint i = 0; i < colliders.size(); i++) {
+		colliders.at(i).Draw();
+	}
+}

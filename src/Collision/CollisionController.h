@@ -16,5 +16,7 @@ public:
 	void Initialize(Vector2 startPoint, Vector2 endPoint, GLfloat sectorSize);
 	void AddCollider(Vector3 position, GLfloat width, GLfloat height);
 	std::vector<Vector2> DetectCollisions(Collider collider);
+
+	void DrawAllColliders();
 };
 

@@ -52,17 +52,19 @@ std::vector<Vector2> CollisionController::DetectCollisions(Collider collider)
 		if (mainSectorX < sectorsCountX - 1 && mainSectorY < sectorsCountY - 1) sectorsToCheck.push_back((mainSectorX + 1) * sectorsCountY + mainSectorY + 1);
 
 		for (GLint i = 0; i < sectorsToCheck.size(); i++) {
-			sectorCollisions = collisionSectors.at(i).DetectCollisions(collider);
-
-			for (GLint j = 0; j < sectorCollisions.size(); j++) {
-				result.push_back(sectorCollisions.at(j));
-			}
-
-			//result.insert(result.end(), sectorCollisions.begin(), sectorCollisions.end());
+			sectorCollisions = collisionSectors.at(sectorsToCheck.at(i)).DetectCollisions(collider);
+			result.insert(result.end(), sectorCollisions.begin(), sectorCollisions.end());
 		}
 		std::cout << collider.GetPosition().X() << ", " << collider.GetPosition().Y() << " - " << mainSectorX << ", " << mainSectorY << std::endl;
 	}
 
 
 	return result;
+}
+
+void CollisionController::DrawAllColliders()
+{
+	for (GLint i = 0; i < collisionSectors.size(); i++) {
+		collisionSectors.at(i).DrawAllColliders();
+	}
 }
