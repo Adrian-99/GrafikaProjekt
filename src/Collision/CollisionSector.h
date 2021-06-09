@@ -7,9 +7,9 @@
 class CollisionSector
 {
 private:
-	Vector2 startPoint;
-	Vector2 endPoint;
-	std::vector<Collider> colliders;
+	Vector2 startPoint;					// pocz¹tkowe wspó³rzêdne XY sektora
+	Vector2 endPoint;					// koñcowe wspó³rzêdne XY sektora
+	std::vector<Collider> colliders;	// lista obiektów, znajduj¹ych siê w sektorze
 
 public:
 	CollisionSector(Vector2 startPoint, GLfloat size);

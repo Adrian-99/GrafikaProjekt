@@ -5,9 +5,9 @@
 class Collider
 {
 private:
-	Vector3 position;
-	GLfloat width;
-	GLfloat height;
+	Vector3 position;	// pozycja obiektu
+	GLfloat width;		// œrednica
+	GLfloat height;		// wysokoœæ
 
 public:
 	Collider(Vector3 position, GLfloat width, GLfloat height);

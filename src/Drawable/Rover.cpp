@@ -5,7 +5,7 @@ Rover::Rover(Vector3 startPosition, GLfloat size, Terrain* terrainPtr, Collision
 	leftWheelsWithLinks(Vector3(-10.0f * size, -40.0f * size, 50.0f * size), size, true),
 	rightWheelsWithLinks(Vector3(-10.0f * size, 40.0f * size, 50.0f * size), size, false),
 
-	collider(startPosition, 170.0f, 120.0f)
+	collider(startPosition, 170.0f * size, 120.0f * size)
 {
 	position = startPosition;
 	yawAngle = 0.0f;

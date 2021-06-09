@@ -96,8 +96,7 @@ void SceneRenderer::RenderScene()
     /*glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     collisionController.DrawAllColliders();
     rover.DrawCollider();
-    glPolygonMode(GL_FRONT, GL_FILL);
-    glPolygonMode(GL_BACK, GL_NONE);*/
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);*/
 
     UpdateCameraPosition();
 }

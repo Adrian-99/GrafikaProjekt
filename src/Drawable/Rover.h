@@ -21,8 +21,8 @@ private:
 	GLfloat moveSpeed = 0.25f;		// przyspieszenie ≥azika
 	GLfloat brakingSpeed = 0.5f;	// hamowanie ≥azika
 
-	CollisionController* collisionControllerPtr;
-	Collider collider;
+	CollisionController* collisionControllerPtr;	// wskaünik do kontrolera kolizji
+	Collider collider;								// obiekt kolizji ≥azika
 
 	GLfloat size;
 	Body body;

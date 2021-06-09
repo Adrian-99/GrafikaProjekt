@@ -55,10 +55,7 @@ std::vector<Vector2> CollisionController::DetectCollisions(Collider collider)
 			sectorCollisions = collisionSectors.at(sectorsToCheck.at(i)).DetectCollisions(collider);
 			result.insert(result.end(), sectorCollisions.begin(), sectorCollisions.end());
 		}
-		std::cout << collider.GetPosition().X() << ", " << collider.GetPosition().Y() << " - " << mainSectorX << ", " << mainSectorY << std::endl;
 	}
-
-
 	return result;
 }
 

@@ -8,9 +8,9 @@
 class CollisionController
 {
 private:
-	std::vector<CollisionSector> collisionSectors;
-	GLint sectorsCountX;
-	GLint sectorsCountY;
+	std::vector<CollisionSector> collisionSectors;	// lista sektorów obs³ugiwanych przez kontroler
+	GLint sectorsCountX;							// liczba sektorów w osi X
+	GLint sectorsCountY;							// liczba sektorów w osi Y
 
 public:
 	void Initialize(Vector2 startPoint, Vector2 endPoint, GLfloat sectorSize);
