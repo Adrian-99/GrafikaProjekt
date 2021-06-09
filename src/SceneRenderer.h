@@ -5,6 +5,7 @@
 #include "Drawable/Rover.h"
 #include "Drawable/Object.h"
 #include "Drawable/Terrain.h"
+#include "Collision/CollisionController.h"
 
 class SceneRenderer
 {
@@ -27,6 +28,8 @@ private:
 	Object t_rock4;
 
 	Terrain terrain;
+
+	CollisionController collisionController;
 
 public:
 	SceneRenderer(GLFWwindow* window);

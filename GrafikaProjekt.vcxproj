@@ -19,6 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Collision\Collider.cpp" />
+    <ClCompile Include="src\Collision\CollisionController.cpp" />
+    <ClCompile Include="src\Collision\CollisionSector.cpp" />
     <ClCompile Include="src\Drawable\Body.cpp" />
     <ClCompile Include="src\Drawable\Cuboid.cpp" />
     <ClCompile Include="src\Drawable\Terrain.cpp" />
@@ -34,6 +37,9 @@
     <ClCompile Include="src\Drawable\WheelLinks.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Collision\Collider.h" />
+    <ClInclude Include="src\Collision\CollisionController.h" />
+    <ClInclude Include="src\Collision\CollisionSector.h" />
     <ClInclude Include="src\Drawable\Body.h" />
     <ClInclude Include="src\Drawable\Cuboid.h" />
     <ClInclude Include="src\Drawable\Object.h" />

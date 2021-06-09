@@ -4,6 +4,8 @@
 #include "WheelLinks.h"
 #include "../Object/Vector3.h"
 #include "../Drawable/Terrain.h"
+#include "../Collision/CollisionController.h"
+#include "../Collision/Collider.h"
 
 class Rover
 {
@@ -19,19 +21,25 @@ private:
 	GLfloat moveSpeed = 0.25f;		// przyspieszenie ³azika
 	GLfloat brakingSpeed = 0.5f;	// hamowanie ³azika
 
+	CollisionController* collisionControllerPtr;
+	Collider collider;
+
 	GLfloat size;
 	Body body;
 	WheelLinks leftWheelsWithLinks;
 	WheelLinks rightWheelsWithLinks;
 
 public:
-	Rover(Vector3 startPosition, GLfloat size, Terrain* terrainPtr);
+	Rover(Vector3 startPosition, GLfloat size, Terrain* terrainPtr, CollisionController* collisionControllerPtr);
 	void Draw();
 	void ProcessInput(GLfloat additionalSpeed, GLfloat additionalTurnAngle);
 	Vector3 GetPosition();
 	GLfloat GetRotation();
 
+	void DrawCollider();
+
 private:
 	void UpdatePosition();
+	bool CanMove();
 };
 

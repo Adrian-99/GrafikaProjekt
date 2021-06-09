@@ -1,9 +1,11 @@
 #include "Rover.h"
 
-Rover::Rover(Vector3 startPosition, GLfloat size, Terrain* terrainPtr) :
+Rover::Rover(Vector3 startPosition, GLfloat size, Terrain* terrainPtr, CollisionController* collisionControllerPtr) :
 	body(5.0f * size, 0.0f, 45.0f * size, size),
 	leftWheelsWithLinks(Vector3(-10.0f * size, -40.0f * size, 50.0f * size), size, true),
-	rightWheelsWithLinks(Vector3(-10.0f * size, 40.0f * size, 50.0f * size), size, false)
+	rightWheelsWithLinks(Vector3(-10.0f * size, 40.0f * size, 50.0f * size), size, false),
+
+	collider(startPosition, 170.0f, 120.0f)
 {
 	position = startPosition;
 	yawAngle = 0.0f;
@@ -13,6 +15,7 @@ Rover::Rover(Vector3 startPosition, GLfloat size, Terrain* terrainPtr) :
 	speed = 0.0f;
 	this->size = size;
 	this->terrainPtr = terrainPtr;
+	this->collisionControllerPtr = collisionControllerPtr;
 }
 
 void Rover::Draw()
@@ -86,9 +89,14 @@ GLfloat Rover::GetRotation()
 	return yawAngle;
 }
 
+void Rover::DrawCollider()
+{
+	collider.Draw();
+}
+
 void Rover::UpdatePosition()
 {
-	if (speed != 0.0f) {
+	if (speed != 0.0f && CanMove()) {
 		Vector3 moveVector;
 		GLfloat distance = speed / 1.25;
 		if (wheelsTurnAngle != 0.0f) {
@@ -128,4 +136,29 @@ void Rover::UpdatePosition()
 
 		//std::cout << "Yaw: " << yawAngle << "; Pitch: " << pitchAngle << "; Roll: " << rollAngle << std::endl;
 	}
+}
+
+bool Rover::CanMove()
+{
+	collider.SetPosition(position);
+	std::vector<Vector2> collisions = collisionControllerPtr->DetectCollisions(collider);
+
+	if (collisions.size() == 0) return true;
+
+	for (GLint i = 0; i < collisions.size(); i++) {
+		if (speed > 0) {
+			if (abs(yawAngle - collisions.at(i).GetAngle()) < 90 || abs(yawAngle - collisions.at(i).GetAngle() - 360) < 90) {
+				speed = 0.0f;
+				return false;
+			}
+		}
+		else {
+			if (abs(yawAngle - collisions.at(i).GetAngle() - 180) < 90 || abs(yawAngle - collisions.at(i).GetAngle() - 540) < 90) {
+				speed = 0.0f;
+				return false;
+			}
+		}
+	}
+
+	return true;
 }
