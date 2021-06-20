@@ -122,7 +122,7 @@ void Rover::UpdatePosition()
 		GLfloat newPitchAngle = (asin((leftFrontHeight - leftBackHeight) / 135.0f) + asin((rightFrontHeight - rightBackHeight) / 135.0f)) * 57.2957795 / 2;
 		GLfloat newRollAngle = (asin((rightFrontHeight - leftFrontHeight) / 80.0f) + asin((rightBackHeight - leftBackHeight) / 80.0f)) * 57.2957795 / 2;
 
-		GLfloat angleMaxStep = 10.0f;
+		GLfloat angleMaxStep = 5.0f;
 
 		if (newPitchAngle - pitchAngle < -angleMaxStep) pitchAngle -= angleMaxStep;
 		else if (newPitchAngle - pitchAngle > angleMaxStep) pitchAngle += angleMaxStep;
@@ -133,8 +133,6 @@ void Rover::UpdatePosition()
 		else rollAngle = newRollAngle;
 
 		position.Z((leftFrontHeight + rightFrontHeight + leftBackHeight + rightBackHeight) / 4);
-
-		//std::cout << "Yaw: " << yawAngle << "; Pitch: " << pitchAngle << "; Roll: " << rollAngle << std::endl;
 	}
 }
 
